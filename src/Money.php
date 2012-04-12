@@ -1,7 +1,7 @@
 <?php
 namespace SebastianBergmann\Money
 {
-    class Money
+    class Money implements MoneyInterface
     {
         private $amount;
 
@@ -21,12 +21,12 @@ namespace SebastianBergmann\Money
             return $this->amount;
         }
 
-        public function add(Money $other)
+        public function add(MoneyInterface $other)
         {
             return new Money($this->amount + $other->getAmount());
         }
 
-        public function subtract(Money $other)
+        public function subtract(MoneyInterface $other)
         {
             return new Money($this->amount - $other->getAmount());
         }
@@ -58,7 +58,7 @@ namespace SebastianBergmann\Money
             return $result;
         }
 
-        public function compareTo(Money $other)
+        public function compareTo(MoneyInterface $other)
         {
             if ($this->amount == $other->getAmount()) {
                 return 0;
@@ -67,12 +67,12 @@ namespace SebastianBergmann\Money
             return $this->amount < $other->getAmount() ? -1 : 1;
         }
 
-        public function greaterThan(Money $other)
+        public function greaterThan(MoneyInterface $other)
         {
             return $this->compareTo($other) == 1;
         }
 
-        public function lessThan(Money $other)
+        public function lessThan(MoneyInterface $other)
         {
             return $this->compareTo($other) == -1;
         }

@@ -9,7 +9,8 @@ spl_autoload_register(
             $classes = array(
                 'sebastianbergmann\\money\\exception' => '/interfaces/Exception.php',
                 'sebastianbergmann\\money\\invalidargumentexception' => '/exceptions/InvalidArgumentException.php',
-                'sebastianbergmann\\money\\money' => '/Money.php'
+                'sebastianbergmann\\money\\money' => '/Money.php',
+                'sebastianbergmann\\money\\moneyinterface' => '/interfaces/MoneyInterface.php'
             );
         }
         $cn = strtolower($class);
