@@ -1,5 +1,5 @@
 <?php
-namespace SebastianBergmann\Money\Tests
+namespace SebastianBergmann\Money
 {
     class MoneyTest extends \PHPUnit_Framework_TestCase
     {
