@@ -1,0 +1,26 @@
+{
+    "name": "sebastian/money",
+    "description": "Value Object that represents a monetary value (using a currency's smallest unit).",
+    "keywords": ["money"],
+    "homepage": "http://www.github.com/sebastianbergmann/money",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Sebastian Bergmann",
+            "email": "sebastian@phpunit.de"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.7"
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}
