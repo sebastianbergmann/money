@@ -4,7 +4,8 @@
          backupStaticAttributes="false"
          syntaxCheck="false"
          bootstrap="../src/autoload.php"
-         strict="true">
+         strict="true"
+         verbose="true">
   <testsuites>
     <testsuite name="Money">
       <directory suffix="Test.php">../tests</directory>
