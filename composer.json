@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "php": ">=5.4.7",
+        "php": ">=5.3.3",
         "ext-intl": "*"
     },
     "autoload": {
