@@ -85,6 +85,7 @@ namespace SebastianBergmann\Money
 
         /**
          * @covers SebastianBergmann\Money\Money::add
+         * @covers SebastianBergmann\Money\Money::newMoney
          */
         public function testAnotherMoneyWithSameCurrencyObjectCanBeAdded()
         {
@@ -111,6 +112,7 @@ namespace SebastianBergmann\Money
 
         /**
          * @covers SebastianBergmann\Money\Money::subtract
+         * @covers SebastianBergmann\Money\Money::newMoney
          */
         public function testAnotherMoneyObjectWithSameCurrencyCanBeSubtracted()
         {
@@ -137,6 +139,7 @@ namespace SebastianBergmann\Money
 
         /**
          * @covers SebastianBergmann\Money\Money::negate
+         * @covers SebastianBergmann\Money\Money::newMoney
          */
         public function testCanBeNegated()
         {
@@ -149,6 +152,7 @@ namespace SebastianBergmann\Money
 
         /**
          * @covers SebastianBergmann\Money\Money::multiply
+         * @covers SebastianBergmann\Money\Money::newMoney
          */
         public function testCanBeMultipliedByAFactor()
         {
@@ -161,6 +165,7 @@ namespace SebastianBergmann\Money
 
         /**
          * @covers SebastianBergmann\Money\Money::allocateToTargets
+         * @covers SebastianBergmann\Money\Money::newMoney
          */
         public function testCanBeAllocatedToNumberOfTargets()
         {
@@ -186,6 +191,7 @@ namespace SebastianBergmann\Money
 
         /**
          * @covers SebastianBergmann\Money\Money::allocateByRatios
+         * @covers SebastianBergmann\Money\Money::newMoney
          */
         public function testCanBeAllocatedByRatios()
         {

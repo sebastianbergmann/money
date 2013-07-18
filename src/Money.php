@@ -118,9 +118,7 @@ namespace SebastianBergmann\Money
                 throw new CurrencyMismatchException;
             }
 
-            return new Money(
-              $this->amount + $other->getAmount(), $this->currency
-            );
+            return $this->newMoney($this->amount + $other->getAmount());
         }
 
         /**
@@ -137,9 +135,7 @@ namespace SebastianBergmann\Money
                 throw new CurrencyMismatchException;
             }
 
-            return new Money(
-              $this->amount - $other->getAmount(), $this->currency
-            );
+            return $this->newMoney($this->amount - $other->getAmount());
         }
 
         /**
@@ -150,7 +146,7 @@ namespace SebastianBergmann\Money
          */
         public function negate()
         {
-            return new Money(-1 * $this->amount, $this->currency);
+            return $this->newMoney(-1 * $this->amount);
         }
 
         /**
@@ -162,7 +158,7 @@ namespace SebastianBergmann\Money
          */
         public function multiply($factor)
         {
-            return new Money($factor * $this->amount, $this->currency);
+            return $this->newMoney($factor * $this->amount);
         }
 
         /**
@@ -174,8 +170,8 @@ namespace SebastianBergmann\Money
          */
         public function allocateToTargets($n)
         {
-            $low       = new Money(intval($this->amount / $n), $this->currency);
-            $high      = new Money($low->getAmount() + 1, $this->currency);
+            $low       = $this->newMoney(intval($this->amount / $n));
+            $high      = $this->newMoney($low->getAmount() + 1);
             $remainder = $this->amount % $n;
             $result    = array();
 
@@ -205,14 +201,12 @@ namespace SebastianBergmann\Money
 
             for ($i = 0; $i < count($ratios); $i++) {
                 $amount     = intval($this->amount * $ratios[$i] / $total);
-                $result[]   = new Money($amount, $this->currency);
+                $result[]   = $this->newMoney($amount);
                 $remainder -= $amount;
             }
 
             for ($i = 0; $i < $remainder; $i++) {
-                $result[$i] = new Money(
-                  $result[$i]->getAmount() + 1, $this->currency
-                );
+                $result[$i] = $this->newMoney($result[$i]->getAmount() + 1);
             }
 
             return $result;
@@ -266,6 +260,15 @@ namespace SebastianBergmann\Money
         public function lessThan(Money $other)
         {
             return $this->compareTo($other) == -1;
+        }
+
+        /**
+         * @param  integer $amount
+         * @return SebastianBergmann\Money\Money
+         */
+        private function newMoney($amount)
+        {
+            return new Money($amount, $this->currency);
         }
     }
 }
