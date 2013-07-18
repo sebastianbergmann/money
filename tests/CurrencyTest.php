@@ -109,4 +109,13 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(978, $c->getNumericCode());
     }
+
+    /**
+     * @covers  SebastianBergmann\Money\Currency::getSubUnit
+     * @depends testObjectCanBeConstructedForValidConstructorArgument
+     */
+    public function testSubUnitCanBeRetrieved(Currency $c)
+    {
+        $this->assertEquals(100, $c->getSubUnit());
+    }
 }
