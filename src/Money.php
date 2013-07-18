@@ -160,6 +160,10 @@ namespace SebastianBergmann\Money
         /**
          * Compares this Money object to another.
          *
+         * Returns an integer less than, equal to, or greater than zero
+         * if the value of this Money object is considered to be respectively
+         * less than, equal to, or greater than the other Money object.
+         *
          * @param  SebastianBergmann\Money\Money $other
          * @return -1|0|1
          */
