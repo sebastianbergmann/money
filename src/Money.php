@@ -97,7 +97,7 @@ namespace SebastianBergmann\Money
          * Returns the currency of the monetary value represented by this
          * object.
          *
-         * @return integer
+         * @return SebastianBergmann\Money\Currency
          */
         public function getCurrency()
         {
