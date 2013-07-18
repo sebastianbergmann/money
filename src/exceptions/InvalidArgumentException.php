@@ -40,19 +40,18 @@
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.github.com/sebastianbergmann/money
  */
-namespace SebastianBergmann\Money
+namespace SebastianBergmann\Money;
+
+/**
+ * Exception that is raised when invalid (scalar) arguments
+ * are passed to a method.
+ *
+ * @package    Money
+ * @author     Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
+ * @link       http://www.github.com/sebastianbergmann/money
+ */
+class InvalidArgumentException extends \InvalidArgumentException implements Exception
 {
-    /**
-     * Exception that is raised when invalid (scalar) arguments
-     * are passed to a method.
-     *
-     * @package    Money
-     * @author     Sebastian Bergmann <sebastian@phpunit.de>
-     * @copyright  2013 Sebastian Bergmann <sebastian@phpunit.de>
-     * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
-     * @link       http://www.github.com/sebastianbergmann/money
-     */
-    class InvalidArgumentException extends \InvalidArgumentException implements Exception
-    {
-    }
 }

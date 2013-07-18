@@ -40,235 +40,232 @@
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.github.com/sebastianbergmann/money
  */
-namespace SebastianBergmann\Money
+namespace SebastianBergmann\Money;
+
+/**
+ * Value Object that represents a monetary value
+ * (using a currency's smallest unit).
+ *
+ * @package    Money
+ * @author     Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
+ * @link       http://www.github.com/sebastianbergmann/money
+ * @see        http://martinfowler.com/bliki/ValueObject.html
+ * @see        http://martinfowler.com/eaaCatalog/money.html
+ */
+class Money
 {
     /**
-     * Value Object that represents a monetary value
-     * (using a currency's smallest unit).
-     *
-     * @package    Money
-     * @author     Sebastian Bergmann <sebastian@phpunit.de>
-     * @copyright  2013 Sebastian Bergmann <sebastian@phpunit.de>
-     * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
-     * @link       http://www.github.com/sebastianbergmann/money
-     * @see        http://martinfowler.com/bliki/ValueObject.html
-     * @see        http://martinfowler.com/eaaCatalog/money.html
+     * @var integer
      */
-    class Money
+    private $amount;
+
+    /**
+     * @var SebastianBergmann\Money\Currency
+     */
+    private $currency;
+
+    /**
+     * @param  integer                          $amount
+     * @param  SebastianBergmann\Money\Currency $currency
+     * @throws SebastianBergmann\Money\InvalidArgumentException
+     */
+    public function __construct($amount, Currency $currency)
     {
-        /**
-         * @var integer
-         */
-        private $amount;
-
-        /**
-         * @var SebastianBergmann\Money\Currency
-         */
-        private $currency;
-
-        /**
-         * @param  integer                          $amount
-         * @param  SebastianBergmann\Money\Currency $currency
-         * @throws SebastianBergmann\Money\InvalidArgumentException
-         */
-        public function __construct($amount, Currency $currency)
-        {
-            if (!is_int($amount)) {
-                throw new InvalidArgumentException(
-                  '$amount must be an integer'
-                );
-            }
-
-            $this->amount   = $amount;
-            $this->currency = $currency;
+        if (!is_int($amount)) {
+            throw new InvalidArgumentException('$amount must be an integer');
         }
 
-        /**
-         * Returns the monetary value represented by this object.
-         *
-         * @return integer
-         */
-        public function getAmount()
-        {
-            return $this->amount;
+        $this->amount   = $amount;
+        $this->currency = $currency;
+    }
+
+    /**
+     * Returns the monetary value represented by this object.
+     *
+     * @return integer
+     */
+    public function getAmount()
+    {
+        return $this->amount;
+    }
+
+    /**
+     * Returns the currency of the monetary value represented by this
+     * object.
+     *
+     * @return SebastianBergmann\Money\Currency
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+
+    /**
+     * Returns a new Money object that represents the monetary value
+     * of the sum of this Money object and another.
+     *
+     * @param  SebastianBergmann\Money\Money $other
+     * @return SebastianBergmann\Money\Money
+     * @throws SebastianBergmann\Money\CurrencyMismatchException
+     */
+    public function add(Money $other)
+    {
+        if ($this->currency != $other->getCurrency()) {
+            throw new CurrencyMismatchException;
         }
 
-        /**
-         * Returns the currency of the monetary value represented by this
-         * object.
-         *
-         * @return SebastianBergmann\Money\Currency
-         */
-        public function getCurrency()
-        {
-            return $this->currency;
+        return $this->newMoney($this->amount + $other->getAmount());
+    }
+
+    /**
+     * Returns a new Money object that represents the monetary value
+     * of the difference of this Money object and another.
+     *
+     * @param  SebastianBergmann\Money\Money $other
+     * @return SebastianBergmann\Money\Money
+     * @throws SebastianBergmann\Money\CurrencyMismatchException
+     */
+    public function subtract(Money $other)
+    {
+        if ($this->currency != $other->getCurrency()) {
+            throw new CurrencyMismatchException;
         }
 
-        /**
-         * Returns a new Money object that represents the monetary value
-         * of the sum of this Money object and another.
-         *
-         * @param  SebastianBergmann\Money\Money $other
-         * @return SebastianBergmann\Money\Money
-         * @throws SebastianBergmann\Money\CurrencyMismatchException
-         */
-        public function add(Money $other)
-        {
-            if ($this->currency != $other->getCurrency()) {
-                throw new CurrencyMismatchException;
-            }
+        return $this->newMoney($this->amount - $other->getAmount());
+    }
 
-            return $this->newMoney($this->amount + $other->getAmount());
+    /**
+     * Returns a new Money object that represents the negated monetary value
+     * of this Money object.
+     *
+     * @return SebastianBergmann\Money\Money
+     */
+    public function negate()
+    {
+        return $this->newMoney(-1 * $this->amount);
+    }
+
+    /**
+     * Returns a new Money object that represents the monetary value
+     * of this Money object multiplied by a given factor.
+     *
+     * @param  float $factor
+     * @return SebastianBergmann\Money\Money
+     */
+    public function multiply($factor)
+    {
+        return $this->newMoney($factor * $this->amount);
+    }
+
+    /**
+     * Allocate the monetary value represented by this Money object
+     * among N targets.
+     *
+     * @param  integer $n
+     * @return SebastianBergmann\Money\Money[]
+     */
+    public function allocateToTargets($n)
+    {
+        $low       = $this->newMoney(intval($this->amount / $n));
+        $high      = $this->newMoney($low->getAmount() + 1);
+        $remainder = $this->amount % $n;
+        $result    = array();
+
+        for ($i = 0; $i < $remainder; $i++) {
+            $result[] = $high;
         }
 
-        /**
-         * Returns a new Money object that represents the monetary value
-         * of the difference of this Money object and another.
-         *
-         * @param  SebastianBergmann\Money\Money $other
-         * @return SebastianBergmann\Money\Money
-         * @throws SebastianBergmann\Money\CurrencyMismatchException
-         */
-        public function subtract(Money $other)
-        {
-            if ($this->currency != $other->getCurrency()) {
-                throw new CurrencyMismatchException;
-            }
-
-            return $this->newMoney($this->amount - $other->getAmount());
+        for ($i = $remainder; $i < $n; $i++) {
+            $result[] = $low;
         }
 
-        /**
-         * Returns a new Money object that represents the negated monetary value
-         * of this Money object.
-         *
-         * @return SebastianBergmann\Money\Money
-         */
-        public function negate()
-        {
-            return $this->newMoney(-1 * $this->amount);
+        return $result;
+    }
+
+    /**
+     * Allocate the monetary value represented by this Money object
+     * using a list of ratios.
+     *
+     * @param  array $ratios
+     * @return SebastianBergmann\Money\Money[]
+     */
+    public function allocateByRatios(array $ratios)
+    {
+        $total     = array_sum($ratios);
+        $remainder = $this->amount;
+        $result    = array();
+
+        for ($i = 0; $i < count($ratios); $i++) {
+            $amount     = intval($this->amount * $ratios[$i] / $total);
+            $result[]   = $this->newMoney($amount);
+            $remainder -= $amount;
         }
 
-        /**
-         * Returns a new Money object that represents the monetary value
-         * of this Money object multiplied by a given factor.
-         *
-         * @param  float $factor
-         * @return SebastianBergmann\Money\Money
-         */
-        public function multiply($factor)
-        {
-            return $this->newMoney($factor * $this->amount);
+        for ($i = 0; $i < $remainder; $i++) {
+            $result[$i] = $this->newMoney($result[$i]->getAmount() + 1);
         }
 
-        /**
-         * Allocate the monetary value represented by this Money object
-         * among N targets.
-         *
-         * @param  integer $n
-         * @return SebastianBergmann\Money\Money[]
-         */
-        public function allocateToTargets($n)
-        {
-            $low       = $this->newMoney(intval($this->amount / $n));
-            $high      = $this->newMoney($low->getAmount() + 1);
-            $remainder = $this->amount % $n;
-            $result    = array();
+        return $result;
+    }
 
-            for ($i = 0; $i < $remainder; $i++) {
-                $result[] = $high;
-            }
-
-            for ($i = $remainder; $i < $n; $i++) {
-                $result[] = $low;
-            }
-
-            return $result;
+    /**
+     * Compares this Money object to another.
+     *
+     * Returns an integer less than, equal to, or greater than zero
+     * if the value of this Money object is considered to be respectively
+     * less than, equal to, or greater than the other Money object.
+     *
+     * @param  SebastianBergmann\Money\Money $other
+     * @return -1|0|1
+     * @throws SebastianBergmann\Money\CurrencyMismatchException
+     */
+    public function compareTo(Money $other)
+    {
+        if ($this->currency != $other->getCurrency()) {
+            throw new CurrencyMismatchException;
         }
 
-        /**
-         * Allocate the monetary value represented by this Money object
-         * using a list of ratios.
-         *
-         * @param  array $ratios
-         * @return SebastianBergmann\Money\Money[]
-         */
-        public function allocateByRatios(array $ratios)
-        {
-            $total     = array_sum($ratios);
-            $remainder = $this->amount;
-            $result    = array();
-
-            for ($i = 0; $i < count($ratios); $i++) {
-                $amount     = intval($this->amount * $ratios[$i] / $total);
-                $result[]   = $this->newMoney($amount);
-                $remainder -= $amount;
-            }
-
-            for ($i = 0; $i < $remainder; $i++) {
-                $result[$i] = $this->newMoney($result[$i]->getAmount() + 1);
-            }
-
-            return $result;
+        if ($this->amount == $other->getAmount()) {
+            return 0;
         }
 
-        /**
-         * Compares this Money object to another.
-         *
-         * Returns an integer less than, equal to, or greater than zero
-         * if the value of this Money object is considered to be respectively
-         * less than, equal to, or greater than the other Money object.
-         *
-         * @param  SebastianBergmann\Money\Money $other
-         * @return -1|0|1
-         * @throws SebastianBergmann\Money\CurrencyMismatchException
-         */
-        public function compareTo(Money $other)
-        {
-            if ($this->currency != $other->getCurrency()) {
-                throw new CurrencyMismatchException;
-            }
+        return $this->amount < $other->getAmount() ? -1 : 1;
+    }
 
-            if ($this->amount == $other->getAmount()) {
-                return 0;
-            }
+    /**
+     * Returns TRUE if the monetary value represented by this Money object
+     * is greater than that of another, FALSE otherwise.
+     *
+     * @param  SebastianBergmann\Money\Money $other
+     * @return boolean
+     * @throws SebastianBergmann\Money\CurrencyMismatchException
+     */
+    public function greaterThan(Money $other)
+    {
+        return $this->compareTo($other) == 1;
+    }
 
-            return $this->amount < $other->getAmount() ? -1 : 1;
-        }
+    /**
+     * Returns TRUE if the monetary value represented by this Money object
+     * is smaller than that of another, FALSE otherwise.
+     *
+     * @param  SebastianBergmann\Money\Money $other
+     * @return boolean
+     * @throws SebastianBergmann\Money\CurrencyMismatchException
+     */
+    public function lessThan(Money $other)
+    {
+        return $this->compareTo($other) == -1;
+    }
 
-        /**
-         * Returns TRUE if the monetary value represented by this Money object
-         * is greater than that of another, FALSE otherwise.
-         *
-         * @param  SebastianBergmann\Money\Money $other
-         * @return boolean
-         * @throws SebastianBergmann\Money\CurrencyMismatchException
-         */
-        public function greaterThan(Money $other)
-        {
-            return $this->compareTo($other) == 1;
-        }
-
-        /**
-         * Returns TRUE if the monetary value represented by this Money object
-         * is smaller than that of another, FALSE otherwise.
-         *
-         * @param  SebastianBergmann\Money\Money $other
-         * @return boolean
-         * @throws SebastianBergmann\Money\CurrencyMismatchException
-         */
-        public function lessThan(Money $other)
-        {
-            return $this->compareTo($other) == -1;
-        }
-
-        /**
-         * @param  integer $amount
-         * @return SebastianBergmann\Money\Money
-         */
-        private function newMoney($amount)
-        {
-            return new Money($amount, $this->currency);
-        }
+    /**
+     * @param  integer $amount
+     * @return SebastianBergmann\Money\Money
+     */
+    private function newMoney($amount)
+    {
+        return new Money($amount, $this->currency);
     }
 }
