@@ -115,8 +115,8 @@ class Money
         $formatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
 
         return $formatter->formatCurrency(
-          $this->amount / $this->currency->getSubUnit(),
-          $this->currency
+            $this->amount / $this->currency->getSubUnit(),
+            $this->currency
         );
     }
 
