@@ -48,17 +48,17 @@ namespace SebastianBergmann\Money
          * @covers            SebastianBergmann\Money\Money::__construct
          * @expectedException SebastianBergmann\Money\InvalidArgumentException
          */
-        public function testExceptionIsRaisedForInvalidConstructorArgument()
+        public function testExceptionIsRaisedForInvalidConstructorArguments()
         {
-            $m = new Money(NULL);
+            $m = new Money(NULL, new Currency('EUR'));
         }
 
         /**
          * @covers SebastianBergmann\Money\Money::__construct
          */
-        public function testObjectCanBeConstructedForValidConstructorArgument()
+        public function testObjectCanBeConstructedForValidConstructorArguments()
         {
-            $m = new Money(0);
+            $m = new Money(0, new Currency('EUR'));
 
             $this->assertInstanceOf('SebastianBergmann\\Money\\Money', $m);
 
@@ -67,7 +67,7 @@ namespace SebastianBergmann\Money
 
         /**
          * @covers  SebastianBergmann\Money\Money::getAmount
-         * @depends testObjectCanBeConstructedForValidConstructorArgument
+         * @depends testObjectCanBeConstructedForValidConstructorArguments
          */
         public function testAmountCanBeRetrieved(Money $m)
         {
@@ -75,12 +75,21 @@ namespace SebastianBergmann\Money
         }
 
         /**
+         * @covers  SebastianBergmann\Money\Money::getCurrency
+         * @depends testObjectCanBeConstructedForValidConstructorArguments
+         */
+        public function testCurrencyCanBeRetrieved(Money $m)
+        {
+            $this->assertEquals(new Currency('EUR'), $m->getCurrency());
+        }
+
+        /**
          * @covers SebastianBergmann\Money\Money::add
          */
-        public function testAnotherMoneyObjectCanBeAdded()
+        public function testAnotherMoneyWithSameCurrencyObjectCanBeAdded()
         {
-            $a = new Money(1);
-            $b = new Money(2);
+            $a = new Money(1, new Currency('EUR'));
+            $b = new Money(2, new Currency('EUR'));
             $c = $a->add($b);
 
             $this->assertEquals(1, $a->getAmount());
@@ -89,12 +98,24 @@ namespace SebastianBergmann\Money
         }
 
         /**
+         * @covers            SebastianBergmann\Money\Money::add
+         * @expectedException SebastianBergmann\Money\CurrencyMismatchException
+         */
+        public function testExceptionIsRaisedWhenMoneyObjectWithDifferentCurrencyIsAdded()
+        {
+            $a = new Money(1, new Currency('EUR'));
+            $b = new Money(2, new Currency('USD'));
+
+            $a->add($b);
+        }
+
+        /**
          * @covers SebastianBergmann\Money\Money::subtract
          */
-        public function testAnotherMoneyObjectCanBeSubtracted()
+        public function testAnotherMoneyObjectWithSameCurrencyCanBeSubtracted()
         {
-            $a = new Money(1);
-            $b = new Money(2);
+            $a = new Money(1, new Currency('EUR'));
+            $b = new Money(2, new Currency('EUR'));
             $c = $b->subtract($a);
 
             $this->assertEquals(1, $a->getAmount());
@@ -103,11 +124,23 @@ namespace SebastianBergmann\Money
         }
 
         /**
+         * @covers            SebastianBergmann\Money\Money::subtract
+         * @expectedException SebastianBergmann\Money\CurrencyMismatchException
+         */
+        public function testExceptionIsRaisedWhenMoneyObjectWithDifferentCurrencyIsSubtracted()
+        {
+            $a = new Money(1, new Currency('EUR'));
+            $b = new Money(2, new Currency('USD'));
+
+            $b->subtract($a);
+        }
+
+        /**
          * @covers SebastianBergmann\Money\Money::negate
          */
         public function testCanBeNegated()
         {
-            $a = new Money(1);
+            $a = new Money(1, new Currency('EUR'));
             $b = $a->negate();
 
             $this->assertEquals(1, $a->getAmount());
@@ -119,7 +152,7 @@ namespace SebastianBergmann\Money
          */
         public function testCanBeMultipliedByAFactor()
         {
-            $a = new Money(1);
+            $a = new Money(1, new Currency('EUR'));
             $b = $a->multiply(2);
 
             $this->assertEquals(1, $a->getAmount());
@@ -131,21 +164,21 @@ namespace SebastianBergmann\Money
          */
         public function testCanBeDividedByADenominator()
         {
-            $a = new Money(99);
+            $a = new Money(99, new Currency('EUR'));
             $b = $a->divide(10);
 
             $this->assertEquals(
               array(
-                new Money(10),
-                new Money(10),
-                new Money(10),
-                new Money(10),
-                new Money(10),
-                new Money(10),
-                new Money(10),
-                new Money(10),
-                new Money(10),
-                new Money(9)
+                new Money(10, new Currency('EUR')),
+                new Money(10, new Currency('EUR')),
+                new Money(10, new Currency('EUR')),
+                new Money(10, new Currency('EUR')),
+                new Money(10, new Currency('EUR')),
+                new Money(10, new Currency('EUR')),
+                new Money(10, new Currency('EUR')),
+                new Money(10, new Currency('EUR')),
+                new Money(10, new Currency('EUR')),
+                new Money(9,  new Currency('EUR'))
               ),
               $b
             );
@@ -154,24 +187,24 @@ namespace SebastianBergmann\Money
         /**
          * @covers SebastianBergmann\Money\Money::compareTo
          */
-        public function testCanBeComparedToAnotherMoneyObject()
+        public function testCanBeComparedToAnotherMoneyObjectWithSameCurrency()
         {
-            $a = new Money(1);
-            $b = new Money(2);
+            $a = new Money(1, new Currency('EUR'));
+            $b = new Money(2, new Currency('EUR'));
 
             $this->assertEquals(-1, $a->compareTo($b));
-            $this->assertEquals( 1, $b->compareTo($a));
+            $this->assertEquals(1, $b->compareTo($a));
             $this->assertEquals(0, $a->compareTo($a));
         }
 
         /**
          * @covers  SebastianBergmann\Money\Money::greaterThan
-         * @depends testCanBeComparedToAnotherMoneyObject
+         * @depends testCanBeComparedToAnotherMoneyObjectWithSameCurrency
          */
-        public function testCanBeComparedToAnotherMoneyObject2()
+        public function testCanBeComparedToAnotherMoneyObjectWithSameCurrency2()
         {
-            $a = new Money(1);
-            $b = new Money(2);
+            $a = new Money(1, new Currency('EUR'));
+            $b = new Money(2, new Currency('EUR'));
 
             $this->assertFalse($a->greaterThan($b));
             $this->assertTrue($b->greaterThan($a));
@@ -179,15 +212,27 @@ namespace SebastianBergmann\Money
 
         /**
          * @covers  SebastianBergmann\Money\Money::lessThan
-         * @depends testCanBeComparedToAnotherMoneyObject
+         * @depends testCanBeComparedToAnotherMoneyObjectWithSameCurrency
          */
-        public function testCanBeComparedToAnotherMoneyObject3()
+        public function testCanBeComparedToAnotherMoneyObjectWithSameCurrency3()
         {
-            $a = new Money(1);
-            $b = new Money(2);
+            $a = new Money(1, new Currency('EUR'));
+            $b = new Money(2, new Currency('EUR'));
 
             $this->assertFalse($b->lessThan($a));
             $this->assertTrue($a->lessThan($b));
+        }
+
+        /**
+         * @covers            SebastianBergmann\Money\Money::compareTo
+         * @expectedException SebastianBergmann\Money\CurrencyMismatchException
+         */
+        public function testExceptionIsRaisedWhenComparedToMoneyObjectWithDifferentCurrency()
+        {
+            $a = new Money(1, new Currency('EUR'));
+            $b = new Money(2, new Currency('USD'));
+
+            $a->compareTo($b);
         }
     }
 }

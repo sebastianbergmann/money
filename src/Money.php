@@ -62,10 +62,16 @@ namespace SebastianBergmann\Money
         private $amount;
 
         /**
-         * @param  integer $amount
+         * @var SebastianBergmann\Money\Currency
+         */
+        private $currency;
+
+        /**
+         * @param  integer                          $amount
+         * @param  SebastianBergmann\Money\Currency $currency
          * @throws SebastianBergmann\Money\InvalidArgumentException
          */
-        public function __construct($amount)
+        public function __construct($amount, Currency $currency)
         {
             if (!is_int($amount)) {
                 throw new InvalidArgumentException(
@@ -73,7 +79,8 @@ namespace SebastianBergmann\Money
                 );
             }
 
-            $this->amount = $amount;
+            $this->amount   = $amount;
+            $this->currency = $currency;
         }
 
         /**
@@ -87,15 +94,33 @@ namespace SebastianBergmann\Money
         }
 
         /**
+         * Returns the currency of the monetary value represented by this
+         * object.
+         *
+         * @return integer
+         */
+        public function getCurrency()
+        {
+            return $this->currency;
+        }
+
+        /**
          * Returns a new Money object that represents the monetary value
          * of the sum of this Money object and another.
          *
          * @param  SebastianBergmann\Money\Money $other
          * @return SebastianBergmann\Money\Money
+         * @throws SebastianBergmann\Money\CurrencyMismatchException
          */
         public function add(Money $other)
         {
-            return new Money($this->amount + $other->getAmount());
+            if ($this->currency != $other->getCurrency()) {
+                throw new CurrencyMismatchException;
+            }
+
+            return new Money(
+              $this->amount + $other->getAmount(), $this->currency
+            );
         }
 
         /**
@@ -104,10 +129,17 @@ namespace SebastianBergmann\Money
          *
          * @param  SebastianBergmann\Money\Money $other
          * @return SebastianBergmann\Money\Money
+         * @throws SebastianBergmann\Money\CurrencyMismatchException
          */
         public function subtract(Money $other)
         {
-            return new Money($this->amount - $other->getAmount());
+            if ($this->currency != $other->getCurrency()) {
+                throw new CurrencyMismatchException;
+            }
+
+            return new Money(
+              $this->amount - $other->getAmount(), $this->currency
+            );
         }
 
         /**
@@ -118,7 +150,7 @@ namespace SebastianBergmann\Money
          */
         public function negate()
         {
-            return new Money(-1 * $this->amount);
+            return new Money(-1 * $this->amount, $this->currency);
         }
 
         /**
@@ -130,7 +162,7 @@ namespace SebastianBergmann\Money
          */
         public function multiply($factor)
         {
-            return new Money($factor * $this->amount);
+            return new Money($factor * $this->amount, $this->currency);
         }
 
         /**
@@ -147,11 +179,11 @@ namespace SebastianBergmann\Money
             $remainder    = $this->amount - $simpleResult * $denominator;
 
             for ($i = 0; $i < $denominator; $i++) {
-                $result[$i] = new Money($simpleResult);
+                $result[$i] = new Money($simpleResult, $this->currency);
             }
 
             for ($i = 0; $i < $remainder; $i++) {
-                $result[$i] = $result[$i]->add(new Money(1));
+                $result[$i] = $result[$i]->add(new Money(1, $this->currency));
             }
 
             return $result;
@@ -166,9 +198,14 @@ namespace SebastianBergmann\Money
          *
          * @param  SebastianBergmann\Money\Money $other
          * @return -1|0|1
+         * @throws SebastianBergmann\Money\CurrencyMismatchException
          */
         public function compareTo(Money $other)
         {
+            if ($this->currency != $other->getCurrency()) {
+                throw new CurrencyMismatchException;
+            }
+
             if ($this->amount == $other->getAmount()) {
                 return 0;
             }
@@ -182,6 +219,7 @@ namespace SebastianBergmann\Money
          *
          * @param  SebastianBergmann\Money\Money $other
          * @return boolean
+         * @throws SebastianBergmann\Money\CurrencyMismatchException
          */
         public function greaterThan(Money $other)
         {
@@ -194,6 +232,7 @@ namespace SebastianBergmann\Money
          *
          * @param  SebastianBergmann\Money\Money $other
          * @return boolean
+         * @throws SebastianBergmann\Money\CurrencyMismatchException
          */
         public function lessThan(Money $other)
         {

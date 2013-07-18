@@ -7,6 +7,8 @@ spl_autoload_register(
         static $classes = null;
         if ($classes === null) {
             $classes = array(
+                'sebastianbergmann\\money\\currency' => '/Currency.php',
+                'sebastianbergmann\\money\\currencymismatchexception' => '/exceptions/CurrencyMismatchException.php',
                 'sebastianbergmann\\money\\exception' => '/interfaces/Exception.php',
                 'sebastianbergmann\\money\\invalidargumentexception' => '/exceptions/InvalidArgumentException.php',
                 'sebastianbergmann\\money\\money' => '/Money.php'
