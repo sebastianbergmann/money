@@ -166,24 +166,53 @@ namespace SebastianBergmann\Money
         }
 
         /**
-         * Returns an array of N Money objects (N = $denominator) into which the
-         * monetary value of this Money object is divided.
+         * Allocate the monetary value represented by this Money object
+         * among N targets.
          *
-         * @param  integer $denominator
+         * @param  integer $n
          * @return SebastianBergmann\Money\Money[]
          */
-        public function divide($denominator)
+        public function allocateToTargets($n)
         {
-            $result       = array();
-            $simpleResult = intval($this->amount / $denominator);
-            $remainder    = $this->amount - $simpleResult * $denominator;
+            $low       = new Money(intval($this->amount / $n), $this->currency);
+            $high      = new Money($low->getAmount() + 1, $this->currency);
+            $remainder = $this->amount % $n;
+            $result    = array();
 
-            for ($i = 0; $i < $denominator; $i++) {
-                $result[$i] = new Money($simpleResult, $this->currency);
+            for ($i = 0; $i < $remainder; $i++) {
+                $result[] = $high;
+            }
+
+            for ($i = $remainder; $i < $n; $i++) {
+                $result[] = $low;
+            }
+
+            return $result;
+        }
+
+        /**
+         * Allocate the monetary value represented by this Money object
+         * using a list of ratios.
+         *
+         * @param  array $ratios
+         * @return SebastianBergmann\Money\Money[]
+         */
+        public function allocateByRatios(array $ratios)
+        {
+            $total     = array_sum($ratios);
+            $remainder = $this->amount;
+            $result    = array();
+
+            for ($i = 0; $i < count($ratios); $i++) {
+                $amount     = intval($this->amount * $ratios[$i] / $total);
+                $result[]   = new Money($amount, $this->currency);
+                $remainder -= $amount;
             }
 
             for ($i = 0; $i < $remainder; $i++) {
-                $result[$i] = $result[$i]->add(new Money(1, $this->currency));
+                $result[$i] = new Money(
+                  $result[$i]->getAmount() + 1, $this->currency
+                );
             }
 
             return $result;

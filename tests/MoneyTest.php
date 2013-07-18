@@ -160,12 +160,12 @@ namespace SebastianBergmann\Money
         }
 
         /**
-         * @covers SebastianBergmann\Money\Money::divide
+         * @covers SebastianBergmann\Money\Money::allocateToTargets
          */
-        public function testCanBeDividedByADenominator()
+        public function testCanBeAllocatedToNumberOfTargets()
         {
             $a = new Money(99, new Currency('EUR'));
-            $b = $a->divide(10);
+            $r = $a->allocateToTargets(10);
 
             $this->assertEquals(
               array(
@@ -180,7 +180,24 @@ namespace SebastianBergmann\Money
                 new Money(10, new Currency('EUR')),
                 new Money(9,  new Currency('EUR'))
               ),
-              $b
+              $r
+            );
+        }
+
+        /**
+         * @covers SebastianBergmann\Money\Money::allocateByRatios
+         */
+        public function testCanBeAllocatedByRatios()
+        {
+            $a = new Money(5, new Currency('EUR'));
+            $r = $a->allocateByRatios(array(3, 7));
+
+            $this->assertEquals(
+              array(
+                new Money(2, new Currency('EUR')),
+                new Money(3, new Currency('EUR'))
+              ),
+              $r
             );
         }
 
