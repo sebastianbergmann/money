@@ -42,6 +42,8 @@
  */
 namespace SebastianBergmann\Money;
 
+use NumberFormatter;
+
 /**
  * Value Object that represents a monetary value
  * (using a currency's smallest unit).
@@ -100,6 +102,22 @@ class Money
     public function getCurrency()
     {
         return $this->currency;
+    }
+
+    /**
+     * Format the monetary value represented by this Money object as a string.
+     *
+     * @param  string $locale
+     * @return string
+     */
+    public function formatAsString($locale)
+    {
+        $formatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
+
+        return $formatter->formatCurrency(
+          $this->amount / $this->currency->getSubUnit(),
+          $this->currency
+        );
     }
 
     /**

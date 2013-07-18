@@ -84,6 +84,15 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers  SebastianBergmann\Money\Money::formatAsString
+     * @depends testObjectCanBeConstructedForValidConstructorArguments
+     */
+    public function testCanBeFormattedAsString(Money $m)
+    {
+        $this->assertEquals('0,00 €', $m->formatAsString('de_DE'));
+    }
+
+    /**
      * @covers SebastianBergmann\Money\Money::add
      * @covers SebastianBergmann\Money\Money::newMoney
      */
