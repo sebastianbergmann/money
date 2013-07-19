@@ -55,8 +55,14 @@ use NumberFormatter;
  */
 class IntlFormatter implements Formatter
 {
+    /**
+     * @var NumberFormatter
+     */
     private $numberFormatter;
 
+    /**
+     * @param string $locale
+     */
     public function __construct($locale)
     {
         $this->numberFormatter = new NumberFormatter(
@@ -64,6 +70,12 @@ class IntlFormatter implements Formatter
         );
     }
 
+    /**
+     * Formats a Money object using PHP's built-in NumberFormatter.
+     *
+     * @param  SebastianBergmann\Money\Money $money
+     * @return                               string
+     */
     public function format(Money $money)
     {
         return $this->numberFormatter->formatCurrency(

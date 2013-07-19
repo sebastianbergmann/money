@@ -53,5 +53,11 @@ namespace SebastianBergmann\Money;
  */
 interface Formatter
 {
+    /**
+     * Formats a Money object.
+     *
+     * @param  SebastianBergmann\Money\Money $money
+     * @return                               string
+     */
     public function format(Money $money);
 }
