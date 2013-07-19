@@ -10,6 +10,8 @@ spl_autoload_register(
                 'sebastianbergmann\\money\\currency' => '/Currency.php',
                 'sebastianbergmann\\money\\currencymismatchexception' => '/exceptions/CurrencyMismatchException.php',
                 'sebastianbergmann\\money\\exception' => '/interfaces/Exception.php',
+                'sebastianbergmann\\money\\formatter' => '/interfaces/Formatter.php',
+                'sebastianbergmann\\money\\intlformatter' => '/IntlFormatter.php',
                 'sebastianbergmann\\money\\invalidargumentexception' => '/exceptions/InvalidArgumentException.php',
                 'sebastianbergmann\\money\\money' => '/Money.php'
             );
