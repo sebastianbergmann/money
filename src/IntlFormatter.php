@@ -66,7 +66,8 @@ class IntlFormatter implements Formatter
     public function __construct($locale)
     {
         $this->numberFormatter = new NumberFormatter(
-            $locale, NumberFormatter::CURRENCY
+            $locale,
+            NumberFormatter::CURRENCY
         );
     }
 
