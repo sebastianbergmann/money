@@ -6,9 +6,9 @@
 
 ## Installation
 
-You can use [Composer](http://getcomposer.org/) to download and install this package as well as its dependencies.
+Simply add a dependency on `sebastian/money` to your project's `composer.json` file if you use [Composer](http://getcomposer.org/) to manage the dependencies of your project.
 
-To add this component to your project, simply add a dependency on `sebastian/money` to your project's `composer.json` file. Here is a minimal example of a `composer.json` file that just defines a dependency on Money 1.0:
+Here is a minimal example of a `composer.json` file that just defines a dependency on Money 1.0:
 
     {
         "require": {
