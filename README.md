@@ -18,7 +18,7 @@ Here is a minimal example of a `composer.json` file that just defines a dependen
 
 ## Usage Examples
 
-### Creating a Money object and accessing its monetary value
+#### Creating a Money object and accessing its monetary value
 
 ```php
 use SebastianBergmann\Money\Currency;
@@ -35,7 +35,7 @@ The code above produces the output shown below:
 
     100
 
-### Formatting a Money object using PHP's built-in NumberFormatter
+#### Formatting a Money object using PHP's built-in NumberFormatter
 
 ```php
 use SebastianBergmann\Money\Currency;
@@ -55,7 +55,7 @@ The code above produces the output shown below:
 
     1,00 €
 
-### Basic arithmetic using Money objects
+#### Basic arithmetic using Money objects
 
 ```php
 use SebastianBergmann\Money\Currency;
@@ -89,7 +89,7 @@ The code above produces the output shown below:
     100
     200
 
-### Comparing Money objects
+#### Comparing Money objects
 
 ```php
 use SebastianBergmann\Money\Currency;
@@ -152,7 +152,7 @@ The code above produces the output shown below:
     200
     300
 
-### Allocate the monetary value represented by a Money object among N targets
+#### Allocate the monetary value represented by a Money object among N targets
 
 ```php
 use SebastianBergmann\Money\Currency;
@@ -179,7 +179,7 @@ The code above produces the output shown below:
     10
     9
 
-### Allocate the monetary value represented by a Money object using a list of ratios
+#### Allocate the monetary value represented by a Money object using a list of ratios
 
 ```php
 use SebastianBergmann\Money\Currency;
