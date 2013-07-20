@@ -106,6 +106,7 @@ var_dump($b->lessThan($a));
 var_dump($b->greaterThan($a));
 
 var_dump($a->compareTo($b));
+var_dump($a->compareTo($a));
 var_dump($b->compareTo($a));
 ```
 
