@@ -87,7 +87,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers SebastianBergmann\Money\Money::add
      * @covers SebastianBergmann\Money\Money::newMoney
      */
-    public function testAnotherMoneyWithSameCurrencyObjectCanBeAdded()
+    public function testAnotherMoneyObjectWithSameCurrencyCanBeAdded()
     {
         $a = new Money(1, new Currency('EUR'));
         $b = new Money(2, new Currency('EUR'));
