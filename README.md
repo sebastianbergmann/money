@@ -1,3 +1,4 @@
+[![Latest Stable Version](https://poser.pugx.org/sebastian/money/v/stable.png)](https://packagist.org/packages/sebastian/money)
 [![Build Status](https://travis-ci.org/sebastianbergmann/money.png?branch=master)](https://travis-ci.org/sebastianbergmann/money)
 
 # Money
