@@ -56,6 +56,21 @@ The code above produces the output shown below:
 
     1,00 €
 
+#### Using a derived class as a shortcut for a specific currency
+
+```php
+use SebastianBergmann\Money\Currency;
+use SebastianBergmann\Money\Money;
+
+class EUR extends Money
+{
+    public function __construct($amount)
+    {
+        parent::__construct($amount, new Currency('EUR'));
+    }
+}
+```
+
 #### Basic arithmetic using Money objects
 
 ```php
