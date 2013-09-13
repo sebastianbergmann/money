@@ -74,8 +74,8 @@ class IntlFormatter implements Formatter
     /**
      * Formats a Money object using PHP's built-in NumberFormatter.
      *
-     * @param  SebastianBergmann\Money\Money $money
-     * @return                               string
+     * @param  \SebastianBergmann\Money\Money $money
+     * @return string
      */
     public function format(Money $money)
     {

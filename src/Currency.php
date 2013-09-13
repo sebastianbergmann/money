@@ -1161,7 +1161,7 @@ class Currency
 
     /**
      * @param  string $currencyCode
-     * @throws SebastianBergmann\Money\InvalidArgumentException
+     * @throws \SebastianBergmann\Money\InvalidArgumentException
      */
     public function __construct($currencyCode)
     {
