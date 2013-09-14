@@ -62,14 +62,14 @@ class Money
     private $amount;
 
     /**
-     * @var SebastianBergmann\Money\Currency
+     * @var \SebastianBergmann\Money\Currency
      */
     private $currency;
 
     /**
-     * @param  integer                          $amount
-     * @param  SebastianBergmann\Money\Currency $currency
-     * @throws SebastianBergmann\Money\InvalidArgumentException
+     * @param  integer                           $amount
+     * @param  \SebastianBergmann\Money\Currency $currency
+     * @throws \SebastianBergmann\Money\InvalidArgumentException
      */
     public function __construct($amount, Currency $currency)
     {
@@ -95,7 +95,7 @@ class Money
      * Returns the currency of the monetary value represented by this
      * object.
      *
-     * @return SebastianBergmann\Money\Currency
+     * @return \SebastianBergmann\Money\Currency
      */
     public function getCurrency()
     {
@@ -106,9 +106,9 @@ class Money
      * Returns a new Money object that represents the monetary value
      * of the sum of this Money object and another.
      *
-     * @param  SebastianBergmann\Money\Money $other
-     * @return SebastianBergmann\Money\Money
-     * @throws SebastianBergmann\Money\CurrencyMismatchException
+     * @param  \SebastianBergmann\Money\Money $other
+     * @return \SebastianBergmann\Money\Money
+     * @throws \SebastianBergmann\Money\CurrencyMismatchException
      */
     public function add(Money $other)
     {
@@ -123,9 +123,9 @@ class Money
      * Returns a new Money object that represents the monetary value
      * of the difference of this Money object and another.
      *
-     * @param  SebastianBergmann\Money\Money $other
-     * @return SebastianBergmann\Money\Money
-     * @throws SebastianBergmann\Money\CurrencyMismatchException
+     * @param  \SebastianBergmann\Money\Money $other
+     * @return \SebastianBergmann\Money\Money
+     * @throws \SebastianBergmann\Money\CurrencyMismatchException
      */
     public function subtract(Money $other)
     {
@@ -140,7 +140,7 @@ class Money
      * Returns a new Money object that represents the negated monetary value
      * of this Money object.
      *
-     * @return SebastianBergmann\Money\Money
+     * @return \SebastianBergmann\Money\Money
      */
     public function negate()
     {
@@ -152,7 +152,7 @@ class Money
      * of this Money object multiplied by a given factor.
      *
      * @param  float $factor
-     * @return SebastianBergmann\Money\Money
+     * @return \SebastianBergmann\Money\Money
      */
     public function multiply($factor)
     {
@@ -164,7 +164,7 @@ class Money
      * among N targets.
      *
      * @param  integer $n
-     * @return SebastianBergmann\Money\Money[]
+     * @return \SebastianBergmann\Money\Money[]
      */
     public function allocateToTargets($n)
     {
@@ -189,7 +189,7 @@ class Money
      * using a list of ratios.
      *
      * @param  array $ratios
-     * @return SebastianBergmann\Money\Money[]
+     * @return \SebastianBergmann\Money\Money[]
      */
     public function allocateByRatios(array $ratios)
     {
@@ -217,9 +217,9 @@ class Money
      * if the value of this Money object is considered to be respectively
      * less than, equal to, or greater than the other Money object.
      *
-     * @param  SebastianBergmann\Money\Money $other
+     * @param  \SebastianBergmann\Money\Money $other
      * @return -1|0|1
-     * @throws SebastianBergmann\Money\CurrencyMismatchException
+     * @throws \SebastianBergmann\Money\CurrencyMismatchException
      */
     public function compareTo(Money $other)
     {
@@ -238,9 +238,9 @@ class Money
      * Returns TRUE if the monetary value represented by this Money object
      * is greater than that of another, FALSE otherwise.
      *
-     * @param  SebastianBergmann\Money\Money $other
+     * @param  \SebastianBergmann\Money\Money $other
      * @return boolean
-     * @throws SebastianBergmann\Money\CurrencyMismatchException
+     * @throws \SebastianBergmann\Money\CurrencyMismatchException
      */
     public function greaterThan(Money $other)
     {
@@ -251,9 +251,9 @@ class Money
      * Returns TRUE if the monetary value represented by this Money object
      * is smaller than that of another, FALSE otherwise.
      *
-     * @param  SebastianBergmann\Money\Money $other
+     * @param  \SebastianBergmann\Money\Money $other
      * @return boolean
-     * @throws SebastianBergmann\Money\CurrencyMismatchException
+     * @throws \SebastianBergmann\Money\CurrencyMismatchException
      */
     public function lessThan(Money $other)
     {
@@ -262,7 +262,7 @@ class Money
 
     /**
      * @param  integer $amount
-     * @return SebastianBergmann\Money\Money
+     * @return \SebastianBergmann\Money\Money
      */
     private function newMoney($amount)
     {
