@@ -314,6 +314,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers  SebastianBergmann\Money\Money::greaterThanOrEqual
      * @uses    SebastianBergmann\Money\Money::__construct
+     * @uses    SebastianBergmann\Money\Money::greaterThan
+     * @uses    SebastianBergmann\Money\Money::equals
      * @uses    SebastianBergmann\Money\Money::compareTo
      * @uses    SebastianBergmann\Money\Money::getAmount
      * @uses    SebastianBergmann\Money\Money::getCurrency
@@ -335,6 +337,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers  SebastianBergmann\Money\Money::lessThanOrEqual
      * @uses    SebastianBergmann\Money\Money::__construct
+     * @uses    SebastianBergmann\Money\Money::lessThan
+     * @uses    SebastianBergmann\Money\Money::equals
      * @uses    SebastianBergmann\Money\Money::compareTo
      * @uses    SebastianBergmann\Money\Money::getAmount
      * @uses    SebastianBergmann\Money\Money::getCurrency
