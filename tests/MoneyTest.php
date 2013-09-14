@@ -292,6 +292,68 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers  SebastianBergmann\Money\Money::equals
+     * @uses    SebastianBergmann\Money\Money::__construct
+     * @uses    SebastianBergmann\Money\Money::compareTo
+     * @uses    SebastianBergmann\Money\Money::getAmount
+     * @uses    SebastianBergmann\Money\Money::getCurrency
+     * @uses    SebastianBergmann\Money\Currency
+     * @depends testCanBeComparedToAnotherMoneyObjectWithSameCurrency
+     */
+    public function testCanBeComparedToAnotherMoneyObjectWithSameCurrency4()
+    {
+        $a = new Money(1, new Currency('EUR'));
+        $b = new Money(1, new Currency('EUR'));
+
+        $this->assertEquals(0, $a->compareTo($b));
+        $this->assertEquals(0, $b->compareTo($a));
+        $this->assertTrue($a->equals($b));
+        $this->assertTrue($b->equals($a));
+    }
+
+    /**
+     * @covers  SebastianBergmann\Money\Money::greaterThanOrEqual
+     * @uses    SebastianBergmann\Money\Money::__construct
+     * @uses    SebastianBergmann\Money\Money::compareTo
+     * @uses    SebastianBergmann\Money\Money::getAmount
+     * @uses    SebastianBergmann\Money\Money::getCurrency
+     * @uses    SebastianBergmann\Money\Currency
+     * @depends testCanBeComparedToAnotherMoneyObjectWithSameCurrency
+     */
+    public function testCanBeComparedToAnotherMoneyObjectWithSameCurrency5()
+    {
+        $a = new Money(2, new Currency('EUR'));
+        $b = new Money(2, new Currency('EUR'));
+        $c = new Money(1, new Currency('EUR'));
+
+        $this->assertTrue($a->greaterThanOrEqual($a));
+        $this->assertTrue($a->greaterThanOrEqual($b));
+        $this->assertTrue($a->greaterThanOrEqual($c));
+        $this->assertFalse($c->greaterThanOrEqual($a));
+    }
+
+    /**
+     * @covers  SebastianBergmann\Money\Money::lessThanOrEqual
+     * @uses    SebastianBergmann\Money\Money::__construct
+     * @uses    SebastianBergmann\Money\Money::compareTo
+     * @uses    SebastianBergmann\Money\Money::getAmount
+     * @uses    SebastianBergmann\Money\Money::getCurrency
+     * @uses    SebastianBergmann\Money\Currency
+     * @depends testCanBeComparedToAnotherMoneyObjectWithSameCurrency
+     */
+    public function testCanBeComparedToAnotherMoneyObjectWithSameCurrency6()
+    {
+        $a = new Money(1, new Currency('EUR'));
+        $b = new Money(1, new Currency('EUR'));
+        $c = new Money(2, new Currency('EUR'));
+
+        $this->assertTrue($a->lessThanOrEqual($a));
+        $this->assertTrue($a->lessThanOrEqual($b));
+        $this->assertTrue($a->lessThanOrEqual($c));
+        $this->assertFalse($c->lessThanOrEqual($a));
+    }
+
+    /**
      * @covers            SebastianBergmann\Money\Money::compareTo
      * @uses              SebastianBergmann\Money\Money::__construct
      * @uses              SebastianBergmann\Money\Money::getCurrency

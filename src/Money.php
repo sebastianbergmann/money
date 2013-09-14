@@ -235,6 +235,18 @@ class Money
     }
 
     /**
+     * Returns TRUE if this Money object equals to another.
+     *
+     * @param  \SebastianBergmann\Money\Money $other
+     * @return boolean
+     * @throws \SebastianBergmann\Money\CurrencyMismatchException
+     */
+    public function equals(Money $other)
+    {
+        return $this->compareTo($other) == 0;
+    }
+
+    /**
      * Returns TRUE if the monetary value represented by this Money object
      * is greater than that of another, FALSE otherwise.
      *
@@ -249,6 +261,19 @@ class Money
 
     /**
      * Returns TRUE if the monetary value represented by this Money object
+     * is greater than or equal that of another, FALSE otherwise.
+     *
+     * @param  \SebastianBergmann\Money\Money $other
+     * @return boolean
+     * @throws \SebastianBergmann\Money\CurrencyMismatchException
+     */
+    public function greaterThanOrEqual(Money $other)
+    {
+        return $this->greaterThan($other) || $this->equals($other);
+    }
+
+    /**
+     * Returns TRUE if the monetary value represented by this Money object
      * is smaller than that of another, FALSE otherwise.
      *
      * @param  \SebastianBergmann\Money\Money $other
@@ -258,6 +283,19 @@ class Money
     public function lessThan(Money $other)
     {
         return $this->compareTo($other) == -1;
+    }
+
+    /**
+     * Returns TRUE if the monetary value represented by this Money object
+     * is smaller than or equal that of another, FALSE otherwise.
+     *
+     * @param  \SebastianBergmann\Money\Money $other
+     * @return boolean
+     * @throws \SebastianBergmann\Money\CurrencyMismatchException
+     */
+    public function lessThanOrEqual(Money $other)
+    {
+        return $this->lessThan($other) || $this->equals($other);
     }
 
     /**
