@@ -67,18 +67,40 @@ class Money
     private $currency;
 
     /**
+     * @var integer
+     */
+    private $roundingMode;
+
+    /**
+     * The valid rounding modes that can be used
+     * @var array
+     */
+    private static $roundingModes = array(
+        PHP_ROUND_HALF_UP,
+        PHP_ROUND_HALF_DOWN,
+        PHP_ROUND_HALF_EVEN,
+        PHP_ROUND_HALF_ODD
+    );
+
+    /**
      * @param  integer                           $amount
      * @param  \SebastianBergmann\Money\Currency $currency
+     * @param  integer                           $roundingMode
      * @throws \SebastianBergmann\Money\InvalidArgumentException
      */
-    public function __construct($amount, Currency $currency)
+    public function __construct($amount, Currency $currency, $roundingMode = PHP_ROUND_HALF_UP)
     {
         if (!is_int($amount)) {
             throw new InvalidArgumentException('$amount must be an integer');
         }
+        
+        if (!in_array($roundingMode, self::$roundingModes)) {
+            throw new InvalidArgumentException('$roundingMode must be a valid php rounding mode (PHP_ROUND_*)');
+        }
 
         $this->amount   = $amount;
         $this->currency = $currency;
+        $this->roundingMode = $roundingMode;
     }
 
     /**
@@ -100,6 +122,16 @@ class Money
     public function getCurrency()
     {
         return $this->currency;
+    }
+
+    /**
+     * Returns the round mode of the object
+     * 
+     * @return int
+     */
+    public function getRoundingMode()
+    {
+        return $this->roundingMode;
     }
 
     /**
@@ -150,13 +182,31 @@ class Money
     /**
      * Returns a new Money object that represents the monetary value
      * of this Money object multiplied by a given factor.
+     * 
+     * Supports specifying a new currency to facilitate currency conversions.
      *
-     * @param  float $factor
+     * @param  float   $factor
+     * @param Currency $currency
      * @return \SebastianBergmann\Money\Money
      */
-    public function multiply($factor)
+    public function multiply($factor, Currency $currency = null)
     {
-        return $this->newMoney($factor * $this->amount);
+        return $this->newMoney($this->round($factor * $this->amount), $currency);
+    }
+
+    /**
+     * Returns a new Money object that represents the monetary value
+     * of this Money object divided by a given factor.
+     *
+     * Supports specifying a new currency to facilitate currency conversions.
+     *
+     * @param  float   $factor
+     * @param Currency $currency
+     * @return \SebastianBergmann\Money\Money
+     */
+    public function divide($factor, Currency $currency = null)
+    {
+        return $this->newMoney($this->round($this->amount / $factor), $currency);
     }
 
     /**
@@ -300,10 +350,21 @@ class Money
 
     /**
      * @param  integer $amount
+     * @param Currency $currency
      * @return \SebastianBergmann\Money\Money
      */
-    private function newMoney($amount)
+    private function newMoney($amount, Currency $currency = null)
     {
-        return new Money($amount, $this->currency);
+        return new Money($amount, $currency ?: $this->currency, $this->roundingMode);
+    }
+
+    /**
+     * Rounds a float value using the rounding strategy Money::roundingMode
+     * @param float $value
+     * @return int
+     */
+    private function round($value)
+    {
+        return intval(round($value, 0, $this->roundingMode));
     }
 }

@@ -49,9 +49,19 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @uses              SebastianBergmann\Money\Currency
      * @expectedException SebastianBergmann\Money\InvalidArgumentException
      */
-    public function testExceptionIsRaisedForInvalidConstructorArguments()
+    public function testExceptionIsRaisedForInvalidAmountConstructorArgument()
     {
         $m = new Money(NULL, new Currency('EUR'));
+    }
+
+    /**
+     * @covers            SebastianBergmann\Money\Money::__construct
+     * @uses              SebastianBergmann\Money\Currency
+     * @expectedException SebastianBergmann\Money\InvalidArgumentException
+     */
+    public function testExceptionIsRaisedForInvalidRoundingModeConstructorArgument()
+    {
+        $m = new Money(1, new Currency('EUR'), 999);
     }
 
     /**
@@ -84,6 +94,16 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     public function testCurrencyCanBeRetrieved(Money $m)
     {
         $this->assertEquals(new Currency('EUR'), $m->getCurrency());
+    }
+
+    /**
+     * @covers  SebastianBergmann\Money\Money::getRoundingMode
+     * @uses    SebastianBergmann\Money\Currency
+     * @depends testObjectCanBeConstructedForValidConstructorArguments
+     */
+    public function testRoundingModeCanBeRetrieved(Money $m)
+    {
+        $this->assertEquals(PHP_ROUND_HALF_UP, $m->getRoundingMode());
     }
 
     /**
@@ -175,6 +195,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers SebastianBergmann\Money\Money::multiply
      * @covers SebastianBergmann\Money\Money::newMoney
+     * @covers SebastianBergmann\Money\Money::round
      * @uses   SebastianBergmann\Money\Money::__construct
      * @uses   SebastianBergmann\Money\Money::getAmount
      * @uses   SebastianBergmann\Money\Currency
@@ -186,6 +207,69 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(1, $a->getAmount());
         $this->assertEquals(2, $b->getAmount());
+    }
+
+    /**
+     * @covers SebastianBergmann\Money\Money::multiply
+     * @covers SebastianBergmann\Money\Money::newMoney
+     * @covers SebastianBergmann\Money\Money::round
+     * @uses   SebastianBergmann\Money\Money::__construct
+     * @uses   SebastianBergmann\Money\Money::getAmount
+     * @uses   SebastianBergmann\Money\Currency
+     */
+    public function testCanBeMultipliedByAFactorUsingRoundingMode()
+    {
+        $a = new Money(10, new Currency('EUR'), PHP_ROUND_HALF_UP);
+        $b = $a->multiply(5.55);
+
+        $this->assertEquals(10, $a->getAmount());
+        $this->assertEquals(56, $b->getAmount());
+        
+        $a = new Money(10, new Currency('EUR'), PHP_ROUND_HALF_DOWN);
+        $b = $a->multiply(5.55);
+
+        $this->assertEquals(10, $a->getAmount());
+        $this->assertEquals(55, $b->getAmount());
+    }
+
+    /**
+     * @covers SebastianBergmann\Money\Money::divide
+     * @covers SebastianBergmann\Money\Money::newMoney
+     * @covers SebastianBergmann\Money\Money::round
+     * @uses   SebastianBergmann\Money\Money::__construct
+     * @uses   SebastianBergmann\Money\Money::getAmount
+     * @uses   SebastianBergmann\Money\Currency
+     */
+    public function testCanBeDividedByAFactor()
+    {
+        $a = new Money(10, new Currency('EUR'));
+        $b = $a->divide(2);
+
+        $this->assertEquals(10, $a->getAmount());
+        $this->assertEquals(5, $b->getAmount());
+    }
+
+    /**
+     * @covers SebastianBergmann\Money\Money::divide
+     * @covers SebastianBergmann\Money\Money::newMoney
+     * @covers SebastianBergmann\Money\Money::round
+     * @uses   SebastianBergmann\Money\Money::__construct
+     * @uses   SebastianBergmann\Money\Money::getAmount
+     * @uses   SebastianBergmann\Money\Currency
+     */
+    public function testCanBeDividedByAFactorUsingRoundingMode()
+    {
+        $a = new Money(31, new Currency('EUR'), PHP_ROUND_HALF_UP);
+        $b = $a->divide(2);
+
+        $this->assertEquals(31, $a->getAmount());
+        $this->assertEquals(16, $b->getAmount());
+
+        $a = new Money(31, new Currency('EUR'), PHP_ROUND_HALF_DOWN);
+        $b = $a->divide(2);
+
+        $this->assertEquals(31, $a->getAmount());
+        $this->assertEquals(15, $b->getAmount());
     }
 
     /**
