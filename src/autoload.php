@@ -8,6 +8,7 @@ spl_autoload_register(
         if ($classes === null) {
             $classes = array(
                 'sebastianbergmann\\money\\currency' => '/Currency.php',
+                'sebastianbergmann\\money\\currencypair' => '/CurrencyPair.php',
                 'sebastianbergmann\\money\\currencymismatchexception' => '/exceptions/CurrencyMismatchException.php',
                 'sebastianbergmann\\money\\exception' => '/interfaces/Exception.php',
                 'sebastianbergmann\\money\\formatter' => '/interfaces/Formatter.php',
