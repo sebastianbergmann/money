@@ -67,6 +67,16 @@ class Money
     private $currency;
 
     /**
+     * @var integer[]
+     */
+    private static $roundingModes = array(
+        PHP_ROUND_HALF_UP,
+        PHP_ROUND_HALF_DOWN,
+        PHP_ROUND_HALF_EVEN,
+        PHP_ROUND_HALF_ODD
+    );
+
+    /**
      * @param  integer                           $amount
      * @param  \SebastianBergmann\Money\Currency $currency
      * @throws \SebastianBergmann\Money\InvalidArgumentException
@@ -151,12 +161,21 @@ class Money
      * Returns a new Money object that represents the monetary value
      * of this Money object multiplied by a given factor.
      *
-     * @param  float $factor
+     * @param  float   $factor
+     * @param  integer $roundingMode
      * @return \SebastianBergmann\Money\Money
      */
-    public function multiply($factor)
+    public function multiply($factor, $roundingMode = PHP_ROUND_HALF_UP)
     {
-        return $this->newMoney($factor * $this->amount);
+        if (!in_array($roundingMode, self::$roundingModes)) {
+            throw new InvalidArgumentException(
+                '$roundingMode must be a valid rounding mode (PHP_ROUND_*)'
+            );
+        }
+
+        return $this->newMoney(
+            intval(round($factor * $this->amount, 0, $roundingMode))
+        );
     }
 
     /**

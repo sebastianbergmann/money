@@ -189,6 +189,16 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers            SebastianBergmann\Money\Money::multiply
+     * @expectedException SebastianBergmann\Money\InvalidArgumentException
+     */
+    public function testExceptionIsRaisedWhenMultipliedUsingInvalidRoundingMode()
+    {
+        $a = new Money(1, new Currency('EUR'));
+        $b = $a->multiply(2, NULL);
+    }
+
+    /**
      * @covers SebastianBergmann\Money\Money::allocateToTargets
      * @covers SebastianBergmann\Money\Money::newMoney
      * @uses   SebastianBergmann\Money\Money::__construct
