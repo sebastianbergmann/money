@@ -238,7 +238,7 @@ class Money
      * less than, equal to, or greater than the other Money object.
      *
      * @param  \SebastianBergmann\Money\Money $other
-     * @return -1|0|1
+     * @return integer -1|0|1
      * @throws \SebastianBergmann\Money\CurrencyMismatchException
      */
     public function compareTo(Money $other)
