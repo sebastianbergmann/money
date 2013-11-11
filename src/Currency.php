@@ -53,6 +53,7 @@ namespace SebastianBergmann\Money;
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.github.com/sebastianbergmann/money
  * @see        http://docs.oracle.com/javase/7/docs/api/java/util/Currency.html
+ * @SuppressWarnings(PHPMD.ExcessiveClassLength)
  */
 class Currency
 {
