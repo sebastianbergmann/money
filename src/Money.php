@@ -164,6 +164,7 @@ class Money
      * @param  float   $factor
      * @param  integer $roundingMode
      * @return \SebastianBergmann\Money\Money
+     * @throws \SebastianBergmann\Money\InvalidArgumentException
      */
     public function multiply($factor, $roundingMode = PHP_ROUND_HALF_UP)
     {
