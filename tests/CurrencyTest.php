@@ -45,8 +45,8 @@ namespace SebastianBergmann\Money;
 class CurrencyTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers            SebastianBergmann\Money\Currency::__construct
-     * @expectedException SebastianBergmann\Money\InvalidArgumentException
+     * @covers            \SebastianBergmann\Money\Currency::__construct
+     * @expectedException \SebastianBergmann\Money\InvalidArgumentException
      */
     public function testExceptionIsRaisedForInvalidConstructorArgument()
     {
@@ -54,7 +54,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers SebastianBergmann\Money\Currency::__construct
+     * @covers \SebastianBergmann\Money\Currency::__construct
      */
     public function testObjectCanBeConstructedForValidConstructorArgument()
     {
@@ -66,7 +66,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  SebastianBergmann\Money\Currency::__toString
+     * @covers  \SebastianBergmann\Money\Currency::__toString
      * @depends testObjectCanBeConstructedForValidConstructorArgument
      */
     public function testCanBeCastToString(Currency $c)
@@ -75,7 +75,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  SebastianBergmann\Money\Currency::getCurrencyCode
+     * @covers  \SebastianBergmann\Money\Currency::getCurrencyCode
      * @depends testObjectCanBeConstructedForValidConstructorArgument
      */
     public function testCurrencyCodeCanBeRetrieved(Currency $c)
@@ -84,7 +84,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  SebastianBergmann\Money\Currency::getDefaultFractionDigits
+     * @covers  \SebastianBergmann\Money\Currency::getDefaultFractionDigits
      * @depends testObjectCanBeConstructedForValidConstructorArgument
      */
     public function testDefaultFractionDigitsCanBeRetrieved(Currency $c)
@@ -93,7 +93,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  SebastianBergmann\Money\Currency::getDisplayName
+     * @covers  \SebastianBergmann\Money\Currency::getDisplayName
      * @depends testObjectCanBeConstructedForValidConstructorArgument
      */
     public function testDisplayNameCanBeRetrieved(Currency $c)
@@ -102,7 +102,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  SebastianBergmann\Money\Currency::getNumericCode
+     * @covers  \SebastianBergmann\Money\Currency::getNumericCode
      * @depends testObjectCanBeConstructedForValidConstructorArgument
      */
     public function testNumericCodeCanBeRetrieved(Currency $c)
@@ -111,7 +111,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  SebastianBergmann\Money\Currency::getSubUnit
+     * @covers  \SebastianBergmann\Money\Currency::getSubUnit
      * @depends testObjectCanBeConstructedForValidConstructorArgument
      */
     public function testSubUnitCanBeRetrieved(Currency $c)
