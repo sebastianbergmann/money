@@ -51,7 +51,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionIsRaisedForInvalidConstructorArguments()
     {
-        $m = new Money(NULL, new Currency('EUR'));
+        new Money(NULL, new Currency('EUR'));
     }
 
     /**
@@ -197,7 +197,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     public function testExceptionIsRaisedWhenMultipliedUsingInvalidRoundingMode()
     {
         $a = new Money(1, new Currency('EUR'));
-        $b = $a->multiply(2, NULL);
+        $a->multiply(2, NULL);
     }
 
     /**
