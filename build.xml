@@ -35,7 +35,7 @@
   </delete>
  </target>
 
- <target name="prepare" depends="clean,phpab"
+ <target name="prepare" depends="clean,generate-code"
          description="Prepare for build">
   <mkdir dir="${basedir}/build/api"/>
   <mkdir dir="${basedir}/build/code-browser"/>
@@ -44,7 +44,9 @@
   <mkdir dir="${basedir}/build/pdepend"/>
  </target>
 
- <target name="phpab" description="Generate autoloader scripts">
+ <target name="generate-code" description="Generate Currency-specific subclasses of Money and autoloader code">
+  <exec executable="${basedir}/build/generate-child-classes.php"/>
+
   <exec executable="phpab">
    <arg value="--output" />
    <arg path="src/autoload.php" />
