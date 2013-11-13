@@ -209,9 +209,10 @@ class Money
      */
     public function allocateByRatios(array $ratios)
     {
+        /** @var \SebastianBergmann\Money\Money[] $result */
+        $result    = array();
         $total     = array_sum($ratios);
         $remainder = $this->amount;
-        $result    = array();
 
         for ($i = 0; $i < count($ratios); $i++) {
             $amount     = intval($this->amount * $ratios[$i] / $total);
