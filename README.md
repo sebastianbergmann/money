@@ -36,6 +36,22 @@ The code above produces the output shown below:
 
     100
 
+#### Using a Currency-specific subclass of Money
+
+```php
+use SebastianBergmann\Money\EUR;
+
+// Create Money object that represents 1 EUR
+$m = new EUR(100);
+
+// Access the Money object's monetary value
+print $m->getAmount();
+```
+
+The code above produces the output shown below:
+
+    100
+
 #### Formatting a Money object using PHP's built-in NumberFormatter
 
 ```php
@@ -55,21 +71,6 @@ print $f->format($m);
 The code above produces the output shown below:
 
     1,00 €
-
-#### Using a derived class as a shortcut for a specific currency
-
-```php
-use SebastianBergmann\Money\Currency;
-use SebastianBergmann\Money\Money;
-
-class EUR extends Money
-{
-    public function __construct($amount)
-    {
-        parent::__construct($amount, new Currency('EUR'));
-    }
-}
-```
 
 #### Basic arithmetic using Money objects
 
