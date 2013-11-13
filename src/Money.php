@@ -122,9 +122,7 @@ class Money
      */
     public function add(Money $other)
     {
-        if ($this->currency != $other->getCurrency()) {
-            throw new CurrencyMismatchException;
-        }
+        $this->assertSameCurrency($this, $other);
 
         return $this->newMoney($this->amount + $other->getAmount());
     }
@@ -139,9 +137,7 @@ class Money
      */
     public function subtract(Money $other)
     {
-        if ($this->currency != $other->getCurrency()) {
-            throw new CurrencyMismatchException;
-        }
+        $this->assertSameCurrency($this, $other);
 
         return $this->newMoney($this->amount - $other->getAmount());
     }
@@ -243,9 +239,7 @@ class Money
      */
     public function compareTo(Money $other)
     {
-        if ($this->currency != $other->getCurrency()) {
-            throw new CurrencyMismatchException;
-        }
+        $this->assertSameCurrency($this, $other);
 
         if ($this->amount == $other->getAmount()) {
             return 0;
@@ -316,6 +310,18 @@ class Money
     public function lessThanOrEqual(Money $other)
     {
         return $this->lessThan($other) || $this->equals($other);
+    }
+
+    /**
+     * @param  \SebastianBergmann\Money\Money $a
+     * @param  \SebastianBergmann\Money\Money $b
+     * @throws \SebastianBergmann\Money\CurrencyMismatchException
+     */
+    private function assertSameCurrency(Money $a, Money $b)
+    {
+        if ($a->getCurrency() != $b->getCurrency()) {
+            throw new CurrencyMismatchException;
+        }
     }
 
     /**

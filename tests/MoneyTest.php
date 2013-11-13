@@ -89,6 +89,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers \SebastianBergmann\Money\Money::add
      * @covers \SebastianBergmann\Money\Money::newMoney
+     * @covers \SebastianBergmann\Money\Money::assertSameCurrency
      * @uses   \SebastianBergmann\Money\Money::__construct
      * @uses   \SebastianBergmann\Money\Money::getAmount
      * @uses   \SebastianBergmann\Money\Money::getCurrency
@@ -107,10 +108,11 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers            \SebastianBergmann\Money\Money::add
-     * @uses              \SebastianBergmann\Money\Currency
+     * @covers            \SebastianBergmann\Money\Money::assertSameCurrency
      * @uses              \SebastianBergmann\Money\Money::__construct
      * @uses              \SebastianBergmann\Money\Money::getAmount
      * @uses              \SebastianBergmann\Money\Money::getCurrency
+     * @uses              \SebastianBergmann\Money\Currency
      * @expectedException \SebastianBergmann\Money\CurrencyMismatchException
      */
     public function testExceptionIsRaisedWhenMoneyObjectWithDifferentCurrencyIsAdded()
@@ -124,6 +126,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers \SebastianBergmann\Money\Money::subtract
      * @covers \SebastianBergmann\Money\Money::newMoney
+     * @covers \SebastianBergmann\Money\Money::assertSameCurrency
      * @uses   \SebastianBergmann\Money\Money::__construct
      * @uses   \SebastianBergmann\Money\Money::getAmount
      * @uses   \SebastianBergmann\Money\Money::getCurrency
@@ -142,6 +145,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers            \SebastianBergmann\Money\Money::subtract
+     * @covers            \SebastianBergmann\Money\Money::assertSameCurrency
      * @uses              \SebastianBergmann\Money\Money::__construct
      * @uses              \SebastianBergmann\Money\Money::getAmount
      * @uses              \SebastianBergmann\Money\Money::getCurrency
@@ -252,6 +256,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \SebastianBergmann\Money\Money::compareTo
+     * @covers \SebastianBergmann\Money\Money::assertSameCurrency
      * @uses   \SebastianBergmann\Money\Money::__construct
      * @uses   \SebastianBergmann\Money\Money::getAmount
      * @uses   \SebastianBergmann\Money\Money::getCurrency
@@ -269,6 +274,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers  \SebastianBergmann\Money\Money::greaterThan
+     * @covers  \SebastianBergmann\Money\Money::assertSameCurrency
      * @uses    \SebastianBergmann\Money\Money::__construct
      * @uses    \SebastianBergmann\Money\Money::compareTo
      * @uses    \SebastianBergmann\Money\Money::getAmount
@@ -287,6 +293,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers  \SebastianBergmann\Money\Money::lessThan
+     * @covers  \SebastianBergmann\Money\Money::assertSameCurrency
      * @uses    \SebastianBergmann\Money\Money::__construct
      * @uses    \SebastianBergmann\Money\Money::compareTo
      * @uses    \SebastianBergmann\Money\Money::getAmount
@@ -305,6 +312,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers  \SebastianBergmann\Money\Money::equals
+     * @covers  \SebastianBergmann\Money\Money::assertSameCurrency
      * @uses    \SebastianBergmann\Money\Money::__construct
      * @uses    \SebastianBergmann\Money\Money::compareTo
      * @uses    \SebastianBergmann\Money\Money::getAmount
@@ -325,6 +333,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers  \SebastianBergmann\Money\Money::greaterThanOrEqual
+     * @covers  \SebastianBergmann\Money\Money::assertSameCurrency
      * @uses    \SebastianBergmann\Money\Money::__construct
      * @uses    \SebastianBergmann\Money\Money::greaterThan
      * @uses    \SebastianBergmann\Money\Money::equals
@@ -348,6 +357,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers  \SebastianBergmann\Money\Money::lessThanOrEqual
+     * @covers  \SebastianBergmann\Money\Money::assertSameCurrency
      * @uses    \SebastianBergmann\Money\Money::__construct
      * @uses    \SebastianBergmann\Money\Money::lessThan
      * @uses    \SebastianBergmann\Money\Money::equals
@@ -371,6 +381,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers            \SebastianBergmann\Money\Money::compareTo
+     * @covers            \SebastianBergmann\Money\Money::assertSameCurrency
      * @uses              \SebastianBergmann\Money\Money::__construct
      * @uses              \SebastianBergmann\Money\Money::getCurrency
      * @uses              \SebastianBergmann\Money\Currency
