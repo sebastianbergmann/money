@@ -11,11 +11,11 @@
 
 Simply add a dependency on `sebastian/money` to your project's `composer.json` file if you use [Composer](http://getcomposer.org/) to manage the dependencies of your project.
 
-Here is a minimal example of a `composer.json` file that just defines a dependency on Money 1.2:
+Here is a minimal example of a `composer.json` file that just defines a dependency on Money:
 
     {
         "require": {
-            "sebastian/money": "1.2.*"
+            "sebastian/money": "*"
         }
     }
 
