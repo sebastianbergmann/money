@@ -47,6 +47,7 @@ class IntlFormatterTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers \SebastianBergmann\Money\IntlFormatter::__construct
      * @covers \SebastianBergmann\Money\IntlFormatter::format
+     * @uses   \SebastianBergmann\Money\Currency
      * @uses   \SebastianBergmann\Money\Money
      */
     public function testMoneyObjectCanBeFormattedAsString()
