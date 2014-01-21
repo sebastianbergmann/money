@@ -2,7 +2,7 @@
 /**
  * Money
  *
- * Copyright (c) 2012-2013, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2012-2014, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@
  *
  * @package    Money
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2012-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  2012-2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.github.com/sebastianbergmann/money
  * @since      File available since Release 1.3.0
@@ -46,7 +46,7 @@ namespace SebastianBergmann\Money;
 /**
  * @package    Money
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2012-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  2012-2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @since      Class available since Release 1.3.0
  * @codeCoverageIgnore
