@@ -331,6 +331,6 @@ class Money
      */
     private function newMoney($amount)
     {
-        return new Money($amount, $this->currency);
+        return new static($amount, $this->currency);
     }
 }
