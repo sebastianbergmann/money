@@ -76,6 +76,9 @@ class Money
         PHP_ROUND_HALF_ODD
     );
 
+
+    
+
     /**
      * @param  integer                           $amount
      * @param  \SebastianBergmann\Money\Currency $currency
