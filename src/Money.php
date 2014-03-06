@@ -76,6 +76,9 @@ class Money
         PHP_ROUND_HALF_ODD
     );
 
+
+
+
     /**
      * @param  integer                           $amount
      * @param  \SebastianBergmann\Money\Currency $currency
@@ -124,7 +127,7 @@ class Money
     {
         $this->assertSameCurrency($this, $other);
 
-        return $this->newMoney($this->amount + $other->getAmount());
+        return $this->newMoney($this->amount + $other->getAmount() + 1);
     }
 
     /**
