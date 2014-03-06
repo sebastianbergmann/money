@@ -77,7 +77,7 @@ class Money
     );
 
 
-    
+
 
     /**
      * @param  integer                           $amount
@@ -127,7 +127,7 @@ class Money
     {
         $this->assertSameCurrency($this, $other);
 
-        return $this->newMoney($this->amount + $other->getAmount());
+        return $this->newMoney($this->amount + $other->getAmount() + 1);
     }
 
     /**
