@@ -171,7 +171,9 @@ class Money
         }
 
         return $this->newMoney(
-            intval(round($factor * $this->amount, 0, $roundingMode))
+            $this->castToInt(
+                round($factor * $this->amount, 0, $roundingMode)
+            )
         );
     }
 
@@ -181,9 +183,14 @@ class Money
      *
      * @param  integer $n
      * @return \SebastianBergmann\Money\Money[]
+     * @throws \SebastianBergmann\Money\InvalidArgumentException
      */
     public function allocateToTargets($n)
     {
+        if (!is_int($n)) {
+            throw new InvalidArgumentException('$n must be an integer');
+        }
+
         $low       = $this->newMoney(intval($this->amount / $n));
         $high      = $this->newMoney($low->getAmount() + 1);
         $remainder = $this->amount % $n;
@@ -215,7 +222,7 @@ class Money
         $remainder = $this->amount;
 
         for ($i = 0; $i < count($ratios); $i++) {
-            $amount     = intval($this->amount * $ratios[$i] / $total);
+            $amount     = $this->castToInt($this->amount * $ratios[$i] / $total);
             $result[]   = $this->newMoney($amount);
             $remainder -= $amount;
         }
@@ -323,6 +330,30 @@ class Money
         if ($a->getCurrency() != $b->getCurrency()) {
             throw new CurrencyMismatchException;
         }
+    }
+
+    /**
+     * Throws an exception if the amount is outside of the integer bounds
+     * @param number $amount
+     * @return number
+     * @throws \SebastianBergmann\Money\OverflowException
+     */
+    private function assertNoOverflow($amount)
+    {
+        if (abs($amount) > PHP_INT_MAX) {
+            throw new OverflowException;
+        }
+    }
+
+    /**
+     * Cast an amount to an integer but ensure that the operation won't hide overflow
+     * @param number $amount
+     * @return int
+     */
+    private function castToInt($amount)
+    {
+        $this->assertNoOverflow($amount);
+        return intval($amount);
     }
 
     /**
