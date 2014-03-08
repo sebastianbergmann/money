@@ -44,7 +44,7 @@
  </target>
 
  <target name="phploc" description="Measure project size using PHPLOC">
-  <exec executable="phploc">
+  <exec executable="${basedir}/build/tools/phploc.phar">
    <arg value="--count-tests" />
    <arg value="--log-csv" />
    <arg path="${basedir}/build/logs/phploc.csv" />
@@ -56,7 +56,7 @@
  </target>
 
  <target name="pdepend" description="Calculate software metrics using PHP_Depend">
-  <exec executable="pdepend">
+  <exec executable="${basedir}/build/tools/pdepend.phar">
    <arg value="--jdepend-xml=${basedir}/build/logs/jdepend.xml" />
    <arg value="--jdepend-chart=${basedir}/build/pdepend/dependencies.svg" />
    <arg value="--overview-pyramid=${basedir}/build/pdepend/overview-pyramid.svg" />
@@ -65,7 +65,7 @@
  </target>
 
  <target name="phpmd" description="Perform project mess detection using PHPMD and print result in text format">
-  <exec executable="phpmd">
+  <exec executable="${basedir}/build/tools/phpmd.phar">
    <arg path="${basedir}/src" />
    <arg value="text" />
    <arg path="${basedir}/build/phpmd.xml" />
@@ -73,7 +73,7 @@
  </target>
 
  <target name="phpmd-ci" description="Perform project mess detection using PHPMD and log result in XML format">
-  <exec executable="phpmd">
+  <exec executable="${basedir}/build/tools/phpmd.phar">
    <arg path="${basedir}/src" />
    <arg value="xml" />
    <arg path="${basedir}/build/phpmd.xml" />
@@ -83,7 +83,7 @@
  </target>
 
  <target name="phpcs" description="Find coding standard violations using PHP_CodeSniffer and print result in text format">
-  <exec executable="phpcs">
+  <exec executable="${basedir}/build/tools/phpcs.phar">
    <arg value="--standard=PSR2" />
    <arg value="--extensions=php" />
    <arg value="--ignore=autoload.php" />
@@ -92,7 +92,7 @@
  </target>
 
  <target name="phpcs-ci" description="Find coding standard violations using PHP_CodeSniffer and log result in XML format">
-  <exec executable="phpcs" output="/dev/null">
+  <exec executable="${basedir}/build/tools/phpcs.phar" output="/dev/null">
    <arg value="--report=checkstyle" />
    <arg value="--report-file=${basedir}/build/logs/checkstyle.xml" />
    <arg value="--standard=PSR2" />
@@ -103,7 +103,7 @@
  </target>
 
  <target name="phpcpd" description="Find duplicate code using PHPCPD">
-  <exec executable="phpcpd">
+  <exec executable="${basedir}/build/tools/phpcpd.phar">
    <arg value="--log-pmd" />
    <arg path="${basedir}/build/logs/pmd-cpd.xml" />
    <arg path="${basedir}/src" />
@@ -111,13 +111,14 @@
  </target>
 
  <target name="phpunit" description="Run unit tests with PHPUnit">
-  <exec executable="phpunit" failonerror="true">
+  <exec executable="${basedir}/build/tools/phpunit.phar" failonerror="true">
    <arg value="--configuration"/>
    <arg path="${basedir}/build/phpunit.xml"/>
   </exec>
  </target>
 
  <target name="phpdox" description="Generate API documentation using phpDox">
-  <exec executable="phpdox" dir="${basedir}/build"/>
+  <exec executable="${basedir}/build/tools/phpdox.phar" dir="${basedir}/build"/>
  </target>
 </project>
+
