@@ -107,6 +107,20 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers            \SebastianBergmann\Money\Money::assertNoOverflow
+     * @uses              \SebastianBergmann\Money\Money::__construct
+     * @uses              \SebastianBergmann\Money\Money::multiply
+     * @uses              \SebastianBergmann\Money\Money::castToInt
+     * @uses              \SebastianBergmann\Money\Currency
+     * @expectedException \SebastianBergmann\Money\OverflowException
+     */
+    public function testExceptionIsRaisedForIntegerOverflow()
+    {
+        $a = new Money(PHP_INT_MAX, new Currency('EUR'));
+        $a->multiply(2);
+    }
+
+    /**
      * @covers            \SebastianBergmann\Money\Money::add
      * @covers            \SebastianBergmann\Money\Money::assertSameCurrency
      * @uses              \SebastianBergmann\Money\Money::__construct
@@ -233,6 +247,18 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
             ),
             $r
         );
+    }
+
+    /**
+     * @covers            \SebastianBergmann\Money\Money::allocateToTargets
+     * @uses              \SebastianBergmann\Money\Money::__construct
+     * @uses              \SebastianBergmann\Money\Currency
+     * @expectedException \SebastianBergmann\Money\InvalidArgumentException
+     */
+    public function testExceptionIsRaisedWhenTryingToAllocateToInvalidNumberOfTargets()
+    {
+        $a = new Money(0, new Currency('EUR'));
+        $a->allocateToTargets(null);
     }
 
     /**
