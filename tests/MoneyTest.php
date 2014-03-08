@@ -179,6 +179,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers \SebastianBergmann\Money\Money::multiply
      * @covers \SebastianBergmann\Money\Money::newMoney
+     * @covers \SebastianBergmann\Money\Money::assertNoOverflow
+     * @covers \SebastianBergmann\Money\Money::castToInt
      * @uses   \SebastianBergmann\Money\Money::__construct
      * @uses   \SebastianBergmann\Money\Money::getAmount
      * @uses   \SebastianBergmann\Money\Currency
@@ -236,6 +238,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers \SebastianBergmann\Money\Money::allocateByRatios
      * @covers \SebastianBergmann\Money\Money::newMoney
+     * @covers \SebastianBergmann\Money\Money::assertNoOverflow
+     * @covers \SebastianBergmann\Money\Money::castToInt
      * @uses   \SebastianBergmann\Money\Money::__construct
      * @uses   \SebastianBergmann\Money\Money::getAmount
      * @uses   \SebastianBergmann\Money\Currency
