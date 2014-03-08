@@ -88,6 +88,7 @@
    <arg value="--extensions=php" />
    <arg value="--ignore=autoload.php" />
    <arg path="${basedir}/src" />
+   <arg path="${basedir}/tests" />
   </exec>
  </target>
 
