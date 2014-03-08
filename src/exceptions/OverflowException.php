@@ -54,3 +54,4 @@ namespace SebastianBergmann\Money;
 class OverflowException extends \OverflowException implements Exception
 {
 }
+
