@@ -126,6 +126,7 @@ spl_autoload_register(
                 'sebastianbergmann\\money\\npr' => '/currency/NPR.php',
                 'sebastianbergmann\\money\\nzd' => '/currency/NZD.php',
                 'sebastianbergmann\\money\\omr' => '/currency/OMR.php',
+                'sebastianbergmann\\money\\overflowexception' => '/exceptions/OverflowException.php',
                 'sebastianbergmann\\money\\pab' => '/currency/PAB.php',
                 'sebastianbergmann\\money\\pen' => '/currency/PEN.php',
                 'sebastianbergmann\\money\\pgk' => '/currency/PGK.php',
