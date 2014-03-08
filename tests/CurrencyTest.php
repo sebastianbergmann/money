@@ -50,7 +50,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionIsRaisedForInvalidConstructorArgument()
     {
-        new Currency(NULL);
+        new Currency(null);
     }
 
     /**
