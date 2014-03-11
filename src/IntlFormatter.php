@@ -58,7 +58,7 @@ class IntlFormatter implements Formatter
     /**
      * @var NumberFormatter
      */
-    private $numberFormatter;
+    protected $numberFormatter;
 
     /**
      * @param string $locale

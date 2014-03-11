@@ -59,17 +59,17 @@ class Money
     /**
      * @var integer
      */
-    private $amount;
+    protected $amount;
 
     /**
      * @var \SebastianBergmann\Money\Currency
      */
-    private $currency;
+    protected $currency;
 
     /**
      * @var integer[]
      */
-    private static $roundingModes = array(
+    protected static $roundingModes = array(
         PHP_ROUND_HALF_UP,
         PHP_ROUND_HALF_DOWN,
         PHP_ROUND_HALF_EVEN,
@@ -325,7 +325,7 @@ class Money
      * @param  \SebastianBergmann\Money\Money $b
      * @throws \SebastianBergmann\Money\CurrencyMismatchException
      */
-    private function assertSameCurrency(Money $a, Money $b)
+    protected function assertSameCurrency(Money $a, Money $b)
     {
         if ($a->getCurrency() != $b->getCurrency()) {
             throw new CurrencyMismatchException;
@@ -338,7 +338,7 @@ class Money
      * @return number
      * @throws \SebastianBergmann\Money\OverflowException
      */
-    private function assertNoOverflow($amount)
+    protected function assertNoOverflow($amount)
     {
         if (abs($amount) > PHP_INT_MAX) {
             throw new OverflowException;
@@ -350,7 +350,7 @@ class Money
      * @param number $amount
      * @return int
      */
-    private function castToInt($amount)
+    protected function castToInt($amount)
     {
         $this->assertNoOverflow($amount);
         return intval($amount);
@@ -360,7 +360,7 @@ class Money
      * @param  integer $amount
      * @return \SebastianBergmann\Money\Money
      */
-    private function newMoney($amount)
+    protected function newMoney($amount)
     {
         return new static($amount, $this->currency);
     }
