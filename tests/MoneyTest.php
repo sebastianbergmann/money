@@ -108,6 +108,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers            \SebastianBergmann\Money\Money::assertNoOverflow
+     * @covers            \SebastianBergmann\Money\Money::assertValidRoundingMode
      * @uses              \SebastianBergmann\Money\Money::__construct
      * @uses              \SebastianBergmann\Money\Money::multiply
      * @uses              \SebastianBergmann\Money\Money::castToInt
@@ -194,6 +195,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers \SebastianBergmann\Money\Money::multiply
      * @covers \SebastianBergmann\Money\Money::newMoney
      * @covers \SebastianBergmann\Money\Money::assertNoOverflow
+     * @covers \SebastianBergmann\Money\Money::assertValidRoundingMode
      * @covers \SebastianBergmann\Money\Money::castToInt
      * @uses   \SebastianBergmann\Money\Money::__construct
      * @uses   \SebastianBergmann\Money\Money::getAmount
@@ -210,6 +212,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers            \SebastianBergmann\Money\Money::multiply
+     * @covers            \SebastianBergmann\Money\Money::assertValidRoundingMode
      * @uses              \SebastianBergmann\Money\Money::__construct
      * @uses              \SebastianBergmann\Money\Currency
      * @expectedException \SebastianBergmann\Money\InvalidArgumentException
@@ -224,6 +227,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers \SebastianBergmann\Money\Money::divide
      * @covers \SebastianBergmann\Money\Money::newMoney
      * @covers \SebastianBergmann\Money\Money::assertNoOverflow
+     * @covers \SebastianBergmann\Money\Money::assertValidRoundingMode
      * @covers \SebastianBergmann\Money\Money::castToInt
      * @uses   \SebastianBergmann\Money\Money::__construct
      * @uses   \SebastianBergmann\Money\Money::getAmount
@@ -240,6 +244,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers            \SebastianBergmann\Money\Money::divide
+     * @covers            \SebastianBergmann\Money\Money::assertValidRoundingMode
      * @uses              \SebastianBergmann\Money\Money::__construct
      * @uses              \SebastianBergmann\Money\Currency
      * @expectedException \SebastianBergmann\Money\InvalidArgumentException

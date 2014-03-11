@@ -164,7 +164,7 @@ class Money
      */
     public function multiply($factor, $roundingMode = PHP_ROUND_HALF_UP)
     {
-        $this->assertRoundingMode($roundingMode);
+        $this->assertValidRoundingMode($roundingMode);
 
         return $this->newMoney(
             $this->castToInt(
@@ -184,7 +184,7 @@ class Money
      */
     public function divide($factor, $roundingMode = PHP_ROUND_HALF_UP)
     {
-        $this->assertRoundingMode($roundingMode);
+        $this->assertValidRoundingMode($roundingMode);
 
         return $this->newMoney(
             $this->castToInt(
@@ -367,7 +367,7 @@ class Money
      * @return void
      * @throws \SebastianBergmann\Money\InvalidArgumentException
      */
-    protected function assertRoundingMode($roundingMode)
+    protected function assertValidRoundingMode($roundingMode)
     {
         if (!in_array($roundingMode, self::$roundingModes)) {
             throw new InvalidArgumentException(
