@@ -164,15 +164,31 @@ class Money
      */
     public function multiply($factor, $roundingMode = PHP_ROUND_HALF_UP)
     {
-        if (!in_array($roundingMode, self::$roundingModes)) {
-            throw new InvalidArgumentException(
-                '$roundingMode must be a valid rounding mode (PHP_ROUND_*)'
-            );
-        }
+        $this->assertRoundingMode($roundingMode);
 
         return $this->newMoney(
             $this->castToInt(
                 round($factor * $this->amount, 0, $roundingMode)
+            )
+        );
+    }
+
+    /**
+     * Returns a new Money object that represents the monetary value
+     * of this Money object divided by a given factor.
+     *
+     * @param  float|integer $factor
+     * @param  integer $roundingMode
+     * @return \SebastianBergmann\Money\Money
+     * @throws \SebastianBergmann\Money\InvalidArgumentException
+     */
+    public function divide($factor, $roundingMode = PHP_ROUND_HALF_UP)
+    {
+        $this->assertRoundingMode($roundingMode);
+
+        return $this->newMoney(
+            $this->castToInt(
+                round($this->amount / $factor, 0, $roundingMode)
             )
         );
     }
@@ -335,13 +351,28 @@ class Money
     /**
      * Throws an exception if the amount is outside of the integer bounds
      * @param number $amount
-     * @return number
+     * @return void
      * @throws \SebastianBergmann\Money\OverflowException
      */
     protected function assertNoOverflow($amount)
     {
         if (abs($amount) > PHP_INT_MAX) {
             throw new OverflowException;
+        }
+    }
+
+    /**
+     * Throws an exception if the rounding mode is invalidd
+     * @param integer $roundingMode
+     * @return void
+     * @throws \SebastianBergmann\Money\InvalidArgumentException
+     */
+    protected function assertRoundingMode($roundingMode)
+    {
+        if (!in_array($roundingMode, self::$roundingModes)) {
+            throw new InvalidArgumentException(
+                '$roundingMode must be a valid rounding mode (PHP_ROUND_*)'
+            );
         }
     }
 
