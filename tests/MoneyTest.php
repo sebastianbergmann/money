@@ -108,6 +108,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers            \SebastianBergmann\Money\Money::assertNoOverflow
+     * @covers            \SebastianBergmann\Money\Money::assertValidRoundingMode
      * @uses              \SebastianBergmann\Money\Money::__construct
      * @uses              \SebastianBergmann\Money\Money::multiply
      * @uses              \SebastianBergmann\Money\Money::castToInt
@@ -194,6 +195,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers \SebastianBergmann\Money\Money::multiply
      * @covers \SebastianBergmann\Money\Money::newMoney
      * @covers \SebastianBergmann\Money\Money::assertNoOverflow
+     * @covers \SebastianBergmann\Money\Money::assertValidRoundingMode
      * @covers \SebastianBergmann\Money\Money::castToInt
      * @uses   \SebastianBergmann\Money\Money::__construct
      * @uses   \SebastianBergmann\Money\Money::getAmount
@@ -210,6 +212,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers            \SebastianBergmann\Money\Money::multiply
+     * @covers            \SebastianBergmann\Money\Money::assertValidRoundingMode
      * @uses              \SebastianBergmann\Money\Money::__construct
      * @uses              \SebastianBergmann\Money\Currency
      * @expectedException \SebastianBergmann\Money\InvalidArgumentException
@@ -218,6 +221,38 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     {
         $a = new Money(1, new Currency('EUR'));
         $a->multiply(2, null);
+    }
+
+    /**
+     * @covers \SebastianBergmann\Money\Money::divide
+     * @covers \SebastianBergmann\Money\Money::newMoney
+     * @covers \SebastianBergmann\Money\Money::assertNoOverflow
+     * @covers \SebastianBergmann\Money\Money::assertValidRoundingMode
+     * @covers \SebastianBergmann\Money\Money::castToInt
+     * @uses   \SebastianBergmann\Money\Money::__construct
+     * @uses   \SebastianBergmann\Money\Money::getAmount
+     * @uses   \SebastianBergmann\Money\Currency
+     */
+    public function testCanBeDividedByAFactor()
+    {
+        $a = new Money(4, new Currency('EUR'));
+        $b = $a->divide(2);
+
+        $this->assertEquals(4, $a->getAmount());
+        $this->assertEquals(2, $b->getAmount());
+    }
+
+    /**
+     * @covers            \SebastianBergmann\Money\Money::divide
+     * @covers            \SebastianBergmann\Money\Money::assertValidRoundingMode
+     * @uses              \SebastianBergmann\Money\Money::__construct
+     * @uses              \SebastianBergmann\Money\Currency
+     * @expectedException \SebastianBergmann\Money\InvalidArgumentException
+     */
+    public function testExceptionIsRaisedWhenDividedUsingInvalidRoundingMode()
+    {
+        $a = new Money(4, new Currency('EUR'));
+        $a->divide(2, null);
     }
 
     /**

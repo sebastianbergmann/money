@@ -59,17 +59,17 @@ class Money
     /**
      * @var integer
      */
-    private $amount;
+    protected $amount;
 
     /**
      * @var \SebastianBergmann\Money\Currency
      */
-    private $currency;
+    protected $currency;
 
     /**
      * @var integer[]
      */
-    private static $roundingModes = array(
+    protected static $roundingModes = array(
         PHP_ROUND_HALF_UP,
         PHP_ROUND_HALF_DOWN,
         PHP_ROUND_HALF_EVEN,
@@ -164,15 +164,31 @@ class Money
      */
     public function multiply($factor, $roundingMode = PHP_ROUND_HALF_UP)
     {
-        if (!in_array($roundingMode, self::$roundingModes)) {
-            throw new InvalidArgumentException(
-                '$roundingMode must be a valid rounding mode (PHP_ROUND_*)'
-            );
-        }
+        $this->assertValidRoundingMode($roundingMode);
 
         return $this->newMoney(
             $this->castToInt(
                 round($factor * $this->amount, 0, $roundingMode)
+            )
+        );
+    }
+
+    /**
+     * Returns a new Money object that represents the monetary value
+     * of this Money object divided by a given factor.
+     *
+     * @param  float|integer $factor
+     * @param  integer $roundingMode
+     * @return \SebastianBergmann\Money\Money
+     * @throws \SebastianBergmann\Money\InvalidArgumentException
+     */
+    public function divide($factor, $roundingMode = PHP_ROUND_HALF_UP)
+    {
+        $this->assertValidRoundingMode($roundingMode);
+
+        return $this->newMoney(
+            $this->castToInt(
+                round($this->amount / $factor, 0, $roundingMode)
             )
         );
     }
@@ -325,7 +341,7 @@ class Money
      * @param  \SebastianBergmann\Money\Money $b
      * @throws \SebastianBergmann\Money\CurrencyMismatchException
      */
-    private function assertSameCurrency(Money $a, Money $b)
+    protected function assertSameCurrency(Money $a, Money $b)
     {
         if ($a->getCurrency() != $b->getCurrency()) {
             throw new CurrencyMismatchException;
@@ -335,13 +351,28 @@ class Money
     /**
      * Throws an exception if the amount is outside of the integer bounds
      * @param number $amount
-     * @return number
+     * @return void
      * @throws \SebastianBergmann\Money\OverflowException
      */
-    private function assertNoOverflow($amount)
+    protected function assertNoOverflow($amount)
     {
         if (abs($amount) > PHP_INT_MAX) {
             throw new OverflowException;
+        }
+    }
+
+    /**
+     * Throws an exception if the rounding mode is invalidd
+     * @param integer $roundingMode
+     * @return void
+     * @throws \SebastianBergmann\Money\InvalidArgumentException
+     */
+    protected function assertValidRoundingMode($roundingMode)
+    {
+        if (!in_array($roundingMode, self::$roundingModes)) {
+            throw new InvalidArgumentException(
+                '$roundingMode must be a valid rounding mode (PHP_ROUND_*)'
+            );
         }
     }
 
@@ -350,7 +381,7 @@ class Money
      * @param number $amount
      * @return int
      */
-    private function castToInt($amount)
+    protected function castToInt($amount)
     {
         $this->assertNoOverflow($amount);
         return intval($amount);
@@ -360,7 +391,7 @@ class Money
      * @param  integer $amount
      * @return \SebastianBergmann\Money\Money
      */
-    private function newMoney($amount)
+    protected function newMoney($amount)
     {
         return new static($amount, $this->currency);
     }
