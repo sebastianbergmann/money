@@ -107,6 +107,23 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers            \SebastianBergmann\Money\Money::add
+     * @covers            \SebastianBergmann\Money\Money::newMoney
+     * @covers            \SebastianBergmann\Money\Money::assertSameCurrency
+     * @uses              \SebastianBergmann\Money\Money::__construct
+     * @uses              \SebastianBergmann\Money\Money::getAmount
+     * @uses              \SebastianBergmann\Money\Money::getCurrency
+     * @uses              \SebastianBergmann\Money\Currency
+     * @expectedException \SebastianBergmann\Money\OverflowException
+     */
+    public function testExceptionIsThrownForOverflowingAddition()
+    {
+        $a = new Money(PHP_INT_MAX, new Currency('EUR'));
+        $b = new Money(2, new Currency('EUR'));
+        $a->add($b);
+    }
+
+    /**
      * @covers            \SebastianBergmann\Money\Money::assertNoOverflow
      * @uses              \SebastianBergmann\Money\Money::__construct
      * @uses              \SebastianBergmann\Money\Money::multiply
@@ -155,6 +172,23 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $a->getAmount());
         $this->assertEquals(2, $b->getAmount());
         $this->assertEquals(1, $c->getAmount());
+    }
+
+    /**
+     * @covers            \SebastianBergmann\Money\Money::subtract
+     * @covers            \SebastianBergmann\Money\Money::newMoney
+     * @covers            \SebastianBergmann\Money\Money::assertSameCurrency
+     * @uses              \SebastianBergmann\Money\Money::__construct
+     * @uses              \SebastianBergmann\Money\Money::getAmount
+     * @uses              \SebastianBergmann\Money\Money::getCurrency
+     * @uses              \SebastianBergmann\Money\Currency
+     * @expectedException \SebastianBergmann\Money\OverflowException
+     */
+    public function testExceptionIsThrownForOverflowingSubtraction()
+    {
+        $a = new Money(-PHP_INT_MAX, new Currency('EUR'));
+        $b = new Money(2, new Currency('EUR'));
+        $a->subtract($b);
     }
 
     /**
