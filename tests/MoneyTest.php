@@ -93,6 +93,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @uses   \SebastianBergmann\Money\Money::__construct
      * @uses   \SebastianBergmann\Money\Money::getAmount
      * @uses   \SebastianBergmann\Money\Money::getCurrency
+     * @uses   \SebastianBergmann\Money\Money::assertIntegerOperationDidntOverflow
      * @uses   \SebastianBergmann\Money\Currency
      */
     public function testAnotherMoneyObjectWithSameCurrencyCanBeAdded()
@@ -110,6 +111,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers            \SebastianBergmann\Money\Money::add
      * @covers            \SebastianBergmann\Money\Money::newMoney
      * @covers            \SebastianBergmann\Money\Money::assertSameCurrency
+     * @covers            \SebastianBergmann\Money\Money::assertIntegerOperationDidntOverflow
      * @uses              \SebastianBergmann\Money\Money::__construct
      * @uses              \SebastianBergmann\Money\Money::getAmount
      * @uses              \SebastianBergmann\Money\Money::getCurrency
@@ -161,6 +163,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @uses   \SebastianBergmann\Money\Money::__construct
      * @uses   \SebastianBergmann\Money\Money::getAmount
      * @uses   \SebastianBergmann\Money\Money::getCurrency
+     * @uses   \SebastianBergmann\Money\Money::assertIntegerOperationDidntOverflow
      * @uses   \SebastianBergmann\Money\Currency
      */
     public function testAnotherMoneyObjectWithSameCurrencyCanBeSubtracted()
@@ -178,6 +181,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers            \SebastianBergmann\Money\Money::subtract
      * @covers            \SebastianBergmann\Money\Money::newMoney
      * @covers            \SebastianBergmann\Money\Money::assertSameCurrency
+     * @covers            \SebastianBergmann\Money\Money::assertIntegerOperationDidntOverflow
      * @uses              \SebastianBergmann\Money\Money::__construct
      * @uses              \SebastianBergmann\Money\Money::getAmount
      * @uses              \SebastianBergmann\Money\Money::getCurrency
