@@ -127,7 +127,7 @@ class Money
 
         $value = $this->amount + $other->getAmount();
 
-        $this->assertIntegerOperationDidntOverflow($value);
+        $this->assertIsInteger($value);
 
         return $this->newMoney($value);
     }
@@ -147,7 +147,7 @@ class Money
 
         $value = $this->amount - $other->getAmount();
 
-        $this->assertIntegerOperationDidntOverflow($value);
+        $this->assertIsInteger($value);
 
         return $this->newMoney($value);
     }
@@ -343,41 +343,44 @@ class Money
     }
 
     /**
-     * Throws an exception if the amount is outside of the integer bounds
-     * @param number $amount
+     * Raises an exception if the amount is not an integer
+     *
+     * @param  number $amount
      * @return number
      * @throws \SebastianBergmann\Money\OverflowException
      */
-    private function assertNoOverflow($amount)
+    private function assertIsInteger($amount)
+    {
+        if (!is_int($amount)) {
+            throw new OverflowException;
+        }
+    }// @codeCoverageIgnore
+
+    /**
+     * Raises an exception if the amount is outside of the integer bounds
+     *
+     * @param  number $amount
+     * @return number
+     * @throws \SebastianBergmann\Money\OverflowException
+     */
+    private function assertInsideIntegerBounds($amount)
     {
         if (abs($amount) > PHP_INT_MAX) {
             throw new OverflowException;
         }
-    }
-
-    /**
-     * Throws an exception if what is meant to be an integer is not
-     * 
-     * This is an indication of overflow when you are operating on integers
-     * 
-     * @param number $value
-     * @throws \SebastianBergmann\Money\OverflowException
-     */
-    private function assertIntegerOperationDidntOverflow($value)
-    {
-        if (!is_int($value)) {
-            throw new OverflowException;
-        }
-    }
+    }// @codeCoverageIgnore
 
     /**
      * Cast an amount to an integer but ensure that the operation won't hide overflow
+     *
      * @param number $amount
      * @return int
+     * @throws \SebastianBergmann\Money\OverflowException
      */
     private function castToInt($amount)
     {
-        $this->assertNoOverflow($amount);
+        $this->assertInsideIntegerBounds($amount);
+
         return intval($amount);
     }
 

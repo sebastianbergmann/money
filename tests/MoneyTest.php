@@ -93,7 +93,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @uses   \SebastianBergmann\Money\Money::__construct
      * @uses   \SebastianBergmann\Money\Money::getAmount
      * @uses   \SebastianBergmann\Money\Money::getCurrency
-     * @uses   \SebastianBergmann\Money\Money::assertIntegerOperationDidntOverflow
+     * @uses   \SebastianBergmann\Money\Money::assertIsInteger
      * @uses   \SebastianBergmann\Money\Currency
      */
     public function testAnotherMoneyObjectWithSameCurrencyCanBeAdded()
@@ -111,7 +111,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers            \SebastianBergmann\Money\Money::add
      * @covers            \SebastianBergmann\Money\Money::newMoney
      * @covers            \SebastianBergmann\Money\Money::assertSameCurrency
-     * @covers            \SebastianBergmann\Money\Money::assertIntegerOperationDidntOverflow
+     * @covers            \SebastianBergmann\Money\Money::assertIsInteger
      * @uses              \SebastianBergmann\Money\Money::__construct
      * @uses              \SebastianBergmann\Money\Money::getAmount
      * @uses              \SebastianBergmann\Money\Money::getCurrency
@@ -126,7 +126,6 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers            \SebastianBergmann\Money\Money::assertNoOverflow
      * @uses              \SebastianBergmann\Money\Money::__construct
      * @uses              \SebastianBergmann\Money\Money::multiply
      * @uses              \SebastianBergmann\Money\Money::castToInt
@@ -163,7 +162,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @uses   \SebastianBergmann\Money\Money::__construct
      * @uses   \SebastianBergmann\Money\Money::getAmount
      * @uses   \SebastianBergmann\Money\Money::getCurrency
-     * @uses   \SebastianBergmann\Money\Money::assertIntegerOperationDidntOverflow
+     * @uses   \SebastianBergmann\Money\Money::assertIsInteger
      * @uses   \SebastianBergmann\Money\Currency
      */
     public function testAnotherMoneyObjectWithSameCurrencyCanBeSubtracted()
@@ -181,7 +180,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers            \SebastianBergmann\Money\Money::subtract
      * @covers            \SebastianBergmann\Money\Money::newMoney
      * @covers            \SebastianBergmann\Money\Money::assertSameCurrency
-     * @covers            \SebastianBergmann\Money\Money::assertIntegerOperationDidntOverflow
+     * @covers            \SebastianBergmann\Money\Money::assertIsInteger
      * @uses              \SebastianBergmann\Money\Money::__construct
      * @uses              \SebastianBergmann\Money\Money::getAmount
      * @uses              \SebastianBergmann\Money\Money::getCurrency
@@ -231,10 +230,10 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers \SebastianBergmann\Money\Money::multiply
      * @covers \SebastianBergmann\Money\Money::newMoney
-     * @covers \SebastianBergmann\Money\Money::assertNoOverflow
      * @covers \SebastianBergmann\Money\Money::castToInt
      * @uses   \SebastianBergmann\Money\Money::__construct
      * @uses   \SebastianBergmann\Money\Money::getAmount
+     * @uses   \SebastianBergmann\Money\Money::assertInsideIntegerBounds
      * @uses   \SebastianBergmann\Money\Currency
      */
     public function testCanBeMultipliedByAFactor()
@@ -302,10 +301,10 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers \SebastianBergmann\Money\Money::allocateByRatios
      * @covers \SebastianBergmann\Money\Money::newMoney
-     * @covers \SebastianBergmann\Money\Money::assertNoOverflow
      * @covers \SebastianBergmann\Money\Money::castToInt
      * @uses   \SebastianBergmann\Money\Money::__construct
      * @uses   \SebastianBergmann\Money\Money::getAmount
+     * @uses   \SebastianBergmann\Money\Money::assertInsideIntegerBounds
      * @uses   \SebastianBergmann\Money\Currency
      */
     public function testCanBeAllocatedByRatios()
