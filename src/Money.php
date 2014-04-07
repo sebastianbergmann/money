@@ -119,12 +119,17 @@ class Money
      * @param  \SebastianBergmann\Money\Money $other
      * @return \SebastianBergmann\Money\Money
      * @throws \SebastianBergmann\Money\CurrencyMismatchException
+     * @throws \SebastianBergmann\Money\OverflowException
      */
     public function add(Money $other)
     {
         $this->assertSameCurrency($this, $other);
 
-        return $this->newMoney($this->amount + $other->getAmount());
+        $value = $this->amount + $other->getAmount();
+
+        $this->assertIntegerOperationDidntOverflow($value);
+
+        return $this->newMoney($value);
     }
 
     /**
@@ -134,12 +139,17 @@ class Money
      * @param  \SebastianBergmann\Money\Money $other
      * @return \SebastianBergmann\Money\Money
      * @throws \SebastianBergmann\Money\CurrencyMismatchException
+     * @throws \SebastianBergmann\Money\OverflowException
      */
     public function subtract(Money $other)
     {
         $this->assertSameCurrency($this, $other);
 
-        return $this->newMoney($this->amount - $other->getAmount());
+        $value = $this->amount - $other->getAmount();
+
+        $this->assertIntegerOperationDidntOverflow($value);
+
+        return $this->newMoney($value);
     }
 
     /**
@@ -341,6 +351,21 @@ class Money
     private function assertNoOverflow($amount)
     {
         if (abs($amount) > PHP_INT_MAX) {
+            throw new OverflowException;
+        }
+    }
+
+    /**
+     * Throws an exception if what is meant to be an integer is not
+     * 
+     * This is an indication of overflow when you are operating on integers
+     * 
+     * @param number $value
+     * @throws \SebastianBergmann\Money\OverflowException
+     */
+    private function assertIntegerOperationDidntOverflow($value)
+    {
+        if (!is_int($value)) {
             throw new OverflowException;
         }
     }
