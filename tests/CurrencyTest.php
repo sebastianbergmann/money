@@ -118,4 +118,26 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(100, $c->getSubUnit());
     }
+
+    /**
+     * @covers  \SebastianBergmann\Money\Currency::getInstance
+     */
+    public function testGetInstance()
+    {
+        $c = Currency::getInstance('NPR');
+
+        $this->assertInstanceOf('SebastianBergmann\\Money\\Currency', $c);
+
+        return $c;
+    }
+
+    /**
+     * @covers  \SebastianBergmann\Money\Currency::getInstance
+     * @depends testGetInstance
+     */
+    public function testUseSingleInstanceOfCurrency(Currency $c)
+    {
+        $d = Currency::getInstance('NPR');
+        $this->assertTrue($c === $d);
+    }
 }
