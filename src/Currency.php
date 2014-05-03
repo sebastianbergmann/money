@@ -1161,6 +1161,11 @@ class Currency
     private $currencyCode;
 
     /**
+     * @var Currency[]
+     */
+    private static $instances = array();
+
+    /**
      * @param  string $currencyCode
      * @throws \SebastianBergmann\Money\InvalidArgumentException
      */
@@ -1173,6 +1178,23 @@ class Currency
         }
 
         $this->currencyCode = $currencyCode;
+    }
+
+    /**
+     * Gets an instance of Currency
+     *
+     * @param  string $currencyCode
+     * @throws \SebastianBergmann\Money\InvalidArgumentException
+     */
+    public static function getInstance($currencyCode)
+    {
+        if (isset(self::$instances[$currencyCode])) {
+            return self::$instances[$currencyCode];
+        }
+        $instance = new static($currencyCode);
+        self::$instances[$currencyCode] = $instance;
+
+        return $instance;
     }
 
     /**
