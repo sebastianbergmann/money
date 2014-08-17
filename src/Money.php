@@ -112,7 +112,7 @@ class Money
             throw new InvalidArgumentException('$value must be a string');
         }
 
-        $currency = static::handleCurrencyArgument($currency);
+        $currency = self::handleCurrencyArgument($currency);
 
         return new static(
             intval(
