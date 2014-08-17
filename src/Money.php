@@ -120,6 +120,14 @@ class Money
             throw new InvalidArgumentException('$value must be a string');
         }
 
+        if (!$currency instanceof Currency && !is_string($currency)) {
+            throw new InvalidArgumentException('$currency must be an object of type Currency or a string');
+        }
+
+        if (is_string($currency)) {
+            $currency = new Currency($currency);
+        }
+
         return new static(
             intval(
                 round(

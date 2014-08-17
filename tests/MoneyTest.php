@@ -114,6 +114,19 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \SebastianBergmann\Money\Money::fromString
+     * @uses   \SebastianBergmann\Money\Money::__construct
+     * @uses   \SebastianBergmann\Money\Currency
+     */
+    public function testObjectCanBeConstructedFromStringValue2()
+    {
+        $this->assertEquals(
+            new Money(1234, new Currency('EUR')),
+            Money::fromString('12.34', 'EUR')
+        );
+    }
+
+    /**
      * @covers  \SebastianBergmann\Money\Money::getAmount
      * @depends testObjectCanBeConstructedForValidConstructorArguments
      */
