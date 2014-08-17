@@ -87,16 +87,8 @@ class Money
             throw new InvalidArgumentException('$amount must be an integer');
         }
 
-        if (!$currency instanceof Currency && !is_string($currency)) {
-            throw new InvalidArgumentException('$currency must be an object of type Currency or a string');
-        }
-
-        if (is_string($currency)) {
-            $currency = new Currency($currency);
-        }
-
         $this->amount   = $amount;
-        $this->currency = $currency;
+        $this->currency = $this->handleCurrencyArgument($currency);
     }
 
     /**
@@ -120,13 +112,7 @@ class Money
             throw new InvalidArgumentException('$value must be a string');
         }
 
-        if (!$currency instanceof Currency && !is_string($currency)) {
-            throw new InvalidArgumentException('$currency must be an object of type Currency or a string');
-        }
-
-        if (is_string($currency)) {
-            $currency = new Currency($currency);
-        }
+        $currency = static::handleCurrencyArgument($currency);
 
         return new static(
             intval(
@@ -445,5 +431,23 @@ class Money
     private function newMoney($amount)
     {
         return new static($amount, $this->currency);
+    }
+
+    /**
+     * @param  \SebastianBergmann\Money\Currency|string $currency
+     * @return \SebastianBergmann\Money\Currency
+     * @throws \SebastianBergmann\Money\InvalidArgumentException
+     */
+    private static function handleCurrencyArgument($currency)
+    {
+        if (!$currency instanceof Currency && !is_string($currency)) {
+            throw new InvalidArgumentException('$currency must be an object of type Currency or a string');
+        }
+
+        if (is_string($currency)) {
+            $currency = new Currency($currency);
+        }
+
+        return $currency;
     }
 }
