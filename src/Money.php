@@ -92,6 +92,44 @@ class Money
     }
 
     /**
+     * Creates a Money object from a string such as "12.34"
+     *
+     * This method is designed to take into account the errors that can arise
+     * from manipulating floating point numbers.
+     *
+     * If the number of decimals in the string is higher than the currency's
+     * number of fractional digits then the value will be rounded to the
+     * currency's number of fractional digits.
+     *
+     * @param  string                            $value
+     * @param  \SebastianBergmann\Money\Currency $currency
+     * @return \SebastianBergmann\Money\Money
+     * @throws \SebastianBergmann\Money\InvalidArgumentException
+     */
+    public static function fromString($value, Currency $currency)
+    {
+        if (!is_string($value)) {
+            throw new InvalidArgumentException('$value must be a string');
+        }
+
+        return new static(
+            intval(
+                round(
+                    $currency->getSubUnit() *
+                    round(
+                        $value,
+                        $currency->getDefaultFractionDigits(),
+                        PHP_ROUND_HALF_UP
+                    ),
+                    0,
+                    PHP_ROUND_HALF_UP
+                )
+            ),
+            $currency
+        );
+    }
+
+    /**
      * Returns the monetary value represented by this object.
      *
      * @return integer

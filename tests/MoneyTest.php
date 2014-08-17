@@ -55,6 +55,16 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers            \SebastianBergmann\Money\Money::fromString
+     * @uses              \SebastianBergmann\Money\Currency
+     * @expectedException \SebastianBergmann\Money\InvalidArgumentException
+     */
+    public function testExceptionIsRaisedForInvalidConstructorArguments2()
+    {
+        Money::fromString(1234, new Currency('EUR'));
+    }
+
+    /**
      * @covers \SebastianBergmann\Money\Money::__construct
      * @uses   \SebastianBergmann\Money\Currency
      */
@@ -65,6 +75,19 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('SebastianBergmann\\Money\\Money', $m);
 
         return $m;
+    }
+
+    /**
+     * @covers \SebastianBergmann\Money\Money::fromString
+     * @uses   \SebastianBergmann\Money\Money::__construct
+     * @uses   \SebastianBergmann\Money\Currency
+     */
+    public function testObjectCanBeConstructedFromStringValue()
+    {
+        $this->assertEquals(
+            new Money(1234, new Currency('EUR')),
+            Money::fromString('12.34', new Currency('EUR'))
+        );
     }
 
     /**
