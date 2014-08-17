@@ -77,14 +77,22 @@ class Money
     );
 
     /**
-     * @param  integer                           $amount
-     * @param  \SebastianBergmann\Money\Currency $currency
+     * @param  integer                                  $amount
+     * @param  \SebastianBergmann\Money\Currency|string $currency
      * @throws \SebastianBergmann\Money\InvalidArgumentException
      */
-    public function __construct($amount, Currency $currency)
+    public function __construct($amount, $currency)
     {
         if (!is_int($amount)) {
             throw new InvalidArgumentException('$amount must be an integer');
+        }
+
+        if (!$currency instanceof Currency && !is_string($currency)) {
+            throw new InvalidArgumentException('$currency must be an object of type Currency or a string');
+        }
+
+        if (is_string($currency)) {
+            $currency = new Currency($currency);
         }
 
         $this->amount   = $amount;
@@ -101,12 +109,12 @@ class Money
      * number of fractional digits then the value will be rounded to the
      * currency's number of fractional digits.
      *
-     * @param  string                            $value
-     * @param  \SebastianBergmann\Money\Currency $currency
+     * @param  string                                   $value
+     * @param  \SebastianBergmann\Money\Currency|string $currency
      * @return \SebastianBergmann\Money\Money
      * @throws \SebastianBergmann\Money\InvalidArgumentException
      */
-    public static function fromString($value, Currency $currency)
+    public static function fromString($value, $currency)
     {
         if (!is_string($value)) {
             throw new InvalidArgumentException('$value must be a string');
