@@ -38,6 +38,23 @@ The code above produces the output shown below:
 
     100
 
+#### Creating a Money object from a string value
+
+```php
+use SebastianBergmann\Money\Currency;
+use SebastianBergmann\Money\Money;
+
+// Create Money object that represents 12.34 EUR
+$m = Money::fromString('12.34', new Currency('EUR'))
+
+// Access the Money object's monetary value
+print $m->getAmount();
+```
+
+The code above produces the output shown below:
+
+    1234
+
 #### Using a Currency-specific subclass of Money
 
 ```php
