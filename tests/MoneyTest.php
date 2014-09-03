@@ -56,7 +56,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers            \SebastianBergmann\Money\Money::__construct
-     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @covers            \SebastianBergmann\Money\Money::handleCurrencyArgument
      * @uses              \SebastianBergmann\Money\Currency
      * @expectedException \SebastianBergmann\Money\InvalidArgumentException
      */
@@ -77,7 +77,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \SebastianBergmann\Money\Money::__construct
-     * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @covers \SebastianBergmann\Money\Money::handleCurrencyArgument
      * @uses   \SebastianBergmann\Money\Currency
      */
     public function testObjectCanBeConstructedForValidConstructorArguments()
@@ -91,7 +91,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \SebastianBergmann\Money\Money::__construct
-     * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @covers \SebastianBergmann\Money\Money::handleCurrencyArgument
      * @uses   \SebastianBergmann\Money\Currency
      */
     public function testObjectCanBeConstructedForValidConstructorArguments2()
