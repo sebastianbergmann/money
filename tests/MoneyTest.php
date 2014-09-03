@@ -192,7 +192,9 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers            \SebastianBergmann\Money\Money::assertInsideIntegerBounds
      * @uses              \SebastianBergmann\Money\Money::__construct
+     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
      * @uses              \SebastianBergmann\Money\Money::multiply
      * @uses              \SebastianBergmann\Money\Money::castToInt
      * @uses              \SebastianBergmann\Money\Currency
