@@ -363,6 +363,27 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \SebastianBergmann\Money\Money::extractPercentage
+     * @uses   \SebastianBergmann\Money\Money::__construct
+     * @uses   \SebastianBergmann\Money\Money::getAmount
+     * @uses   \SebastianBergmann\Money\Money::getCurrency
+     * @uses   \SebastianBergmann\Money\Money::subtract
+     * @uses   \SebastianBergmann\Money\Money::assertSameCurrency
+     * @uses   \SebastianBergmann\Money\Money::assertIsInteger
+     * @uses   \SebastianBergmann\Money\Money::newMoney
+     * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses   \SebastianBergmann\Money\Currency
+     */
+    public function testPercentageCanBeExtracted()
+    {
+        $original = new Money(10000, new Currency('EUR'));
+        $extract  = $original->extractPercentage(21);
+
+        $this->assertEquals(new Money(8265, new Currency('EUR')), $extract['subtotal']);
+        $this->assertEquals(new Money(1735, new Currency('EUR')), $extract['percentage']);
+    }
+
+    /**
      * @covers            \SebastianBergmann\Money\Money::allocateToTargets
      * @uses              \SebastianBergmann\Money\Money::__construct
      * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument

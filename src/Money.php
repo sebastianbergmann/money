@@ -285,6 +285,27 @@ class Money
     }
 
     /**
+     * Extracts a percentage of the monetary value represented by this Money
+     * object and returns an array of two Money objects:
+     * $original = $result['subtotal'] + $result['percentage'];
+     *
+     * @param  float $percentage
+     * @return \SebastianBergmann\Money\Money[]
+     * @see    https://github.com/sebastianbergmann/money/issues/27
+     */
+    public function extractPercentage($percentage)
+    {
+        $percentage = $this->newMoney(
+            intval($this->amount / (100 + $percentage) * $percentage)
+        );
+
+        return array(
+            'percentage' => $percentage,
+            'subtotal'   => $this->subtract($percentage)
+        );
+    }
+
+    /**
      * Compares this Money object to another.
      *
      * Returns an integer less than, equal to, or greater than zero

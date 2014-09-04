@@ -236,3 +236,27 @@ The code above produces the output shown below:
 
     2
     3
+
+#### Extract a percentage (and a subtotal) from the monetary value represented by a Money
+
+```php
+use SebastianBergmann\Money\Currency;
+use SebastianBergmann\Money\Money;
+
+// Create a Money object that represents 100,00 EUR
+$original = new Money(10000, new Currency('EUR'));
+
+// Extract 21% (and the corresponding subtotal)
+$extract = $original->extractPercentage(21);
+
+printf(
+    "%d = %d + %d\n",
+    $original->getAmount(),
+    $extract['subtotal']->getAmount(),
+    $extract['percentage']->getAmount()
+);
+```
+
+The code above produces the output shown below:
+
+    10000 = 8265 + 1735
