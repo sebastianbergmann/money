@@ -237,7 +237,7 @@ The code above produces the output shown below:
     2
     3
 
-#### Extract a percentage (and a subtotal) from the monetary value represented by a Money
+#### Extract a percentage (and a subtotal) from the monetary value represented by a Money object
 
 ```php
 use SebastianBergmann\Money\Currency;
