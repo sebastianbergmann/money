@@ -14,7 +14,7 @@ Here is a minimal example of a `composer.json` file that just defines a dependen
 
     {
         "require": {
-            "sebastian/money": "*"
+            "sebastian/money": "1.5.*"
         }
     }
 
