@@ -3,8 +3,8 @@
  <target name="build" depends="prepare,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,phpdox"/>
 
  <target name="clean" unless="clean.done" description="Cleanup build artifacts">
-  <delete dir="${basedir}/build/api"/>
   <delete dir="${basedir}/build/coverage"/>
+  <delete dir="${basedir}/build/documentation"/>
   <delete dir="${basedir}/build/logs"/>
   <delete dir="${basedir}/build/pdepend"/>
   <delete dir="${basedir}/build/phpdox"/>
@@ -12,8 +12,8 @@
  </target>
 
  <target name="prepare" unless="prepare.done" depends="clean,generate-code" description="Prepare for build">
-  <mkdir dir="${basedir}/build/api"/>
   <mkdir dir="${basedir}/build/coverage"/>
+  <mkdir dir="${basedir}/build/documentation"/>
   <mkdir dir="${basedir}/build/logs"/>
   <mkdir dir="${basedir}/build/pdepend"/>
   <property name="prepare.done" value="true"/>

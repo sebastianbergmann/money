@@ -1,6 +1,6 @@
-build/api
 build/code-browser
 build/coverage
+build/documentation
 build/logs
 build/pdepend
 build/phpdox
