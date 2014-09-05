@@ -15,7 +15,7 @@
     <source type="pmd" />
    </enrich>
 
-   <build engine="html" enabled="true" output="documentation">
+   <build engine="html" enabled="true" output="api">
     <file extension="html" />
    </build>
   </generator>
