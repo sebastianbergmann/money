@@ -259,3 +259,8 @@ printf(
 The code above produces the output shown below:
 
     10000 = 8265 + 1735
+
+Please note that this extracts the percentage out of a monetary value where the
+percentage is already included. If you want to get the percentage of the
+monetary value you should use multiplication (`multiply(0.21)`, for instance,
+to calculate 21% of a monetary value represented by a Money object) instead.
