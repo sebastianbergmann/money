@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Money" default="build">
- <target name="build" depends="prepare,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpunit,phpdox"/>
+ <target name="build" depends="prepare,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,phpdox"/>
 
  <target name="clean" unless="clean.done" description="Cleanup build artifacts">
   <delete dir="${basedir}/build/api"/>
@@ -45,7 +45,15 @@
   </apply>
  </target>
 
- <target name="phploc" depends="prepare" description="Measure project size using PHPLOC">
+ <target name="phploc" description="Measure project size using PHPLOC">
+  <exec executable="${basedir}/build/tools/phploc.phar">
+   <arg value="--count-tests" />
+   <arg path="${basedir}/src" />
+   <arg path="${basedir}/tests" />
+  </exec>
+ </target>
+
+ <target name="phploc-ci" depends="prepare" description="Measure project size using PHPLOC and log result in CSV and XML format">
   <exec executable="${basedir}/build/tools/phploc.phar">
    <arg value="--count-tests" />
    <arg value="--log-csv" />
@@ -105,7 +113,13 @@
   </exec>
  </target>
 
- <target name="phpcpd" depends="prepare" description="Find duplicate code using PHPCPD">
+ <target name="phpcpd" description="Find duplicate code using PHPCPD">
+  <exec executable="${basedir}/build/tools/phpcpd.phar">
+   <arg path="${basedir}/src" />
+  </exec>
+ </target>
+
+ <target name="phpcpd-ci" depends="prepare" description="Find duplicate code using PHPCPD and log result in XML format">
   <exec executable="${basedir}/build/tools/phpcpd.phar">
    <arg value="--log-pmd" />
    <arg path="${basedir}/build/logs/pmd-cpd.xml" />
@@ -120,7 +134,7 @@
   </exec>
  </target>
 
- <target name="phpdox" depends="phploc,phpcs-ci,phpmd-ci" description="Generate API documentation using phpDox">
+ <target name="phpdox" depends="phploc-ci,phpcs-ci,phpmd-ci" description="Generate API documentation using phpDox">
   <exec executable="${basedir}/build/tools/phpdox.phar" dir="${basedir}/build"/>
  </target>
 </project>
