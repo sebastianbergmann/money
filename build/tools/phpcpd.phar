@@ -1,5 +1,15 @@
 #!/usr/bin/env php
 <?php
+if ($_SERVER['SCRIPT_NAME'] != '-') {
+    $phar = realpath($_SERVER['SCRIPT_NAME']);
+} else {
+    $files = get_included_files();
+    $phar = $files[0];
+}
+
+define('__PHPCPD_PHAR__', str_replace(DIRECTORY_SEPARATOR, '/', $phar));
+define('__PHPCPD_PHAR_ROOT__', 'phar://phpcpd-2.0.1.phar');
+
 spl_autoload_register(
   function ($class)
   {
@@ -49,16 +59,19 @@ spl_autoload_register(
             'symfony\\component\\console\\helper\\helper' => '/symfony/console/Symfony/Component/Console/Helper/Helper.php',
             'symfony\\component\\console\\helper\\helperinterface' => '/symfony/console/Symfony/Component/Console/Helper/HelperInterface.php',
             'symfony\\component\\console\\helper\\helperset' => '/symfony/console/Symfony/Component/Console/Helper/HelperSet.php',
+            'symfony\\component\\console\\helper\\inputawarehelper' => '/symfony/console/Symfony/Component/Console/Helper/InputAwareHelper.php',
             'symfony\\component\\console\\helper\\progresshelper' => '/symfony/console/Symfony/Component/Console/Helper/ProgressHelper.php',
             'symfony\\component\\console\\helper\\tablehelper' => '/symfony/console/Symfony/Component/Console/Helper/TableHelper.php',
             'symfony\\component\\console\\input\\argvinput' => '/symfony/console/Symfony/Component/Console/Input/ArgvInput.php',
             'symfony\\component\\console\\input\\arrayinput' => '/symfony/console/Symfony/Component/Console/Input/ArrayInput.php',
             'symfony\\component\\console\\input\\input' => '/symfony/console/Symfony/Component/Console/Input/Input.php',
             'symfony\\component\\console\\input\\inputargument' => '/symfony/console/Symfony/Component/Console/Input/InputArgument.php',
+            'symfony\\component\\console\\input\\inputawareinterface' => '/symfony/console/Symfony/Component/Console/Input/InputAwareInterface.php',
             'symfony\\component\\console\\input\\inputdefinition' => '/symfony/console/Symfony/Component/Console/Input/InputDefinition.php',
             'symfony\\component\\console\\input\\inputinterface' => '/symfony/console/Symfony/Component/Console/Input/InputInterface.php',
             'symfony\\component\\console\\input\\inputoption' => '/symfony/console/Symfony/Component/Console/Input/InputOption.php',
             'symfony\\component\\console\\input\\stringinput' => '/symfony/console/Symfony/Component/Console/Input/StringInput.php',
+            'symfony\\component\\console\\output\\bufferedoutput' => '/symfony/console/Symfony/Component/Console/Output/BufferedOutput.php',
             'symfony\\component\\console\\output\\consoleoutput' => '/symfony/console/Symfony/Component/Console/Output/ConsoleOutput.php',
             'symfony\\component\\console\\output\\consoleoutputinterface' => '/symfony/console/Symfony/Component/Console/Output/ConsoleOutputInterface.php',
             'symfony\\component\\console\\output\\nulloutput' => '/symfony/console/Symfony/Component/Console/Output/NullOutput.php',
@@ -105,6 +118,12 @@ spl_autoload_register(
             'symfony\\component\\finder\\shell\\command' => '/symfony/finder/Symfony/Component/Finder/Shell/Command.php',
             'symfony\\component\\finder\\shell\\shell' => '/symfony/finder/Symfony/Component/Finder/Shell/Shell.php',
             'symfony\\component\\finder\\splfileinfo' => '/symfony/finder/Symfony/Component/Finder/SplFileInfo.php',
+            'theseer\\fdom\\css\\dollarequalrule' => '/fdomdocument/css/DollarEqualRule.php',
+            'theseer\\fdom\\css\\notrule' => '/fdomdocument/css/NotRule.php',
+            'theseer\\fdom\\css\\nthchildrule' => '/fdomdocument/css/NthChildRule.php',
+            'theseer\\fdom\\css\\regexrule' => '/fdomdocument/css/RegexRule.php',
+            'theseer\\fdom\\css\\ruleinterface' => '/fdomdocument/css/RuleInterface.php',
+            'theseer\\fdom\\css\\translator' => '/fdomdocument/css/Translator.php',
             'theseer\\fdom\\fdomdocument' => '/fdomdocument/fDOMDocument.php',
             'theseer\\fdom\\fdomdocumentfragment' => '/fdomdocument/fDOMDocumentFragment.php',
             'theseer\\fdom\\fdomelement' => '/fdomdocument/fDOMElement.php',
@@ -119,45 +138,52 @@ spl_autoload_register(
       $class = strtolower($class);
 
       if (isset($classes[$class])) {
-          require 'phar://phpcpd-2.0.0.phar' . $classes[$class];
+          require 'phar://phpcpd-2.0.1.phar' . $classes[$class];
       }
   }
 );
 
-Phar::mapPhar('phpcpd-2.0.0.phar');
+Phar::mapPhar('phpcpd-2.0.1.phar');
+
+if (isset($_SERVER['argv'][1]) && $_SERVER['argv'][1] == '--manifest') {
+    print file_get_contents(__PHPCPD_PHAR_ROOT__ . '/manifest.txt');
+    exit;
+}
 
 $application = new SebastianBergmann\PHPCPD\CLI\Application;
 $application->run();
 
 __HALT_COMPILER(); ?>
-#$  j          phpcpd-2.0.0.phar       version/Version.phpØ  ô©|RØ  /¿-x∂         src/CodeCloneMap.php>  ô©|R>  zœ¥∂         src/CodeCloneFile.phpU  ô©|RU  t≤⁄U∂         src/Detector/Detector.php‡  ô©|R‡  V	'Ò∂      "   src/Detector/Strategy/Abstract.php≤  ô©|R≤  Óë ∂      !   src/Detector/Strategy/Default.phpJ  ô©|RJ  lÈ∂         src/Log/Text.php]  ô©|R]  ¢◊L“∂         src/Log/PMD.php¿  ô©|R¿  #s™∂         src/Log/AbstractXmlLogger.php  ô©|R  3|~¥∂         src/CodeClone.phpu  ô©|Ru  3sR∂         src/CLI/Command.php¬  ô©|R¬  “n?à∂         src/CLI/Application.php  ô©|R  A]∂      9   symfony/finder/Symfony/Component/Finder/Shell/Command.php∫  ô©|R∫  zæ[@∂      7   symfony/finder/Symfony/Component/Finder/Shell/Shell.phpÖ  ô©|RÖ  –2∞Ø∂      G   symfony/finder/Symfony/Component/Finder/Iterator/PathFilterIterator.php®  ô©|R®  Ö±∆)∂      L   symfony/finder/Symfony/Component/Finder/Iterator/DateRangeFilterIterator.phpµ  ô©|Rµ   Œ‡U∂      N   symfony/finder/Symfony/Component/Finder/Iterator/FilecontentFilterIterator.phpû  ô©|Rû  ¬ Ωç∂      E   symfony/finder/Symfony/Component/Finder/Iterator/SortableIterator.phpÒ	  ô©|RÒ	  ˛Ìj˚∂      M   symfony/finder/Symfony/Component/Finder/Iterator/DepthRangeFilterIterator.phpÒ  ô©|RÒ  ils_∂      L   symfony/finder/Symfony/Component/Finder/Iterator/SizeRangeFilterIterator.php•  ô©|R•  xπPª∂      K   symfony/finder/Symfony/Component/Finder/Iterator/FilenameFilterIterator.phpΩ  ô©|RΩ  {‡^«∂      O   symfony/finder/Symfony/Component/Finder/Iterator/RecursiveDirectoryIterator.phpÁ  ô©|RÁ  Èü6s∂      K   symfony/finder/Symfony/Component/Finder/Iterator/FileTypeFilterIterator.phpb  ô©|Rb  ˝n ∂      F   symfony/finder/Symfony/Component/Finder/Iterator/FilePathsIterator.phpí
-  ô©|Rí
-  ∏õ…î∂      C   symfony/finder/Symfony/Component/Finder/Iterator/FilterIterator.phpü  ô©|Rü  „Ω,G∂      O   symfony/finder/Symfony/Component/Finder/Iterator/MultiplePcreFilterIterator.php*  ô©|R*  ínô∂      I   symfony/finder/Symfony/Component/Finder/Iterator/CustomFilterIterator.php  ô©|R  êºz"∂      S   symfony/finder/Symfony/Component/Finder/Iterator/ExcludeDirectoryFilterIterator.phpµ  ô©|Rµ  ≥Éƒﬂ∂      B   symfony/finder/Symfony/Component/Finder/Adapter/BsdFindAdapter.phpÒ
-  ô©|RÒ
+'  u          phpcpd-2.0.1.phar       version/Version.php	  §49S	  Y”∂         src/CodeCloneMap.php>  §49S>  õÑPü∂         src/CodeCloneFile.phpU  §49SU  ÌiÕ∂         src/Detector/Detector.php‡  §49S‡  €≥æ∂      "   src/Detector/Strategy/Abstract.php≤  §49S≤  ıtòI∂      !   src/Detector/Strategy/Default.phpJ  §49SJ  *’bÔ∂         src/Log/Text.php[  §49S[  ë6<∂         src/Log/PMD.php¿  §49S¿  Ü∏{∂         src/Log/AbstractXmlLogger.php  §49S  ≈D∂         src/CodeClone.phpu  §49Su  ™Q“Ä∂         src/CLI/Command.php  §49S  0”≈∂         src/CLI/Application.php,  §49S,  7(/∂      9   symfony/finder/Symfony/Component/Finder/Shell/Command.phpò  §49Sò  5ã¥K∂      7   symfony/finder/Symfony/Component/Finder/Shell/Shell.phpÖ  §49SÖ  ·4Àµ∂      G   symfony/finder/Symfony/Component/Finder/Iterator/PathFilterIterator.php®  §49S®  Ö±∆)∂      L   symfony/finder/Symfony/Component/Finder/Iterator/DateRangeFilterIterator.phpµ  §49Sµ   Œ‡U∂      N   symfony/finder/Symfony/Component/Finder/Iterator/FilecontentFilterIterator.phpû  §49Sû  ¬ Ωç∂      E   symfony/finder/Symfony/Component/Finder/Iterator/SortableIterator.phpÒ	  §49SÒ	  ˛Ìj˚∂      M   symfony/finder/Symfony/Component/Finder/Iterator/DepthRangeFilterIterator.phpÒ  §49SÒ  ils_∂      L   symfony/finder/Symfony/Component/Finder/Iterator/SizeRangeFilterIterator.php•  §49S•  xπPª∂      K   symfony/finder/Symfony/Component/Finder/Iterator/FilenameFilterIterator.phpΩ  §49SΩ  {‡^«∂      O   symfony/finder/Symfony/Component/Finder/Iterator/RecursiveDirectoryIterator.phpÁ  §49SÁ  Èü6s∂      K   symfony/finder/Symfony/Component/Finder/Iterator/FileTypeFilterIterator.phpb  §49Sb  ˝n ∂      F   symfony/finder/Symfony/Component/Finder/Iterator/FilePathsIterator.phpí
+  §49Sí
+  ∏õ…î∂      C   symfony/finder/Symfony/Component/Finder/Iterator/FilterIterator.phpü  §49Sü  „Ω,G∂      O   symfony/finder/Symfony/Component/Finder/Iterator/MultiplePcreFilterIterator.phpÓ  §49SÓ  ù
+
+≤∂      I   symfony/finder/Symfony/Component/Finder/Iterator/CustomFilterIterator.php  §49S  êºz"∂      S   symfony/finder/Symfony/Component/Finder/Iterator/ExcludeDirectoryFilterIterator.phpú  §49Sú  ±dîê∂      B   symfony/finder/Symfony/Component/Finder/Adapter/BsdFindAdapter.phpÒ
+  §49SÒ
   Ë›kA∂      B   symfony/finder/Symfony/Component/Finder/Adapter/GnuFindAdapter.phpÊ
-  ô©|RÊ
+  §49SÊ
   ‚}]∂      >   symfony/finder/Symfony/Component/Finder/Adapter/PhpAdapter.php{
-  ô©|R{
-  9!ê2∂      G   symfony/finder/Symfony/Component/Finder/Adapter/AbstractFindAdapter.phpò)  ô©|Rò)  QJÓò∂      D   symfony/finder/Symfony/Component/Finder/Adapter/AdapterInterface.php±  ô©|R±  –ì∂      C   symfony/finder/Symfony/Component/Finder/Adapter/AbstractAdapter.php  ô©|R  Ö	∂      0   symfony/finder/Symfony/Component/Finder/Glob.phpb  ô©|Rb  úg@M∂      7   symfony/finder/Symfony/Component/Finder/SplFileInfo.php  ô©|R  ˛5è9∂      G   symfony/finder/Symfony/Component/Finder/Comparator/NumberComparator.php
-  ô©|R
-  æP¡∂      E   symfony/finder/Symfony/Component/Finder/Comparator/DateComparator.php∫  ô©|R∫  ß”— ∂      A   symfony/finder/Symfony/Component/Finder/Comparator/Comparator.php
-  ô©|R
-  |F†z∂      A   symfony/finder/Symfony/Component/Finder/Expression/Expression.php$
-  ô©|R$
-  íùÑ∂      <   symfony/finder/Symfony/Component/Finder/Expression/Regex.php§  ô©|R§  [«êØ∂      ;   symfony/finder/Symfony/Component/Finder/Expression/Glob.php  ô©|R  äE±∂      E   symfony/finder/Symfony/Component/Finder/Expression/ValueInterface.phpH  ô©|RH  –¯"∂      S   symfony/finder/Symfony/Component/Finder/Exception/OperationNotPermitedException.php¢  ô©|R¢  P∂£ô∂      K   symfony/finder/Symfony/Component/Finder/Exception/AccessDeniedException.php´  ô©|R´   cWﬁ∂      H   symfony/finder/Symfony/Component/Finder/Exception/ExceptionInterface.phpÔ  ô©|RÔ  Ä7∂      R   symfony/finder/Symfony/Component/Finder/Exception/ShellCommandFailureException.php9  ô©|R9  ≤º∂      M   symfony/finder/Symfony/Component/Finder/Exception/AdapterFailureException.phpÅ  ô©|RÅ  >√@∂      2   symfony/finder/Symfony/Component/Finder/Finder.php›V  ô©|R›V  áºì∂      =   symfony/console/Symfony/Component/Console/Command/Command.php>  ô©|R>  «u∂      A   symfony/console/Symfony/Component/Console/Command/HelpCommand.php
-  ô©|R
-  Ó◊Ÿ#∂      A   symfony/console/Symfony/Component/Console/Command/ListCommand.phpV
-  ô©|RV
-  7»î¢∂      C   symfony/console/Symfony/Component/Console/Descriptor/Descriptor.php>  ô©|R>  {÷◊˝∂      L   symfony/console/Symfony/Component/Console/Descriptor/DescriptorInterface.php|  ô©|R|  Ò‚„Ô∂      G   symfony/console/Symfony/Component/Console/Descriptor/TextDescriptor.php∏  ô©|R∏  _F\∂      F   symfony/console/Symfony/Component/Console/Descriptor/XmlDescriptor.phpé!  ô©|Ré!  §ŸŸ(∂      O   symfony/console/Symfony/Component/Console/Descriptor/ApplicationDescription.phpπ  ô©|Rπ  øs§X∂      G   symfony/console/Symfony/Component/Console/Descriptor/JsonDescriptor.php/  ô©|R/  | ,∂      K   symfony/console/Symfony/Component/Console/Descriptor/MarkdownDescriptor.php  ô©|R  ﬂlº∂      9   symfony/console/Symfony/Component/Console/Application.phpüå  ô©|Rüå  ’§Ïw∂      ;   symfony/console/Symfony/Component/Console/ConsoleEvents.php¯  ô©|R¯  \0¬E∂      ;   symfony/console/Symfony/Component/Console/Helper/Helper.php´  ô©|R´  Z\ß∂      >   symfony/console/Symfony/Component/Console/Helper/HelperSet.phpv	  ô©|Rv	  ÿÓ„Î∂      @   symfony/console/Symfony/Component/Console/Helper/TableHelper.phpª)  ô©|Rª)  "¸∂      D   symfony/console/Symfony/Component/Console/Helper/HelperInterface.phpÛ  ô©|RÛ  †zÖ◊∂      C   symfony/console/Symfony/Component/Console/Helper/ProgressHelper.php–-  ô©|R–-  ‘¨∫;∂      E   symfony/console/Symfony/Component/Console/Helper/DescriptorHelper.phpÔ	  ô©|RÔ	  ì’Ø∂      A   symfony/console/Symfony/Component/Console/Helper/DialogHelper.phpÃ?  ô©|RÃ?  ∏Ì∂      D   symfony/console/Symfony/Component/Console/Helper/FormatterHelper.phpº  ô©|Rº  g∂se∂      B   symfony/console/Symfony/Component/Console/Output/ConsoleOutput.php∫  ô©|R∫  e∑∏æ∂      A   symfony/console/Symfony/Component/Console/Output/StreamOutput.phpM  ô©|RM  ªX˙z∂      K   symfony/console/Symfony/Component/Console/Output/ConsoleOutputInterface.phpÇ  ô©|RÇ  :‡2p∂      ?   symfony/console/Symfony/Component/Console/Output/NullOutput.php‘  ô©|R‘  F£$_∂      ;   symfony/console/Symfony/Component/Console/Output/Output.php™  ô©|R™  ∫D{r∂      D   symfony/console/Symfony/Component/Console/Output/OutputInterface.phpM  ô©|RM  é’zà∂      3   symfony/console/Symfony/Component/Console/Shell.phpF  ô©|RF  _°Î∂      =   symfony/console/Symfony/Component/Console/Input/ArgvInput.php∏)  ô©|R∏)  —Q∂      ?   symfony/console/Symfony/Component/Console/Input/StringInput.php˚
-  ô©|R˚
-  ´ŒÇ=∂      B   symfony/console/Symfony/Component/Console/Input/InputInterface.php&  ô©|R&  o3ﬁ∂      ?   symfony/console/Symfony/Component/Console/Input/InputOption.phpV  ô©|RV  ¨”O√∂      9   symfony/console/Symfony/Component/Console/Input/Input.php˛  ô©|R˛  (QÖ/∂      A   symfony/console/Symfony/Component/Console/Input/InputArgument.php◊  ô©|R◊  Çö'∂      >   symfony/console/Symfony/Component/Console/Input/ArrayInput.php%  ô©|R%  p∂≤ó∂      C   symfony/console/Symfony/Component/Console/Input/InputDefinition.php–.  ô©|R–.  íé ∂      P   symfony/console/Symfony/Component/Console/Formatter/OutputFormatterInterface.php„  ô©|R„  Jp˘À∂      G   symfony/console/Symfony/Component/Console/Formatter/OutputFormatter.php  ô©|R  ^ã†≥∂      L   symfony/console/Symfony/Component/Console/Formatter/OutputFormatterStyle.php  ô©|R  ∆©∂      Q   symfony/console/Symfony/Component/Console/Formatter/OutputFormatterStyleStack.php⁄
-  ô©|R⁄
-  dòBÓ∂      U   symfony/console/Symfony/Component/Console/Formatter/OutputFormatterStyleInterface.phpü  ô©|Rü  5è¶∂      @   symfony/console/Symfony/Component/Console/Event/ConsoleEvent.php∏  ô©|R∏  æı
-û∂      G   symfony/console/Symfony/Component/Console/Event/ConsoleCommandEvent.php  ô©|R  u≥¸∂      I   symfony/console/Symfony/Component/Console/Event/ConsoleTerminateEvent.php   ô©|R   ·É(∂      I   symfony/console/Symfony/Component/Console/Event/ConsoleExceptionEvent.php;  ô©|R;  4€÷ç∂      B   symfony/console/Symfony/Component/Console/Tester/CommandTester.phpÜ  ô©|RÜ  ,Œ˙—∂      F   symfony/console/Symfony/Component/Console/Tester/ApplicationTester.phpY  ô©|RY  A$·‹∂         php-timer/Timer.php6  ô©|R6  #X6Ò∂         fdomdocument/fDOMException.phpß  ô©|Rß  û”˙µ∂      $   fdomdocument/XPathQueryException.php¯  ô©|R¯  èŸ÷∂         fdomdocument/fDOMDocument.phpP  ô©|RP  ∫Ì'3∂      %   fdomdocument/fDOMDocumentFragment.php9  ô©|R9  tè%∂         fdomdocument/fDOMElement.phpù,  ô©|Rù,  ˛ﬂuO∂         fdomdocument/fDOMNode.phpK
-  ô©|RK
-  A~	∂         fdomdocument/XPathQuery.phpi  ô©|Ri  f‡BÒ∂         fdomdocument/fDOMXPath.php§  ô©|R§  @QÕ∂         finder-facade/FinderFacade.php—  ô©|R—  ’ç≠±∂         finder-facade/Configuration.php{  ô©|R{  rò°æ∂      <?php
+  §49S{
+  9!ê2∂      G   symfony/finder/Symfony/Component/Finder/Adapter/AbstractFindAdapter.phpò)  §49Sò)  QJÓò∂      D   symfony/finder/Symfony/Component/Finder/Adapter/AdapterInterface.php±  §49S±  –ì∂      C   symfony/finder/Symfony/Component/Finder/Adapter/AbstractAdapter.php  §49S  Ö	∂      0   symfony/finder/Symfony/Component/Finder/Glob.phpb  §49Sb  úg@M∂      7   symfony/finder/Symfony/Component/Finder/SplFileInfo.php  §49S  ˛5è9∂      G   symfony/finder/Symfony/Component/Finder/Comparator/NumberComparator.php
+  §49S
+  æP¡∂      E   symfony/finder/Symfony/Component/Finder/Comparator/DateComparator.php∫  §49S∫  ß”— ∂      A   symfony/finder/Symfony/Component/Finder/Comparator/Comparator.php
+  §49S
+  |F†z∂      A   symfony/finder/Symfony/Component/Finder/Expression/Expression.php&
+  §49S&
+  ÅÎá∂      <   symfony/finder/Symfony/Component/Finder/Expression/Regex.php§  §49S§  [«êØ∂      ;   symfony/finder/Symfony/Component/Finder/Expression/Glob.php  §49S  äE±∂      E   symfony/finder/Symfony/Component/Finder/Expression/ValueInterface.phpH  §49SH  –¯"∂      S   symfony/finder/Symfony/Component/Finder/Exception/OperationNotPermitedException.php¢  §49S¢  P∂£ô∂      K   symfony/finder/Symfony/Component/Finder/Exception/AccessDeniedException.php´  §49S´   cWﬁ∂      H   symfony/finder/Symfony/Component/Finder/Exception/ExceptionInterface.phpÔ  §49SÔ  Ä7∂      R   symfony/finder/Symfony/Component/Finder/Exception/ShellCommandFailureException.php9  §49S9  ≤º∂      M   symfony/finder/Symfony/Component/Finder/Exception/AdapterFailureException.phpÅ  §49SÅ  >√@∂      2   symfony/finder/Symfony/Component/Finder/Finder.phpﬁV  §49SﬁV  ªd∂      =   symfony/console/Symfony/Component/Console/Command/Command.php7@  §49S7@  ∆ò™∂      A   symfony/console/Symfony/Component/Console/Command/HelpCommand.php_
+  §49S_
+  ím∂      A   symfony/console/Symfony/Component/Console/Command/ListCommand.php¿
+  §49S¿
+   x≠∂      C   symfony/console/Symfony/Component/Console/Descriptor/Descriptor.phpº  §49Sº  âm™∂      L   symfony/console/Symfony/Component/Console/Descriptor/DescriptorInterface.php·  §49S·  JZ0<∂      G   symfony/console/Symfony/Component/Console/Descriptor/TextDescriptor.php¯  §49S¯  π¯∂      F   symfony/console/Symfony/Component/Console/Descriptor/XmlDescriptor.php%  §49S%  Ô∂≤Õ∂      O   symfony/console/Symfony/Component/Console/Descriptor/ApplicationDescription.phpπ  §49Sπ  øs§X∂      G   symfony/console/Symfony/Component/Console/Descriptor/JsonDescriptor.phpu  §49Su  DÑÆ∂      K   symfony/console/Symfony/Component/Console/Descriptor/MarkdownDescriptor.php.  §49S.  ™lPæ∂      9   symfony/console/Symfony/Component/Console/Application.php“ä  §49S“ä  ≠L˚U∂      ;   symfony/console/Symfony/Component/Console/ConsoleEvents.php¯  §49S¯  \0¬E∂      ;   symfony/console/Symfony/Component/Console/Helper/Helper.php´  §49S´  Z\ß∂      >   symfony/console/Symfony/Component/Console/Helper/HelperSet.phpﬁ	  §49Sﬁ	  ïπ∂      E   symfony/console/Symfony/Component/Console/Helper/InputAwareHelper.phpÎ  §49SÎ  sﬂ H∂      @   symfony/console/Symfony/Component/Console/Helper/TableHelper.php2  §49S2  Î° ø∂      D   symfony/console/Symfony/Component/Console/Helper/HelperInterface.phpÛ  §49SÛ  †zÖ◊∂      C   symfony/console/Symfony/Component/Console/Helper/ProgressHelper.phpo.  §49So.  |p∂      E   symfony/console/Symfony/Component/Console/Helper/DescriptorHelper.php
+  §49S
+  "U•1∂      A   symfony/console/Symfony/Component/Console/Helper/DialogHelper.php>@  §49S>@  &‚∂      D   symfony/console/Symfony/Component/Console/Helper/FormatterHelper.phpº  §49Sº  g∂se∂      B   symfony/console/Symfony/Component/Console/Output/ConsoleOutput.php}  §49S}  Å√œ±∂      A   symfony/console/Symfony/Component/Console/Output/StreamOutput.phpM  §49SM  å,Q´∂      C   symfony/console/Symfony/Component/Console/Output/BufferedOutput.phph  §49Sh  t|X4∂      K   symfony/console/Symfony/Component/Console/Output/ConsoleOutputInterface.phpK  §49SK  Ï≈0û∂      ?   symfony/console/Symfony/Component/Console/Output/NullOutput.php‘  §49S‘  F£$_∂      ;   symfony/console/Symfony/Component/Console/Output/Output.php;  §49S;  sÈ¡Q∂      D   symfony/console/Symfony/Component/Console/Output/OutputInterface.phpM  §49SM  é’zà∂      3   symfony/console/Symfony/Component/Console/Shell.php˚  §49S˚  2V∂      =   symfony/console/Symfony/Component/Console/Input/ArgvInput.php∏)  §49S∏)  —Q∂      ?   symfony/console/Symfony/Component/Console/Input/StringInput.php˚
+  §49S˚
+  ´ŒÇ=∂      B   symfony/console/Symfony/Component/Console/Input/InputInterface.php6  §49S6  ≈AM∂      ?   symfony/console/Symfony/Component/Console/Input/InputOption.phpV  §49SV  ¨”O√∂      9   symfony/console/Symfony/Component/Console/Input/Input.php   §49S   gm(∂      A   symfony/console/Symfony/Component/Console/Input/InputArgument.php◊  §49S◊  Çö'∂      >   symfony/console/Symfony/Component/Console/Input/ArrayInput.php%  §49S%  p∂≤ó∂      C   symfony/console/Symfony/Component/Console/Input/InputDefinition.php(0  §49S(0  1·E∂      G   symfony/console/Symfony/Component/Console/Input/InputAwareInterface.php^  §49S^  9KËh∂      P   symfony/console/Symfony/Component/Console/Formatter/OutputFormatterInterface.php„  §49S„  Jp˘À∂      G   symfony/console/Symfony/Component/Console/Formatter/OutputFormatter.php   §49S   	+<∂      L   symfony/console/Symfony/Component/Console/Formatter/OutputFormatterStyle.php&  §49S&  o«åå∂      Q   symfony/console/Symfony/Component/Console/Formatter/OutputFormatterStyleStack.php‰
+  §49S‰
+  ˘v™∂      U   symfony/console/Symfony/Component/Console/Formatter/OutputFormatterStyleInterface.phpü  §49Sü  5è¶∂      @   symfony/console/Symfony/Component/Console/Event/ConsoleEvent.php∏  §49S∏  æı
+û∂      G   symfony/console/Symfony/Component/Console/Event/ConsoleCommandEvent.php¿  §49S¿  ||-&∂      I   symfony/console/Symfony/Component/Console/Event/ConsoleTerminateEvent.php&  §49S&  ¥Zñ§∂      I   symfony/console/Symfony/Component/Console/Event/ConsoleExceptionEvent.phpA  §49SA  s§K∂      B   symfony/console/Symfony/Component/Console/Tester/CommandTester.php  §49S  ~H(R∂      F   symfony/console/Symfony/Component/Console/Tester/ApplicationTester.phpf  §49Sf  Éhr•∂         php-timer/Timer.php6  §49S6  #X6Ò∂         manifest.txt¥   §49S¥   X¿ê‚∂         fdomdocument/fDOMException.php®  §49S®  B’%∂      $   fdomdocument/XPathQueryException.php¯  §49S¯  èŸ÷∂         fdomdocument/fDOMDocument.phpØR  §49SØR  e?∂      %   fdomdocument/fDOMDocumentFragment.php:  §49S:  ß<öe∂      !   fdomdocument/css/NthChildRule.phpk  §49Sk  f≤]ú∂         fdomdocument/css/Translator.phpÇ  §49SÇ  0≤L3∂      $   fdomdocument/css/DollarEqualRule.phpw  §49Sw  }ÿ∂         fdomdocument/css/NotRule.phpò  §49Sò  ™!8_∂      "   fdomdocument/css/RuleInterface.php–   §49S–   Œ,ó·∂         fdomdocument/css/RegexRule.php«  §49S«  ˘ÆÅs∂         fdomdocument/fDOMElement.php@0  §49S@0  ú€,G∂         fdomdocument/fDOMNode.phpÌ  §49SÌ  ¢◊ï∂         fdomdocument/XPathQuery.phpj  §49Sj  Ä˜ñ∂         fdomdocument/autoload.phpæ  §49Sæ  !ÂH∂         fdomdocument/fDOMXPath.phpÁ  §49SÁ  ™Æ<[∂         finder-facade/FinderFacade.php—  §49S—  ’ç≠±∂         finder-facade/Configuration.php{  §49S{  rò°æ∂      <?php
 /**
- * Copyright (c) 2013, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2013-2014, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -191,113 +217,93 @@ __HALT_COMPILER(); ?>
  *
  * @package   Version
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright 2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright 2013-2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link      http://github.com/sebastianbergmann/version
  * @since     File available since Release 1.0.0
  */
 
-namespace SebastianBergmann
+namespace SebastianBergmann;
+
+/**
+ * @package   Version
+ * @author    Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright 2013-2014 Sebastian Bergmann <sebastian@phpunit.de>
+ * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
+ * @link      http://github.com/sebastianbergmann/version
+ * @since     Class available since Release 1.0.0
+ */
+class Version
 {
+    private $path;
+    private $release;
+    private $version;
+
     /**
-     * @package   Version
-     * @author    Sebastian Bergmann <sebastian@phpunit.de>
-     * @copyright 2013 Sebastian Bergmann <sebastian@phpunit.de>
-     * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
-     * @link      http://github.com/sebastianbergmann/version
-     * @since     Class available since Release 1.0.0
+     * @param string $release
+     * @param string $path
      */
-    class Version
+    public function __construct($release, $path)
     {
-        private $path;
-        private $release;
-        private $version;
+        $this->release = $release;
+        $this->path    = $path;
+    }
 
-        /**
-         * @param string $release
-         * @param string $path
-         */
-        public function __construct($release, $path)
-        {
-            $this->release = $release;
-            $this->path    = $path;
-        }
+    /**
+     * @return string
+     */
+    public function getVersion()
+    {
+        if ($this->version === null) {
+            if (count(explode('.', $this->release)) == 3) {
+                $this->version = $this->release;
+            } else {
+                $this->version = $this->release . '-dev';
+            }
 
-        /**
-         * @return string
-         */
-        public function getVersion()
-        {
-            if ($this->version === NULL) {
+            $git = $this->getGitInformation($this->path);
+
+            if ($git) {
                 if (count(explode('.', $this->release)) == 3) {
-                    $this->version = $this->release;
+                    $this->version = $git;
                 } else {
-                    $this->version = $this->release . '-dev';
-                }
+                    $git = explode('-', $git);
 
-                $git = $this->getGitInformation($this->path);
-
-                if ($git) {
-                    if (count(explode('.', $this->release)) == 3) {
-                        $this->version = $git;
-                    } else {
-                        $git = explode('-', $git);
-
-                        $this->version = $this->release . '-' . $git[2];
-                    }
+                    $this->version = $this->release . '-' . $git[2];
                 }
             }
-
-            return $this->version;
         }
 
-        /**
-         * @param  string $path
-         * @return boolean|string
-         */
-        private function getGitInformation($path)
-        {
-            if (!$this->isGitRepository($path)) {
-                return FALSE;
-            }
+        return $this->version;
+    }
 
-            $dir = getcwd();
-            chdir($path);
-            $result = exec('git describe --tags 2>&1', $output, $returnCode);
-            chdir($dir);
-
-            if ($returnCode !== 0) {
-                return FALSE;
-            }
-
-            return $result;
+    /**
+     * @param  string $path
+     * @return boolean|string
+     */
+    private function getGitInformation($path)
+    {
+        if (!is_dir($path . DIRECTORY_SEPARATOR . '.git')) {
+            return false;
         }
 
-        /**
-         * @param  string $path
-         * @return boolean
-         */
-        private function isGitRepository($path)
-        {
-            if (is_dir($path . DIRECTORY_SEPARATOR . '.git')) {
-                return TRUE;
-            }
+        $dir = getcwd();
+        chdir($path);
+        $result = @exec('git describe --tags 2>&1', $output, $returnCode);
+        chdir($dir);
 
-            $path = dirname($path);
-
-            if (strlen($path) == strlen(dirname($path))) {
-                return FALSE;
-            }
-
-            return $this->isGitRepository($path);
+        if ($returnCode !== 0) {
+            return false;
         }
+
+        return $result;
     }
 }
 <?php
 /**
  * phpcpd
  *
- * Copyright (c) 2009-2013, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2009-2014, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -331,7 +337,7 @@ namespace SebastianBergmann
  *
  * @package   phpcpd
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright 2009-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright 2009-2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @since     File available since Release 1.1.0
  */
@@ -344,7 +350,7 @@ use SebastianBergmann\PHPCPD\CodeClone;
  * A map of exact clones.
  *
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright 2009-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright 2009-2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link      http://github.com/sebastianbergmann/phpcpd/tree
  * @since     Class available since Release 1.1.0
@@ -503,7 +509,7 @@ class CodeCloneMap implements \Countable, \Iterator
 /**
  * phpcpd
  *
- * Copyright (c) 2009-2013, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2009-2014, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -537,7 +543,7 @@ class CodeCloneMap implements \Countable, \Iterator
  *
  * @package   phpcpd
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright 2009-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright 2009-2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @since     File available since Release 1.5.0
  */
@@ -547,7 +553,7 @@ namespace SebastianBergmann\PHPCPD;
  * Represents an exact code clone file.
  *
  * @author    Alexander Kazakov <alexshadow007@gmail.com>
- * @copyright 2009-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright 2009-2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link      http://github.com/sebastianbergmann/phpcpd/tree
  * @since     Class available since Release 1.5.0
@@ -608,7 +614,7 @@ class CodeCloneFile
 /**
  * phpcpd
  *
- * Copyright (c) 2009-2013, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2009-2014, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -642,7 +648,7 @@ class CodeCloneFile
  *
  * @package   phpcpd
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright 2009-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright 2009-2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @since     File available since Release 1.0.0
  */
@@ -658,7 +664,7 @@ use Symfony\Component\Console\Helper\ProgressHelper;
  *
  * @author    Johann-Peter Hartmann <johann-peter.hartmann@mayflower.de>
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright 2009-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright 2009-2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link      http://github.com/sebastianbergmann/phpcpd/tree
  * @since     Class available since Release 1.0.0
@@ -721,7 +727,7 @@ class Detector
 /**
  * phpcpd
  *
- * Copyright (c) 2009-2013, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2009-2014, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -755,7 +761,7 @@ class Detector
  *
  * @package   phpcpd
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright 2009-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright 2009-2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @since     File available since Release 1.4.0
  */
@@ -768,7 +774,7 @@ use SebastianBergmann\PHPCPD\CodeCloneMap;
  * Abstract base class for strategies to detect code clones.
  *
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright 2009-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright 2009-2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link      http://github.com/sebastianbergmann/phpcpd/tree
  * @since     Class available since Release 1.4.0
@@ -810,7 +816,7 @@ abstract class AbstractStrategy
 /**
  * phpcpd
  *
- * Copyright (c) 2009-2013, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2009-2014, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -844,7 +850,7 @@ abstract class AbstractStrategy
  *
  * @package   phpcpd
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright 2009-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright 2009-2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @since     File available since Release 1.4.0
  */
@@ -860,7 +866,7 @@ use SebastianBergmann\PHPCPD\CodeCloneMap;
  *
  * @author    Johann-Peter Hartmann <johann-peter.hartmann@mayflower.de>
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright 2009-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright 2009-2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link      http://github.com/sebastianbergmann/phpcpd/tree
  * @since     Class available since Release 1.4.0
@@ -1013,7 +1019,7 @@ class DefaultStrategy extends AbstractStrategy
 /**
  * phpcpd
  *
- * Copyright (c) 2009-2013, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2009-2014, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -1047,7 +1053,7 @@ class DefaultStrategy extends AbstractStrategy
  *
  * @package   phpcpd
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright 2009-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright 2009-2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @since     File available since Release 2.0.0
  */
@@ -1062,7 +1068,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * A ResultPrinter for the TextUI.
  *
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright 2009-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright 2009-2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link      http://github.com/sebastianbergmann/phpcpd/tree
  * @since     Class available since Release 2.0.0
@@ -1099,7 +1105,7 @@ class Text
 
                 foreach ($clone->getFiles() as $file) {
                     $buffer .= sprintf(
-                        "\r\t%s:%d-%d\n ",
+                        "\t%s:%d-%d\n ",
                         $file->getName(),
                         $file->getStartLine(),
                         $file->getStartLine() + $clone->getSize()
@@ -1136,7 +1142,7 @@ class Text
 /**
  * phpcpd
  *
- * Copyright (c) 2009-2013, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2009-2014, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -1170,7 +1176,7 @@ class Text
  *
  * @package   phpcpd
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright 2009-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright 2009-2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @since     File available since Release 1.0.0
  */
@@ -1183,7 +1189,7 @@ use SebastianBergmann\PHPCPD\CodeCloneMap;
  * Implementation of AbstractXmlLogger that writes in PMD-CPD format.
  *
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright 2009-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright 2009-2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link      http://github.com/sebastianbergmann/phpcpd/tree
  * @since     Class available since Release 1.0.0
@@ -1237,7 +1243,7 @@ class PMD extends AbstractXmlLogger
 /**
  * phpcpd
  *
- * Copyright (c) 2009-2013, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2009-2014, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -1271,7 +1277,7 @@ class PMD extends AbstractXmlLogger
  *
  * @package   phpcpd
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright 2009-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright 2009-2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @since     File available since Release 1.0.0
  */
@@ -1284,7 +1290,7 @@ use SebastianBergmann\PHPCPD\CodeCloneMap;
  * Base class for XML loggers.
  *
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright 2009-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright 2009-2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link      http://github.com/sebastianbergmann/phpcpd/tree
  * @since     Class available since Release 1.0.0
@@ -1377,7 +1383,7 @@ abstract class AbstractXmlLogger
 /**
  * phpcpd
  *
- * Copyright (c) 2009-2013, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2009-2014, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -1411,7 +1417,7 @@ abstract class AbstractXmlLogger
  *
  * @package   phpcpd
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright 2009-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright 2009-2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @since     File available since Release 1.1.0
  */
@@ -1424,7 +1430,7 @@ use SebastianBergmann\PHPCPD\CodeCloneFile;
  * Represents an exact code clone.
  *
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright 2009-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright 2009-2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link      http://github.com/sebastianbergmann/phpcpd/tree
  * @since     Class available since Release 1.1.0
@@ -1571,7 +1577,7 @@ class CodeClone
 /**
  * phpcpd
  *
- * Copyright (c) 2009-2013, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2009-2014, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -1605,7 +1611,7 @@ class CodeClone
  *
  * @package   phpcpd
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright 2009-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright 2009-2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @since     File available since Release 2.0.0
  */
@@ -1625,7 +1631,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright 2009-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright 2009-2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link      http://github.com/sebastianbergmann/phpcpd/tree
  * @since     Class available since Release 2.0.0
@@ -1642,7 +1648,8 @@ class Command extends AbstractCommand
                  array(
                      new InputArgument(
                          'values',
-                         InputArgument::IS_ARRAY
+                         InputArgument::IS_ARRAY,
+                         'Files and directories to analyze'
                      )
                  )
              )
@@ -1664,7 +1671,7 @@ class Command extends AbstractCommand
                  'exclude',
                  null,
                  InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-                 'Exclude a directory from code analysis'
+                 'Exclude a directory from code analysis (must be relative to source)'
              )
              ->addOption(
                  'log-pmd',
@@ -1791,7 +1798,7 @@ class Command extends AbstractCommand
 /**
  * phpcpd
  *
- * Copyright (c) 2009-2013, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2009-2014, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -1825,7 +1832,7 @@ class Command extends AbstractCommand
  *
  * @package   phpcpd
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright 2009-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright 2009-2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @since     File available since Release 2.0.0
  */
@@ -1843,7 +1850,7 @@ use Symfony\Component\Console\Input\ArrayInput;
  * TextUI frontend for PHPCPD.
  *
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright 2009-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright 2009-2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link      http://github.com/sebastianbergmann/phpcpd/tree
  * @since     Class available since Release 2.0.0
@@ -1852,7 +1859,7 @@ class Application extends AbstractApplication
 {
     public function __construct()
     {
-        $version = new Version('2.0.0', __DIR__);
+        $version = new Version('2.0.1', dirname(dirname(__DIR__)));
         parent::__construct('phpcpd', $version->getVersion());
     }
 
@@ -1951,12 +1958,12 @@ class Command
     /**
      * @var array
      */
-    private $bits;
+    private $bits = array();
 
     /**
      * @var array
      */
-    private $labels;
+    private $labels = array();
 
     /**
      * @var \Closure|null
@@ -1966,13 +1973,11 @@ class Command
     /**
      * Constructor.
      *
-     * @param Command $parent Parent command
+     * @param Command|null $parent Parent command
      */
     public function __construct(Command $parent = null)
     {
         $this->parent = $parent;
-        $this->bits   = array();
-        $this->labels = array();
     }
 
     /**
@@ -1988,7 +1993,7 @@ class Command
     /**
      * Creates a new Command instance.
      *
-     * @param Command $parent Parent command
+     * @param Command|null $parent Parent command
      *
      * @return Command New Command instance
      */
@@ -2159,7 +2164,7 @@ class Command
     }
 
     /**
-     * @return callable|null
+     * @return \Closure|null
      */
     public function getErrorHandler()
     {
@@ -2199,10 +2204,10 @@ class Command
     public function join()
     {
         return implode(' ', array_filter(
-            array_map(function($bit) {
+            array_map(function ($bit) {
                 return $bit instanceof Command ? $bit->join() : ($bit ?: null);
             }, $this->bits),
-            function($bit) { return null !== $bit; }
+            function ($bit) { return null !== $bit; }
         ));
     }
 
@@ -2274,7 +2279,7 @@ class Shell
     public function testCommand($command)
     {
         if (self::TYPE_WINDOWS === $this->type) {
-            // todo: find a way to test if windows command exists
+            // todo: find a way to test if Windows command exists
             return false;
         }
 
@@ -3159,8 +3164,8 @@ use Symfony\Component\Finder\Expression\Expression;
  */
 abstract class MultiplePcreFilterIterator extends FilterIterator
 {
-    protected $matchRegexps;
-    protected $noMatchRegexps;
+    protected $matchRegexps = array();
+    protected $noMatchRegexps = array();
 
     /**
      * Constructor.
@@ -3171,12 +3176,10 @@ abstract class MultiplePcreFilterIterator extends FilterIterator
      */
     public function __construct(\Iterator $iterator, array $matchPatterns, array $noMatchPatterns)
     {
-        $this->matchRegexps = array();
         foreach ($matchPatterns as $pattern) {
             $this->matchRegexps[] = $this->toRegex($pattern);
         }
 
-        $this->noMatchRegexps = array();
         foreach ($noMatchPatterns as $pattern) {
             $this->noMatchRegexps[] = $this->toRegex($pattern);
         }
@@ -3288,7 +3291,7 @@ namespace Symfony\Component\Finder\Iterator;
  */
 class ExcludeDirectoryFilterIterator extends FilterIterator
 {
-    private $patterns;
+    private $patterns = array();
 
     /**
      * Constructor.
@@ -3298,7 +3301,6 @@ class ExcludeDirectoryFilterIterator extends FilterIterator
      */
     public function __construct(\Iterator $iterator, array $directories)
     {
-        $this->patterns = array();
         foreach ($directories as $directory) {
             $this->patterns[] = '#(^|/)'.preg_quote($directory, '#').'(/|$)#';
         }
@@ -4882,7 +4884,7 @@ class Expression implements ValueInterface
     public function getGlob()
     {
         if (self::TYPE_GLOB !== $this->value->getType()) {
-            throw new \LogicException('Regex cant be transformed to glob.');
+            throw new \LogicException('Regex can\'t be transformed to glob.');
         }
 
         return $this->value;
@@ -5741,7 +5743,7 @@ class Finder implements \IteratorAggregate, \Countable
      */
     public function getAdapters()
     {
-        return array_values(array_map(function(array $adapter) {
+        return array_values(array_map(function (array $adapter) {
             return $adapter['adapter'];
         }, $this->adapters));
     }
@@ -6430,6 +6432,7 @@ use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Helper\HelperSet;
@@ -6445,13 +6448,13 @@ class Command
 {
     private $application;
     private $name;
-    private $aliases;
+    private $aliases = array();
     private $definition;
     private $help;
     private $description;
-    private $ignoreValidationErrors;
-    private $applicationDefinitionMerged;
-    private $applicationDefinitionMergedWithArgs;
+    private $ignoreValidationErrors = false;
+    private $applicationDefinitionMerged = false;
+    private $applicationDefinitionMergedWithArgs = false;
     private $code;
     private $synopsis;
     private $helperSet;
@@ -6459,7 +6462,7 @@ class Command
     /**
      * Constructor.
      *
-     * @param string $name The name of the command
+     * @param string|null $name The name of the command; passing null means it must be set in configure()
      *
      * @throws \LogicException When the command name is empty
      *
@@ -6468,10 +6471,6 @@ class Command
     public function __construct($name = null)
     {
         $this->definition = new InputDefinition();
-        $this->ignoreValidationErrors = false;
-        $this->applicationDefinitionMerged = false;
-        $this->applicationDefinitionMergedWithArgs = false;
-        $this->aliases = array();
 
         if (null !== $name) {
             $this->setName($name);
@@ -6814,7 +6813,7 @@ class Command
      *
      * @return Command The current instance
      *
-     * @throws \InvalidArgumentException When command name given is empty
+     * @throws \InvalidArgumentException When the name is invalid
      *
      * @api
      */
@@ -6924,6 +6923,8 @@ class Command
      *
      * @return Command The current instance
      *
+     * @throws \InvalidArgumentException When an alias is invalid
+     *
      * @api
      */
     public function setAliases($aliases)
@@ -6989,8 +6990,10 @@ class Command
     public function asText()
     {
         $descriptor = new TextDescriptor();
+        $output = new BufferedOutput(BufferedOutput::VERBOSITY_NORMAL, true);
+        $descriptor->describe($output, $this, array('raw_output' => true));
 
-        return $descriptor->describe($this);
+        return $output->fetch();
     }
 
     /**
@@ -7006,12 +7009,28 @@ class Command
     {
         $descriptor = new XmlDescriptor();
 
-        return $descriptor->describe($this, array('as_dom' => $asDom));
+        if ($asDom) {
+            return $descriptor->getCommandDocument($this);
+        }
+
+        $output = new BufferedOutput();
+        $descriptor->describe($output, $this);
+
+        return $output->fetch();
     }
 
+    /**
+     * Validates a command name.
+     *
+     * It must be non-empty and parts can optionally be separated by ":".
+     *
+     * @param string $name
+     *
+     * @throws \InvalidArgumentException When the name is invalid
+     */
     private function validateName($name)
     {
-        if (!preg_match('/^[^\:]+(\:[^\:]+)*$/', $name)) {
+        if (!preg_match('/^[^\:]++(\:[^\:]++)*$/', $name)) {
             throw new \InvalidArgumentException(sprintf('Command name "%s" is invalid.', $name));
         }
     }
@@ -7056,7 +7075,7 @@ class HelpCommand extends Command
             ->setDefinition(array(
                 new InputArgument('command_name', InputArgument::OPTIONAL, 'The command name', 'help'),
                 new InputOption('xml', null, InputOption::VALUE_NONE, 'To output help as XML'),
-                new InputOption('format', null, InputOption::VALUE_REQUIRED, 'To output help in other formats'),
+                new InputOption('format', null, InputOption::VALUE_REQUIRED, 'To output help in other formats', 'txt'),
                 new InputOption('raw', null, InputOption::VALUE_NONE, 'To output raw command help'),
             ))
             ->setDescription('Displays help for a command')
@@ -7099,7 +7118,11 @@ EOF
         }
 
         $helper = new DescriptorHelper();
-        $helper->describe($output, $this->command, $input->getOption('format'), $input->getOption('raw'));
+        $helper->describe($output, $this->command, array(
+            'format' => $input->getOption('format'),
+            'raw'    => $input->getOption('raw'),
+        ));
+
         $this->command = null;
     }
 }
@@ -7178,7 +7201,11 @@ EOF
         }
 
         $helper = new DescriptorHelper();
-        $helper->describe($output, $this->getApplication(), $input->getOption('format'), $input->getOption('raw'), $input->getArgument('namespace'));
+        $helper->describe($output, $this->getApplication(), array(
+            'format'    => $input->getOption('format'),
+            'raw_text'  => $input->getOption('raw'),
+            'namespace' => $input->getArgument('namespace'),
+        ));
     }
 
     /**
@@ -7190,7 +7217,7 @@ EOF
             new InputArgument('namespace', InputArgument::OPTIONAL, 'The namespace name'),
             new InputOption('xml', null, InputOption::VALUE_NONE, 'To output list as XML'),
             new InputOption('raw', null, InputOption::VALUE_NONE, 'To output raw command list'),
-            new InputOption('format', null, InputOption::VALUE_REQUIRED, 'To output list in other formats'),
+            new InputOption('format', null, InputOption::VALUE_REQUIRED, 'To output list in other formats', 'txt'),
         ));
     }
 }
@@ -7212,28 +7239,55 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @author Jean-Fran√ßois Simon <jeanfrancois.simon@sensiolabs.com>
  */
 abstract class Descriptor implements DescriptorInterface
 {
-    public function describe($object, array $options = array())
+    /**
+     * @var OutputInterface
+     */
+    private $output;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function describe(OutputInterface $output, $object, array $options = array())
     {
+        $this->output = $output;
+
         switch (true) {
             case $object instanceof InputArgument:
-                return $this->describeInputArgument($object, $options);
+                $this->describeInputArgument($object, $options);
+                break;
             case $object instanceof InputOption:
-                return $this->describeInputOption($object, $options);
+                $this->describeInputOption($object, $options);
+                break;
             case $object instanceof InputDefinition:
-                return $this->describeInputDefinition($object, $options);
+                $this->describeInputDefinition($object, $options);
+                break;
             case $object instanceof Command:
-                return $this->describeCommand($object, $options);
+                $this->describeCommand($object, $options);
+                break;
             case $object instanceof Application:
-                return $this->describeApplication($object, $options);
+                $this->describeApplication($object, $options);
+                break;
+            default:
+                throw new \InvalidArgumentException(sprintf('Object of type "%s" is not describable.', get_class($object)));
         }
+    }
 
-        throw new \InvalidArgumentException(sprintf('Object of type "%s" is not describable.', get_class($object)));
+    /**
+     * Writes content to output.
+     *
+     * @param string  $content
+     * @param boolean $decorated
+     */
+    protected function write($content, $decorated = false)
+    {
+        $this->output->write($content, false, $decorated ? OutputInterface::OUTPUT_NORMAL : OutputInterface::OUTPUT_RAW);
     }
 
     /**
@@ -7299,6 +7353,8 @@ abstract class Descriptor implements DescriptorInterface
 
 namespace Symfony\Component\Console\Descriptor;
 
+use Symfony\Component\Console\Output\OutputInterface;
+
 /**
  * Descriptor interface.
  *
@@ -7309,12 +7365,11 @@ interface DescriptorInterface
     /**
      * Describes an InputArgument instance.
      *
-     * @param object $object
-     * @param array  $options
-     *
-     * @return string|mixed
+     * @param OutputInterface $output
+     * @param object          $object
+     * @param array           $options
      */
-    public function describe($object, array $options = array());
+    public function describe(OutputInterface $output, $object, array $options = array());
 }
 <?php
 
@@ -7354,10 +7409,12 @@ class TextDescriptor extends Descriptor
         }
 
         $nameWidth = isset($options['name_width']) ? $options['name_width'] : strlen($argument->getName());
-        $output = str_replace("\n", "\n".str_repeat(' ', $nameWidth + 2), $argument->getDescription());
-        $output = sprintf(" <info>%-${nameWidth}s</info> %s%s", $argument->getName(), $output, $default);
 
-        return isset($options['raw_text']) && $options['raw_text'] ? strip_tags($output) : $output;
+        $this->writeText(sprintf(" <info>%-${nameWidth}s</info> %s%s",
+            $argument->getName(),
+            str_replace("\n", "\n".str_repeat(' ', $nameWidth + 2), $argument->getDescription()),
+            $default
+        ), $options);
     }
 
     /**
@@ -7374,15 +7431,13 @@ class TextDescriptor extends Descriptor
         $nameWidth = isset($options['name_width']) ? $options['name_width'] : strlen($option->getName());
         $nameWithShortcutWidth = $nameWidth - strlen($option->getName()) - 2;
 
-        $output = sprintf(" <info>%s</info> %-${nameWithShortcutWidth}s%s%s%s",
+        $this->writeText(sprintf(" <info>%s</info> %-${nameWithShortcutWidth}s%s%s%s",
             '--'.$option->getName(),
             $option->getShortcut() ? sprintf('(-%s) ', $option->getShortcut()) : '',
             str_replace("\n", "\n".str_repeat(' ', $nameWidth + 2), $option->getDescription()),
             $default,
             $option->isArray() ? '<comment> (multiple values allowed)</comment>' : ''
-        );
-
-        return isset($options['raw_text']) && $options['raw_text'] ? strip_tags($output) : $output;
+        ), $options);
     }
 
     /**
@@ -7403,27 +7458,27 @@ class TextDescriptor extends Descriptor
         }
         ++$nameWidth;
 
-        $messages = array();
-
         if ($definition->getArguments()) {
-            $messages[] = '<comment>Arguments:</comment>';
+            $this->writeText('<comment>Arguments:</comment>', $options);
+            $this->writeText("\n");
             foreach ($definition->getArguments() as $argument) {
-                $messages[] = $this->describeInputArgument($argument, array('name_width' => $nameWidth));
+                $this->describeInputArgument($argument, array_merge($options, array('name_width' => $nameWidth)));
+                $this->writeText("\n");
             }
-            $messages[] = '';
+        }
+
+        if ($definition->getArguments() && $definition->getOptions()) {
+            $this->writeText("\n");
         }
 
         if ($definition->getOptions()) {
-            $messages[] = '<comment>Options:</comment>';
+            $this->writeText('<comment>Options:</comment>', $options);
+            $this->writeText("\n");
             foreach ($definition->getOptions() as $option) {
-                $messages[] = $this->describeInputOption($option, array('name_width' => $nameWidth));
+                $this->describeInputOption($option, array_merge($options, array('name_width' => $nameWidth)));
+                $this->writeText("\n");
             }
-            $messages[] = '';
         }
-
-        $output = implode("\n", $messages);
-
-        return isset($options['raw_text']) && $options['raw_text'] ? strip_tags($output) : $output;
     }
 
     /**
@@ -7433,22 +7488,30 @@ class TextDescriptor extends Descriptor
     {
         $command->getSynopsis();
         $command->mergeApplicationDefinition(false);
-        $messages = array('<comment>Usage:</comment>', ' '.$command->getSynopsis(), '');
 
-        if ($command->getAliases()) {
-            $messages[] = '<comment>Aliases:</comment> <info>'.implode(', ', $command->getAliases()).'</info>';
+        $this->writeText('<comment>Usage:</comment>', $options);
+        $this->writeText("\n");
+        $this->writeText(' '.$command->getSynopsis(), $options);
+        $this->writeText("\n");
+
+        if (count($command->getAliases()) > 0) {
+            $this->writeText("\n");
+            $this->writeText('<comment>Aliases:</comment> <info>'.implode(', ', $command->getAliases()).'</info>', $options);
         }
 
-        $messages[] = $this->describeInputDefinition($command->getNativeDefinition());
+        if ($definition = $command->getNativeDefinition()) {
+            $this->writeText("\n");
+            $this->describeInputDefinition($definition, $options);
+        }
+
+        $this->writeText("\n");
 
         if ($help = $command->getProcessedHelp()) {
-            $messages[] = '<comment>Help:</comment>';
-            $messages[] = ' '.str_replace("\n", "\n ", $help)."\n";
+            $this->writeText('<comment>Help:</comment>', $options);
+            $this->writeText("\n");
+            $this->writeText(' '.str_replace("\n", "\n ", $help), $options);
+            $this->writeText("\n");
         }
-
-        $output = implode("\n", $messages);
-
-        return isset($options['raw_text']) && $options['raw_text'] ? strip_tags($output) : $output;
     }
 
     /**
@@ -7458,41 +7521,52 @@ class TextDescriptor extends Descriptor
     {
         $describedNamespace = isset($options['namespace']) ? $options['namespace'] : null;
         $description = new ApplicationDescription($application, $describedNamespace);
-        $messages = array();
 
         if (isset($options['raw_text']) && $options['raw_text']) {
             $width = $this->getColumnWidth($description->getCommands());
 
             foreach ($description->getCommands() as $command) {
-                $messages[] = sprintf("%-${width}s %s", $command->getName(), $command->getDescription());
+                $this->writeText(sprintf("%-${width}s %s", $command->getName(), $command->getDescription()), $options);
+                $this->writeText("\n");
             }
         } else {
             $width = $this->getColumnWidth($description->getCommands());
 
-            $messages[] = $application->getHelp();
-            $messages[] = '';
+            $this->writeText($application->getHelp(), $options);
+            $this->writeText("\n\n");
 
             if ($describedNamespace) {
-                $messages[] = sprintf("<comment>Available commands for the \"%s\" namespace:</comment>", $describedNamespace);
+                $this->writeText(sprintf("<comment>Available commands for the \"%s\" namespace:</comment>", $describedNamespace), $options);
             } else {
-                $messages[] = '<comment>Available commands:</comment>';
+                $this->writeText('<comment>Available commands:</comment>', $options);
             }
 
             // add commands by namespace
             foreach ($description->getNamespaces() as $namespace) {
                 if (!$describedNamespace && ApplicationDescription::GLOBAL_NAMESPACE !== $namespace['id']) {
-                    $messages[] = '<comment>'.$namespace['id'].'</comment>';
+                    $this->writeText("\n");
+                    $this->writeText('<comment>'.$namespace['id'].'</comment>', $options);
                 }
 
                 foreach ($namespace['commands'] as $name) {
-                    $messages[] = sprintf("  <info>%-${width}s</info> %s", $name, $description->getCommand($name)->getDescription());
+                    $this->writeText("\n");
+                    $this->writeText(sprintf("  <info>%-${width}s</info> %s", $name, $description->getCommand($name)->getDescription()), $options);
                 }
             }
+
+            $this->writeText("\n");
         }
+    }
 
-        $output = implode("\n", $messages);
-
-        return isset($options['raw_text']) && $options['raw_text'] ? strip_tags($output) : $output;
+    /**
+     * {@inheritdoc}
+     */
+    private function writeText($content, array $options = array())
+    {
+        $this->write(
+            isset($options['raw_text']) && $options['raw_text'] ? strip_tags($content) : $content,
+            isset($options['raw_output']) ? !$options['raw_output'] : true
+        );
     }
 
     /**
@@ -7553,9 +7627,184 @@ use Symfony\Component\Console\Input\InputOption;
 class XmlDescriptor extends Descriptor
 {
     /**
+     * @param InputDefinition $definition
+     *
+     * @return \DOMDocument
+     */
+    public function getInputDefinitionDocument(InputDefinition $definition)
+    {
+        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom->appendChild($definitionXML = $dom->createElement('definition'));
+
+        $definitionXML->appendChild($argumentsXML = $dom->createElement('arguments'));
+        foreach ($definition->getArguments() as $argument) {
+            $this->appendDocument($argumentsXML, $this->getInputArgumentDocument($argument));
+        }
+
+        $definitionXML->appendChild($optionsXML = $dom->createElement('options'));
+        foreach ($definition->getOptions() as $option) {
+            $this->appendDocument($optionsXML, $this->getInputOptionDocument($option));
+        }
+
+        return $dom;
+    }
+
+    /**
+     * @param Command $command
+     *
+     * @return \DOMDocument
+     */
+    public function getCommandDocument(Command $command)
+    {
+        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom->appendChild($commandXML = $dom->createElement('command'));
+
+        $command->getSynopsis();
+        $command->mergeApplicationDefinition(false);
+
+        $commandXML->setAttribute('id', $command->getName());
+        $commandXML->setAttribute('name', $command->getName());
+
+        $commandXML->appendChild($usageXML = $dom->createElement('usage'));
+        $usageXML->appendChild($dom->createTextNode(sprintf($command->getSynopsis(), '')));
+
+        $commandXML->appendChild($descriptionXML = $dom->createElement('description'));
+        $descriptionXML->appendChild($dom->createTextNode(str_replace("\n", "\n ", $command->getDescription())));
+
+        $commandXML->appendChild($helpXML = $dom->createElement('help'));
+        $helpXML->appendChild($dom->createTextNode(str_replace("\n", "\n ", $command->getProcessedHelp())));
+
+        $commandXML->appendChild($aliasesXML = $dom->createElement('aliases'));
+        foreach ($command->getAliases() as $alias) {
+            $aliasesXML->appendChild($aliasXML = $dom->createElement('alias'));
+            $aliasXML->appendChild($dom->createTextNode($alias));
+        }
+
+        $definitionXML = $this->getInputDefinitionDocument($command->getNativeDefinition());
+        $this->appendDocument($commandXML, $definitionXML->getElementsByTagName('definition')->item(0));
+
+        return $dom;
+    }
+
+    /**
+     * @param Application $application
+     * @param string|null $namespace
+     *
+     * @return \DOMDocument
+     */
+    public function getApplicationDocument(Application $application, $namespace = null)
+    {
+        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom->appendChild($rootXml = $dom->createElement('symfony'));
+
+        if ($application->getName() !== 'UNKNOWN') {
+            $rootXml->setAttribute('name', $application->getName());
+            if ($application->getVersion() !== 'UNKNOWN') {
+                $rootXml->setAttribute('version', $application->getVersion());
+            }
+        }
+
+        $rootXml->appendChild($commandsXML = $dom->createElement('commands'));
+
+        $description = new ApplicationDescription($application, $namespace);
+
+        if ($namespace) {
+            $commandsXML->setAttribute('namespace', $namespace);
+        }
+
+        foreach ($description->getCommands() as $command) {
+            $this->appendDocument($commandsXML, $this->getCommandDocument($command));
+        }
+
+        if (!$namespace) {
+            $rootXml->appendChild($namespacesXML = $dom->createElement('namespaces'));
+
+            foreach ($description->getNamespaces() as $namespaceDescription) {
+                $namespacesXML->appendChild($namespaceArrayXML = $dom->createElement('namespace'));
+                $namespaceArrayXML->setAttribute('id', $namespaceDescription['id']);
+
+                foreach ($namespaceDescription['commands'] as $name) {
+                    $namespaceArrayXML->appendChild($commandXML = $dom->createElement('command'));
+                    $commandXML->appendChild($dom->createTextNode($name));
+                }
+            }
+        }
+
+        return $dom;
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function describeInputArgument(InputArgument $argument, array $options = array())
+    {
+        $this->writeDocument($this->getInputArgumentDocument($argument));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function describeInputOption(InputOption $option, array $options = array())
+    {
+        $this->writeDocument($this->getInputOptionDocument($option));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function describeInputDefinition(InputDefinition $definition, array $options = array())
+    {
+        $this->writeDocument($this->getInputDefinitionDocument($definition));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function describeCommand(Command $command, array $options = array())
+    {
+        $this->writeDocument($this->getCommandDocument($command));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function describeApplication(Application $application, array $options = array())
+    {
+        $this->writeDocument($this->getApplicationDocument($application, isset($options['namespace']) ? $options['namespace'] : null));
+    }
+
+    /**
+     * Appends document children to parent node.
+     *
+     * @param \DOMNode $parentNode
+     * @param \DOMNode $importedParent
+     */
+    private function appendDocument(\DOMNode $parentNode, \DOMNode $importedParent)
+    {
+        foreach ($importedParent->childNodes as $childNode) {
+            $parentNode->appendChild($parentNode->ownerDocument->importNode($childNode, true));
+        }
+    }
+
+    /**
+     * Writes DOM document.
+     *
+     * @param \DOMDocument $dom
+     *
+     * @return \DOMDocument|string
+     */
+    private function writeDocument(\DOMDocument $dom)
+    {
+        $dom->formatOutput = true;
+        $this->write($dom->saveXML());
+    }
+
+    /**
+     * @param InputArgument $argument
+     *
+     * @return \DOMDocument
+     */
+    private function getInputArgumentDocument(InputArgument $argument)
     {
         $dom = new \DOMDocument('1.0', 'UTF-8');
 
@@ -7573,13 +7822,15 @@ class XmlDescriptor extends Descriptor
             $defaultXML->appendChild($dom->createTextNode($default));
         }
 
-        return $this->output($dom, $options);
+        return $dom;
     }
 
     /**
-     * {@inheritdoc}
+     * @param InputOption $option
+     *
+     * @return \DOMDocument
      */
-    protected function describeInputOption(InputOption $option, array $options = array())
+    private function getInputOptionDocument(InputOption $option)
     {
         $dom = new \DOMDocument('1.0', 'UTF-8');
 
@@ -7610,132 +7861,7 @@ class XmlDescriptor extends Descriptor
             }
         }
 
-        return $this->output($dom, $options);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function describeInputDefinition(InputDefinition $definition, array $options = array())
-    {
-        $dom = new \DOMDocument('1.0', 'UTF-8');
-        $dom->appendChild($definitionXML = $dom->createElement('definition'));
-
-        $definitionXML->appendChild($argumentsXML = $dom->createElement('arguments'));
-        foreach ($definition->getArguments() as $argument) {
-            $this->appendDocument($argumentsXML, $this->describeInputArgument($argument, array('as_dom' => true)));
-        }
-
-        $definitionXML->appendChild($optionsXML = $dom->createElement('options'));
-        foreach ($definition->getOptions() as $option) {
-            $this->appendDocument($optionsXML, $this->describeInputOption($option, array('as_dom' => true)));
-        }
-
-        return $this->output($dom, $options);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function describeCommand(Command $command, array $options = array())
-    {
-        $dom = new \DOMDocument('1.0', 'UTF-8');
-        $dom->appendChild($commandXML = $dom->createElement('command'));
-
-        $command->getSynopsis();
-        $command->mergeApplicationDefinition(false);
-
-        $commandXML->setAttribute('id', $command->getName());
-        $commandXML->setAttribute('name', $command->getName());
-
-        $commandXML->appendChild($usageXML = $dom->createElement('usage'));
-        $usageXML->appendChild($dom->createTextNode(sprintf($command->getSynopsis(), '')));
-
-        $commandXML->appendChild($descriptionXML = $dom->createElement('description'));
-        $descriptionXML->appendChild($dom->createTextNode(str_replace("\n", "\n ", $command->getDescription())));
-
-        $commandXML->appendChild($helpXML = $dom->createElement('help'));
-        $helpXML->appendChild($dom->createTextNode(str_replace("\n", "\n ", $command->getProcessedHelp())));
-
-        $commandXML->appendChild($aliasesXML = $dom->createElement('aliases'));
-        foreach ($command->getAliases() as $alias) {
-            $aliasesXML->appendChild($aliasXML = $dom->createElement('alias'));
-            $aliasXML->appendChild($dom->createTextNode($alias));
-        }
-
-        $definitionXML = $this->describeInputDefinition($command->getNativeDefinition(), array('as_dom' => true));
-        $this->appendDocument($commandXML, $definitionXML->getElementsByTagName('definition')->item(0));
-
-        return $this->output($dom, $options);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function describeApplication(Application $application, array $options = array())
-    {
-        $dom = new \DOMDocument('1.0', 'UTF-8');
-        $dom->appendChild($rootXml = $dom->createElement('symfony'));
-        $rootXml->appendChild($commandsXML = $dom->createElement('commands'));
-
-        $describedNamespace = isset($options['namespace']) ? $options['namespace'] : null;
-        $description = new ApplicationDescription($application, $describedNamespace);
-
-        if ($describedNamespace) {
-            $commandsXML->setAttribute('namespace', $describedNamespace);
-        }
-
-        foreach ($description->getCommands() as $command) {
-            $this->appendDocument($commandsXML, $this->describeCommand($command, array('as_dom' => true)));
-        }
-
-        if (!$describedNamespace) {
-            $rootXml->appendChild($namespacesXML = $dom->createElement('namespaces'));
-
-            foreach ($description->getNamespaces() as $namespace) {
-                $namespacesXML->appendChild($namespaceArrayXML = $dom->createElement('namespace'));
-                $namespaceArrayXML->setAttribute('id', $namespace['id']);
-
-                foreach ($namespace['commands'] as $name) {
-                    $namespaceArrayXML->appendChild($commandXML = $dom->createElement('command'));
-                    $commandXML->appendChild($dom->createTextNode($name));
-                }
-            }
-        }
-
-        return $this->output($dom, $options);
-    }
-
-    /**
-     * Appends document children to parent node.
-     *
-     * @param \DOMNode $parentNode
-     * @param \DOMNode $importedParent
-     */
-    private function appendDocument(\DOMNode $parentNode, \DOMNode $importedParent)
-    {
-        foreach ($importedParent->childNodes as $childNode) {
-            $parentNode->appendChild($parentNode->ownerDocument->importNode($childNode, true));
-        }
-    }
-
-    /**
-     * Outputs document as DOMDocument or string according to options.
-     *
-     * @param \DOMDocument $dom
-     * @param array        $options
-     *
-     * @return \DOMDocument|string
-     */
-    private function output(\DOMDocument $dom, array $options)
-    {
-        if (isset($options['as_dom']) && $options['as_dom']) {
-            return $dom;
-        }
-
-        $dom->formatOutput = true;
-
-        return $dom->saveXML();
+        return $dom;
     }
 }
 <?php
@@ -7922,13 +8048,7 @@ class JsonDescriptor extends Descriptor
      */
     protected function describeInputArgument(InputArgument $argument, array $options = array())
     {
-        return $this->output(array(
-            'name'        => $argument->getName(),
-            'is_required' => $argument->isRequired(),
-            'is_array'    => $argument->isArray(),
-            'description' => $argument->getDescription(),
-            'default'     => $argument->getDefault(),
-        ), $options);
+        $this->writeData($this->getInputArgumentData($argument), $options);
     }
 
     /**
@@ -7936,15 +8056,7 @@ class JsonDescriptor extends Descriptor
      */
     protected function describeInputOption(InputOption $option, array $options = array())
     {
-        return $this->output(array(
-            'name'              => '--'.$option->getName(),
-            'shortcut'          => $option->getShortcut() ? '-'.implode('|-', explode('|', $option->getShortcut())) : '',
-            'accept_value'      => $option->acceptValue(),
-            'is_value_required' => $option->isValueRequired(),
-            'is_multiple'       => $option->isArray(),
-            'description'       => $option->getDescription(),
-            'default'           => $option->getDefault(),
-        ), $options);
+        $this->writeData($this->getInputOptionData($option), $options);
     }
 
     /**
@@ -7952,17 +8064,7 @@ class JsonDescriptor extends Descriptor
      */
     protected function describeInputDefinition(InputDefinition $definition, array $options = array())
     {
-        $inputArguments = array();
-        foreach ($definition->getArguments() as $name => $argument) {
-            $inputArguments[$name] = $this->describeInputArgument($argument, array('as_array' => true));
-        }
-
-        $inputOptions = array();
-        foreach ($definition->getOptions() as $name => $option) {
-            $inputOptions[$name] = $this->describeInputOption($option, array('as_array' => true));
-        }
-
-        return $this->output(array('arguments' => $inputArguments, 'options' => $inputOptions), $options);
+        $this->writeData($this->getInputDefinitionData($definition), $options);
     }
 
     /**
@@ -7970,17 +8072,7 @@ class JsonDescriptor extends Descriptor
      */
     protected function describeCommand(Command $command, array $options = array())
     {
-        $command->getSynopsis();
-        $command->mergeApplicationDefinition(false);
-
-        return $this->output(array(
-            'name'        => $command->getName(),
-            'usage'       => $command->getSynopsis(),
-            'description' => $command->getDescription(),
-            'help'        => $command->getProcessedHelp(),
-            'aliases'     => $command->getAliases(),
-            'definition'  => $this->describeInputDefinition($command->getNativeDefinition(), array('as_array' => true)),
-        ), $options);
+        $this->writeData($this->getCommandData($command), $options);
     }
 
     /**
@@ -7993,31 +8085,101 @@ class JsonDescriptor extends Descriptor
         $commands = array();
 
         foreach ($description->getCommands() as $command) {
-            $commands[] = $this->describeCommand($command, array('as_array' => true));
+            $commands[] = $this->getCommandData($command);
         }
 
         $data = $describedNamespace
             ? array('commands' => $commands, 'namespace' => $describedNamespace)
             : array('commands' => $commands, 'namespaces' => array_values($description->getNamespaces()));
 
-        return $this->output($data, $options);
+        $this->writeData($data, $options);
     }
 
     /**
-     * Outputs data as array or string according to options.
+     * Writes data as json.
      *
      * @param array $data
      * @param array $options
      *
      * @return array|string
      */
-    private function output(array $data, array $options)
+    private function writeData(array $data, array $options)
     {
-        if (isset($options['as_array']) && $options['as_array']) {
-            return $data;
+        $this->write(json_encode($data, isset($options['json_encoding']) ? $options['json_encoding'] : 0));
+    }
+
+    /**
+     * @param InputArgument $argument
+     *
+     * @return array
+     */
+    private function getInputArgumentData(InputArgument $argument)
+    {
+        return array(
+            'name'        => $argument->getName(),
+            'is_required' => $argument->isRequired(),
+            'is_array'    => $argument->isArray(),
+            'description' => $argument->getDescription(),
+            'default'     => $argument->getDefault(),
+        );
+    }
+
+    /**
+     * @param InputOption $option
+     *
+     * @return array
+     */
+    private function getInputOptionData(InputOption $option)
+    {
+        return array(
+            'name'              => '--'.$option->getName(),
+            'shortcut'          => $option->getShortcut() ? '-'.implode('|-', explode('|', $option->getShortcut())) : '',
+            'accept_value'      => $option->acceptValue(),
+            'is_value_required' => $option->isValueRequired(),
+            'is_multiple'       => $option->isArray(),
+            'description'       => $option->getDescription(),
+            'default'           => $option->getDefault(),
+        );
+    }
+
+    /**
+     * @param InputDefinition $definition
+     *
+     * @return array
+     */
+    private function getInputDefinitionData(InputDefinition $definition)
+    {
+        $inputArguments = array();
+        foreach ($definition->getArguments() as $name => $argument) {
+            $inputArguments[$name] = $this->getInputArgumentData($argument);
         }
 
-        return json_encode($data, isset($options['json_encoding']) ? $options['json_encoding'] : 0);
+        $inputOptions = array();
+        foreach ($definition->getOptions() as $name => $option) {
+            $inputOptions[$name] = $this->getInputOptionData($option);
+        }
+
+        return array('arguments' => $inputArguments, 'options' => $inputOptions);
+    }
+
+    /**
+     * @param Command $command
+     *
+     * @return array
+     */
+    private function getCommandData(Command $command)
+    {
+        $command->getSynopsis();
+        $command->mergeApplicationDefinition(false);
+
+        return array(
+            'name'        => $command->getName(),
+            'usage'       => $command->getSynopsis(),
+            'description' => $command->getDescription(),
+            'help'        => $command->getProcessedHelp(),
+            'aliases'     => $command->getAliases(),
+            'definition'  => $this->getInputDefinitionData($command->getNativeDefinition()),
+        );
     }
 }
 <?php
@@ -8051,12 +8213,14 @@ class MarkdownDescriptor extends Descriptor
      */
     protected function describeInputArgument(InputArgument $argument, array $options = array())
     {
-        return '**'.$argument->getName().':**'."\n\n"
+        $this->write(
+            '**'.$argument->getName().':**'."\n\n"
             .'* Name: '.($argument->getName() ?: '<none>')."\n"
             .'* Is required: '.($argument->isRequired() ? 'yes' : 'no')."\n"
             .'* Is array: '.($argument->isArray() ? 'yes' : 'no')."\n"
             .'* Description: '.($argument->getDescription() ?: '<none>')."\n"
-            .'* Default: `'.str_replace("\n", '', var_export($argument->getDefault(), true)).'`';
+            .'* Default: `'.str_replace("\n", '', var_export($argument->getDefault(), true)).'`'
+        );
     }
 
     /**
@@ -8064,14 +8228,16 @@ class MarkdownDescriptor extends Descriptor
      */
     protected function describeInputOption(InputOption $option, array $options = array())
     {
-        return '**'.$option->getName().':**'."\n\n"
+        $this->write(
+            '**'.$option->getName().':**'."\n\n"
             .'* Name: `--'.$option->getName().'`'."\n"
             .'* Shortcut: '.($option->getShortcut() ? '`-'.implode('|-', explode('|', $option->getShortcut())).'`' : '<none>')."\n"
             .'* Accept value: '.($option->acceptValue() ? 'yes' : 'no')."\n"
             .'* Is value required: '.($option->isValueRequired() ? 'yes' : 'no')."\n"
             .'* Is multiple: '.($option->isArray() ? 'yes' : 'no')."\n"
             .'* Description: '.($option->getDescription() ?: '<none>')."\n"
-            .'* Default: `'.str_replace("\n", '', var_export($option->getDefault(), true)).'`';
+            .'* Default: `'.str_replace("\n", '', var_export($option->getDefault(), true)).'`'
+        );
     }
 
     /**
@@ -8079,23 +8245,25 @@ class MarkdownDescriptor extends Descriptor
      */
     protected function describeInputDefinition(InputDefinition $definition, array $options = array())
     {
-        $blocks = array();
-
-        if (count($definition->getArguments()) > 0) {
-            $blocks[] = '### Arguments:';
+        if ($showArguments = count($definition->getArguments()) > 0) {
+            $this->write('### Arguments:');
             foreach ($definition->getArguments() as $argument) {
-                $blocks[] = $this->describeInputArgument($argument);
+                $this->write("\n\n");
+                $this->write($this->describeInputArgument($argument));
             }
         }
 
         if (count($definition->getOptions()) > 0) {
-            $blocks[] = '### Options:';
+            if ($showArguments) {
+                $this->write("\n\n");
+            }
+
+            $this->write('### Options:');
             foreach ($definition->getOptions() as $option) {
-                $blocks[] = $this->describeInputOption($option);
+                $this->write("\n\n");
+                $this->write($this->describeInputOption($option));
             }
         }
-
-        return implode("\n\n", $blocks);
     }
 
     /**
@@ -8106,21 +8274,23 @@ class MarkdownDescriptor extends Descriptor
         $command->getSynopsis();
         $command->mergeApplicationDefinition(false);
 
-        $markdown = $command->getName()."\n"
+        $this->write(
+            $command->getName()."\n"
             .str_repeat('-', strlen($command->getName()))."\n\n"
             .'* Description: '.($command->getDescription() ?: '<none>')."\n"
             .'* Usage: `'.$command->getSynopsis().'`'."\n"
-            .'* Aliases: '.(count($command->getAliases()) ? '`'.implode('`, `', $command->getAliases()).'`' : '<none>');
+            .'* Aliases: '.(count($command->getAliases()) ? '`'.implode('`, `', $command->getAliases()).'`' : '<none>')
+        );
 
         if ($help = $command->getProcessedHelp()) {
-            $markdown .= "\n\n".$help;
+            $this->write("\n\n");
+            $this->write($help);
         }
 
-        if ($definitionMarkdown = $this->describeInputDefinition($command->getNativeDefinition())) {
-            $markdown .= "\n\n".$definitionMarkdown;
+        if ($definition = $command->getNativeDefinition()) {
+            $this->write("\n\n");
+            $this->describeInputDefinition($command->getNativeDefinition());
         }
-
-        return $markdown;
     }
 
     /**
@@ -8130,23 +8300,25 @@ class MarkdownDescriptor extends Descriptor
     {
         $describedNamespace = isset($options['namespace']) ? $options['namespace'] : null;
         $description = new ApplicationDescription($application, $describedNamespace);
-        $blocks = array($application->getName()."\n".str_repeat('=', strlen($application->getName())));
+
+        $this->write($application->getName()."\n".str_repeat('=', strlen($application->getName())));
 
         foreach ($description->getNamespaces() as $namespace) {
             if (ApplicationDescription::GLOBAL_NAMESPACE !== $namespace['id']) {
-                $blocks[] = '**'.$namespace['id'].':**';
+                $this->write("\n\n");
+                $this->write('**'.$namespace['id'].':**');
             }
 
-            $blocks[] = implode("\n", array_map(function ($commandName) {
+            $this->write("\n\n");
+            $this->write(implode("\n", array_map(function ($commandName) {
                 return '* '.$commandName;
-            } , $namespace['commands']));
+            } , $namespace['commands'])));
         }
 
         foreach ($description->getCommands() as $command) {
-            $blocks[] = $this->describeCommand($command);
+            $this->write("\n\n");
+            $this->write($this->describeCommand($command));
         }
-
-        return implode("\n\n", $blocks);
     }
 }
 <?php
@@ -8170,6 +8342,8 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputAwareInterface;
+use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
@@ -8205,16 +8379,17 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class Application
 {
-    private $commands;
+    private $commands = array();
     private $wantHelps = false;
     private $runningCommand;
     private $name;
     private $version;
-    private $catchExceptions;
-    private $autoExit;
+    private $catchExceptions = true;
+    private $autoExit = true;
     private $definition;
     private $helperSet;
     private $dispatcher;
+    private $terminalDimensions;
 
     /**
      * Constructor.
@@ -8228,9 +8403,6 @@ class Application
     {
         $this->name = $name;
         $this->version = $version;
-        $this->catchExceptions = true;
-        $this->autoExit = true;
-        $this->commands = array();
         $this->helperSet = $this->getDefaultHelperSet();
         $this->definition = $this->getDefaultInputDefinition();
 
@@ -8555,6 +8727,10 @@ class Application
             return;
         }
 
+        if (null === $command->getDefinition()) {
+            throw new \LogicException(sprintf('Command class "%s" is not correctly initialized. You probably forgot to call the parent constructor.', get_class($command)));
+        }
+
         $this->commands[$command->getName()] = $command;
 
         foreach ($command->getAliases() as $alias) {
@@ -8642,51 +8818,31 @@ class Application
     public function findNamespace($namespace)
     {
         $allNamespaces = $this->getNamespaces();
-        $found = '';
-        foreach (explode(':', $namespace) as $i => $part) {
-            // select sub-namespaces matching the current namespace we found
-            $namespaces = array();
-            foreach ($allNamespaces as $n) {
-                if ('' === $found || 0 === strpos($n, $found)) {
-                    $namespaces[$n] = explode(':', $n);
-                }
-            }
+        $expr = preg_replace_callback('{([^:]+|)}', function ($matches) { return preg_quote($matches[1]).'[^:]*'; }, $namespace);
+        $namespaces = preg_grep('{^'.$expr.'}', $allNamespaces);
 
-            $abbrevs = static::getAbbreviations(array_unique(array_values(array_filter(array_map(function ($p) use ($i) { return isset($p[$i]) ? $p[$i] : ''; }, $namespaces)))));
+        if (empty($namespaces)) {
+            $message = sprintf('There are no commands defined in the "%s" namespace.', $namespace);
 
-            if (!isset($abbrevs[$part])) {
-                $message = sprintf('There are no commands defined in the "%s" namespace.', $namespace);
-
-                if (1 <= $i) {
-                    $part = $found.':'.$part;
+            if ($alternatives = $this->findAlternatives($namespace, $allNamespaces, array())) {
+                if (1 == count($alternatives)) {
+                    $message .= "\n\nDid you mean this?\n    ";
+                } else {
+                    $message .= "\n\nDid you mean one of these?\n    ";
                 }
 
-                if ($alternatives = $this->findAlternativeNamespace($part, $abbrevs)) {
-                    if (1 == count($alternatives)) {
-                        $message .= "\n\nDid you mean this?\n    ";
-                    } else {
-                        $message .= "\n\nDid you mean one of these?\n    ";
-                    }
-
-                    $message .= implode("\n    ", $alternatives);
-                }
-
-                throw new \InvalidArgumentException($message);
+                $message .= implode("\n    ", $alternatives);
             }
 
-            // there are multiple matches, but $part is an exact match of one of them so we select it
-            if (in_array($part, $abbrevs[$part])) {
-                $abbrevs[$part] = array($part);
-            }
-
-            if (count($abbrevs[$part]) > 1) {
-                throw new \InvalidArgumentException(sprintf('The namespace "%s" is ambiguous (%s).', $namespace, $this->getAbbreviationSuggestions($abbrevs[$part])));
-            }
-
-            $found .= $found ? ':' . $abbrevs[$part][0] : $abbrevs[$part][0];
+            throw new \InvalidArgumentException($message);
         }
 
-        return $found;
+        $exact = in_array($namespace, $namespaces, true);
+        if (count($namespaces) > 1 && !$exact) {
+            throw new \InvalidArgumentException(sprintf('The namespace "%s" is ambiguous (%s).', $namespace, $this->getAbbreviationSuggestions(array_values($namespaces))));
+        }
+
+        return $exact ? $namespace : reset($namespaces);
     }
 
     /**
@@ -8705,58 +8861,19 @@ class Application
      */
     public function find($name)
     {
-        // namespace
-        $namespace = '';
-        $searchName = $name;
-        if (false !== $pos = strrpos($name, ':')) {
-            $namespace = $this->findNamespace(substr($name, 0, $pos));
-            $searchName = $namespace.substr($name, $pos);
-        }
+        $allCommands = array_keys($this->commands);
+        $expr = preg_replace_callback('{([^:]+|)}', function ($matches) { return preg_quote($matches[1]).'[^:]*'; }, $name);
+        $commands = preg_grep('{^'.$expr.'}', $allCommands);
 
-        // name
-        $commands = array();
-        foreach ($this->commands as $command) {
-            $extractedNamespace = $this->extractNamespace($command->getName());
-            if ($extractedNamespace === $namespace
-               || !empty($namespace) && 0 === strpos($extractedNamespace, $namespace)
-            ) {
-                $commands[] = $command->getName();
+        if (empty($commands) || count(preg_grep('{^'.$expr.'$}', $commands)) < 1) {
+            if (false !== $pos = strrpos($name, ':')) {
+                // check if a namespace exists and contains commands
+                $this->findNamespace(substr($name, 0, $pos));
             }
-        }
 
-        $abbrevs = static::getAbbreviations(array_unique($commands));
-        if (isset($abbrevs[$searchName]) && 1 == count($abbrevs[$searchName])) {
-            return $this->get($abbrevs[$searchName][0]);
-        }
-
-        if (isset($abbrevs[$searchName]) && in_array($searchName, $abbrevs[$searchName])) {
-            return $this->get($searchName);
-        }
-
-        if (isset($abbrevs[$searchName]) && count($abbrevs[$searchName]) > 1) {
-            $suggestions = $this->getAbbreviationSuggestions($abbrevs[$searchName]);
-
-            throw new \InvalidArgumentException(sprintf('Command "%s" is ambiguous (%s).', $name, $suggestions));
-        }
-
-        // aliases
-        $aliases = array();
-        foreach ($this->commands as $command) {
-            foreach ($command->getAliases() as $alias) {
-                $extractedNamespace = $this->extractNamespace($alias);
-                if ($extractedNamespace === $namespace
-                   || !empty($namespace) && 0 === strpos($extractedNamespace, $namespace)
-                ) {
-                    $aliases[] = $alias;
-                }
-            }
-        }
-
-        $aliases = static::getAbbreviations(array_unique($aliases));
-        if (!isset($aliases[$searchName])) {
             $message = sprintf('Command "%s" is not defined.', $name);
 
-            if ($alternatives = $this->findAlternativeCommands($searchName, $abbrevs)) {
+            if ($alternatives = $this->findAlternatives($name, $allCommands, array())) {
                 if (1 == count($alternatives)) {
                     $message .= "\n\nDid you mean this?\n    ";
                 } else {
@@ -8768,11 +8885,24 @@ class Application
             throw new \InvalidArgumentException($message);
         }
 
-        if (count($aliases[$searchName]) > 1) {
-            throw new \InvalidArgumentException(sprintf('Command "%s" is ambiguous (%s).', $name, $this->getAbbreviationSuggestions($aliases[$searchName])));
+        // filter out aliases for commands which are already on the list
+        if (count($commands) > 1) {
+            $commandList = $this->commands;
+            $commands = array_filter($commands, function ($nameOrAlias) use ($commandList, $commands) {
+                $commandName = $commandList[$nameOrAlias]->getName();
+
+                return $commandName === $nameOrAlias || !in_array($commandName, $commands);
+            });
         }
 
-        return $this->get($aliases[$searchName][0]);
+        $exact = in_array($name, $commands, true);
+        if (count($commands) > 1 && !$exact) {
+            $suggestions = $this->getAbbreviationSuggestions(array_values($commands));
+
+            throw new \InvalidArgumentException(sprintf('Command "%s" is ambiguous (%s).', $name, $suggestions));
+        }
+
+        return $this->get($exact ? $name : reset($commands));
     }
 
     /**
@@ -8835,8 +8965,10 @@ class Application
     public function asText($namespace = null, $raw = false)
     {
         $descriptor = new TextDescriptor();
+        $output = new BufferedOutput(BufferedOutput::VERBOSITY_NORMAL, !$raw);
+        $descriptor->describe($output, $this, array('namespace' => $namespace, 'raw_output' => true));
 
-        return $descriptor->describe($this, array('namespace' => $namespace, 'raw_text' => $raw));
+        return $output->fetch();
     }
 
     /**
@@ -8853,7 +8985,14 @@ class Application
     {
         $descriptor = new XmlDescriptor();
 
-        return $descriptor->describe($this, array('namespace' => $namespace, 'as_dom' => $asDom));
+        if ($asDom) {
+            return $descriptor->getApplicationDocument($this, $namespace);
+        }
+
+        $output = new BufferedOutput();
+        $descriptor->describe($output, $this, array('namespace' => $namespace));
+
+        return $output->fetch();
     }
 
     /**
@@ -8879,7 +9018,8 @@ class Application
         do {
             $title = sprintf('  [%s]  ', get_class($e));
             $len = $strlen($title);
-            $width = $this->getTerminalWidth() ? $this->getTerminalWidth() - 1 : PHP_INT_MAX;
+            // HHVM only accepts 32 bits integer in str_split, even when PHP_INT_MAX is a 64 bit integer: https://github.com/facebook/hhvm/issues/1327
+            $width = $this->getTerminalWidth() ? $this->getTerminalWidth() - 1 : (defined('HHVM_VERSION') ? 1 << 31 : PHP_INT_MAX);
             $formatter = $output->getFormatter();
             $lines = array();
             foreach (preg_split('/\r?\n/', $e->getMessage()) as $line) {
@@ -8969,6 +9109,10 @@ class Application
      */
     public function getTerminalDimensions()
     {
+        if ($this->terminalDimensions) {
+            return $this->terminalDimensions;
+        }
+
         if (defined('PHP_WINDOWS_VERSION_BUILD')) {
             // extract [w, H] from "wxh (WxH)"
             if (preg_match('/^(\d+)x\d+ \(\d+x(\d+)\)$/', trim(getenv('ANSICON')), $matches)) {
@@ -8992,6 +9136,23 @@ class Application
         }
 
         return array(null, null);
+    }
+
+    /**
+     * Sets terminal dimensions.
+     *
+     * Can be useful to force terminal dimensions for functional tests.
+     *
+     * @param integer $width  The width
+     * @param integer $height The height
+     *
+     * @return Application The current application
+     */
+    public function setTerminalDimensions($width, $height)
+    {
+        $this->terminalDimensions = array($width, $height);
+
+        return $this;
     }
 
     /**
@@ -9044,6 +9205,12 @@ class Application
      */
     protected function doRunCommand(Command $command, InputInterface $input, OutputInterface $output)
     {
+        foreach ($command->getHelperSet() as $helper) {
+            if ($helper instanceof InputAwareInterface) {
+                $helper->setInput($input);
+            }
+        }
+
         if (null === $this->dispatcher) {
             return $command->run($input, $output);
         }
@@ -9205,72 +9372,51 @@ class Application
     }
 
     /**
-     * Finds alternative commands of $name
-     *
-     * @param string $name    The full name of the command
-     * @param array  $abbrevs The abbreviations
-     *
-     * @return array A sorted array of similar commands
-     */
-    private function findAlternativeCommands($name, $abbrevs)
-    {
-        $callback = function($item) {
-            return $item->getName();
-        };
-
-        return $this->findAlternatives($name, $this->commands, $abbrevs, $callback);
-    }
-
-    /**
-     * Finds alternative namespace of $name
-     *
-     * @param string $name    The full name of the namespace
-     * @param array  $abbrevs The abbreviations
-     *
-     * @return array A sorted array of similar namespace
-     */
-    private function findAlternativeNamespace($name, $abbrevs)
-    {
-        return $this->findAlternatives($name, $this->getNamespaces(), $abbrevs);
-    }
-
-    /**
      * Finds alternative of $name among $collection,
      * if nothing is found in $collection, try in $abbrevs
      *
      * @param string               $name       The string
-     * @param array|Traversable    $collection The collection
-     * @param array                $abbrevs    The abbreviations
-     * @param Closure|string|array $callback   The callable to transform collection item before comparison
+     * @param array|\Traversable   $collection The collection
      *
      * @return array A sorted array of similar string
      */
-    private function findAlternatives($name, $collection, $abbrevs, $callback = null)
+    private function findAlternatives($name, $collection)
     {
+        $threshold = 1e3;
         $alternatives = array();
 
+        $collectionParts = array();
         foreach ($collection as $item) {
-            if (null !== $callback) {
-                $item = call_user_func($callback, $item);
-            }
-
-            $lev = levenshtein($name, $item);
-            if ($lev <= strlen($name) / 3 || false !== strpos($item, $name)) {
-                $alternatives[$item] = $lev;
-            }
+            $collectionParts[$item] = explode(':', $item);
         }
 
-        if (!$alternatives) {
-            foreach ($abbrevs as $key => $values) {
-                $lev = levenshtein($name, $key);
-                if ($lev <= strlen($name) / 3 || false !== strpos($key, $name)) {
-                    foreach ($values as $value) {
-                        $alternatives[$value] = $lev;
-                    }
+        foreach (explode(':', $name) as $i => $subname) {
+            foreach ($collectionParts as $collectionName => $parts) {
+                $exists = isset($alternatives[$collectionName]);
+                if (!isset($parts[$i]) && $exists) {
+                    $alternatives[$collectionName] += $threshold;
+                    continue;
+                } elseif (!isset($parts[$i])) {
+                    continue;
+                }
+
+                $lev = levenshtein($subname, $parts[$i]);
+                if ($lev <= strlen($subname) / 3 || false !== strpos($parts[$i], $subname)) {
+                    $alternatives[$collectionName] = $exists ? $alternatives[$collectionName] + $lev : $lev;
+                } elseif ($exists) {
+                    $alternatives[$collectionName] += $threshold;
                 }
             }
         }
 
+        foreach ($collection as $item) {
+            $lev = levenshtein($name, $item);
+            if ($lev <= strlen($name) / 3 || false !== strpos($item, $name)) {
+                $alternatives[$item] = isset($alternatives[$item]) ? $alternatives[$item] - $lev : $lev;
+            }
+        }
+
+        $alternatives = array_filter($alternatives, function ($lev) use ($threshold) { return $lev < 2*$threshold; });
         asort($alternatives);
 
         return array_keys($alternatives);
@@ -9413,9 +9559,9 @@ use Symfony\Component\Console\Command\Command;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class HelperSet
+class HelperSet implements \IteratorAggregate
 {
-    private $helpers;
+    private $helpers = array();
     private $command;
 
     /**
@@ -9425,7 +9571,6 @@ class HelperSet
      */
     public function __construct(array $helpers = array())
     {
-        $this->helpers = array();
         foreach ($helpers as $alias => $helper) {
             $this->set($helper, is_int($alias) ? null : $alias);
         }
@@ -9496,6 +9641,44 @@ class HelperSet
     {
         return $this->command;
     }
+
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->helpers);
+    }
+}
+<?php
+
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Symfony\Component\Console\Helper;
+
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputAwareInterface;
+
+/**
+ * An implementation of InputAwareInterface for Helpers.
+ *
+ * @author Wouter J <waldio.webdesign@gmail.com>
+ */
+abstract class InputAwareHelper extends Helper implements InputAwareInterface
+{
+    protected $input;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setInput(InputInterface $input)
+    {
+        $this->input = $input;
+    }
 }
 <?php
 
@@ -9522,6 +9705,7 @@ class TableHelper extends Helper
 {
     const LAYOUT_DEFAULT = 0;
     const LAYOUT_BORDERLESS = 1;
+    const LAYOUT_COMPACT = 2;
 
     /**
      * Table headers.
@@ -9544,6 +9728,7 @@ class TableHelper extends Helper
     private $crossingChar;
     private $cellHeaderFormat;
     private $cellRowFormat;
+    private $cellRowContentFormat;
     private $borderFormat;
     private $padType;
 
@@ -9588,7 +9773,22 @@ class TableHelper extends Helper
                     ->setVerticalBorderChar(' ')
                     ->setCrossingChar(' ')
                     ->setCellHeaderFormat('<info>%s</info>')
-                    ->setCellRowFormat('<comment>%s</comment>')
+                    ->setCellRowFormat('%s')
+                    ->setCellRowContentFormat(' %s ')
+                    ->setBorderFormat('%s')
+                    ->setPadType(STR_PAD_RIGHT)
+                ;
+                break;
+
+            case self::LAYOUT_COMPACT:
+                $this
+                    ->setPaddingChar(' ')
+                    ->setHorizontalBorderChar('')
+                    ->setVerticalBorderChar(' ')
+                    ->setCrossingChar('')
+                    ->setCellHeaderFormat('<info>%s</info>')
+                    ->setCellRowFormat('%s')
+                    ->setCellRowContentFormat('%s')
                     ->setBorderFormat('%s')
                     ->setPadType(STR_PAD_RIGHT)
                 ;
@@ -9601,7 +9801,8 @@ class TableHelper extends Helper
                     ->setVerticalBorderChar('|')
                     ->setCrossingChar('+')
                     ->setCellHeaderFormat('<info>%s</info>')
-                    ->setCellRowFormat('<comment>%s</comment>')
+                    ->setCellRowFormat('%s')
+                    ->setCellRowContentFormat(' %s ')
                     ->setBorderFormat('%s')
                     ->setPadType(STR_PAD_RIGHT)
                 ;
@@ -9642,6 +9843,29 @@ class TableHelper extends Helper
     {
         $this->rows[] = array_values($row);
 
+        $keys = array_keys($this->rows);
+        $rowKey = array_pop($keys);
+
+        foreach ($row as $key => $cellValue) {
+            if (!strstr($cellValue, "\n")) {
+                continue;
+            }
+
+            $lines = explode("\n", $cellValue);
+            $this->rows[$rowKey][$key] = $lines[0];
+            unset($lines[0]);
+
+            foreach ($lines as $lineKey => $line) {
+                $nextRowKey = $rowKey + $lineKey + 1;
+
+                if (isset($this->rows[$nextRowKey])) {
+                    $this->rows[$nextRowKey][$key] = $line;
+                } else {
+                    $this->rows[$nextRowKey] = array($key => $line);
+                }
+            }
+        }
+
         return $this;
     }
 
@@ -9661,6 +9885,10 @@ class TableHelper extends Helper
      */
     public function setPaddingChar($paddingChar)
     {
+        if (!$paddingChar) {
+            throw new \LogicException('The padding char must not be empty');
+        }
+
         $this->paddingChar = $paddingChar;
 
         return $this;
@@ -9737,6 +9965,20 @@ class TableHelper extends Helper
     }
 
     /**
+     * Sets row cell content format.
+     *
+     * @param string $cellRowContentFormat
+     *
+     * @return TableHelper
+     */
+    public function setCellRowContentFormat($cellRowContentFormat)
+    {
+        $this->cellRowContentFormat = $cellRowContentFormat;
+
+        return $this;
+    }
+
+    /**
      * Sets table border format.
      *
      * @param string $borderFormat
@@ -9808,11 +10050,13 @@ class TableHelper extends Helper
             return;
         }
 
+        if (!$this->horizontalBorderChar && !$this->crossingChar) {
+            return;
+        }
+
         $markup = $this->crossingChar;
         for ($column = 0; $column < $count; $column++) {
-            $markup .= str_repeat($this->horizontalBorderChar, $this->getColumnWidth($column))
-                    .$this->crossingChar
-            ;
+            $markup .= str_repeat($this->horizontalBorderChar, $this->getColumnWidth($column)).$this->crossingChar;
         }
 
         $this->output->writeln(sprintf($this->borderFormat, $markup));
@@ -9865,15 +10109,11 @@ class TableHelper extends Helper
             $width += strlen($cell) - mb_strlen($cell, $encoding);
         }
 
-        $this->output->write(sprintf(
-            $cellFormat,
-            str_pad(
-                $this->paddingChar.$cell.$this->paddingChar,
-                $width,
-                $this->paddingChar,
-                $this->padType
-            )
-        ));
+        $width += $this->strlen($cell) - $this->computeLengthWithoutDecoration($cell);
+
+        $content = sprintf($this->cellRowContentFormat, $cell);
+
+        $this->output->write(sprintf($cellFormat, str_pad($content, $width, $this->paddingChar, $this->padType)));
     }
 
     /**
@@ -9915,7 +10155,7 @@ class TableHelper extends Helper
             $lengths[] = $this->getCellWidth($row, $column);
         }
 
-        return $this->columnWidths[$column] = max($lengths) + 2;
+        return $this->columnWidths[$column] = max($lengths) + strlen($this->cellRowContentFormat) - 2;
     }
 
     /**
@@ -9928,15 +10168,7 @@ class TableHelper extends Helper
      */
     private function getCellWidth(array $row, $column)
     {
-        if ($column < 0) {
-            return 0;
-        }
-
-        if (isset($row[$column])) {
-            return $this->strlen($row[$column]);
-        }
-
-        return $this->getCellWidth($row, $column - 1);
+        return isset($row[$column]) ? $this->computeLengthWithoutDecoration($row[$column]) : 0;
     }
 
     /**
@@ -9946,6 +10178,18 @@ class TableHelper extends Helper
     {
         $this->columnWidths = array();
         $this->numberOfColumns = null;
+    }
+
+    private function computeLengthWithoutDecoration($string)
+    {
+        $formatter = $this->output->getFormatter();
+        $isDecorated = $formatter->isDecorated();
+        $formatter->setDecorated(false);
+
+        $string = $formatter->format($string);
+        $formatter->setDecorated($isDecorated);
+
+        return $this->strlen($string);
     }
 
     /**
@@ -10185,7 +10429,7 @@ class ProgressHelper extends Helper
      * Starts the progress output.
      *
      * @param OutputInterface $output An Output instance
-     * @param integer         $max    Maximum steps
+     * @param integer|null    $max    Maximum steps
      */
     public function start(OutputInterface $output, $max = null)
     {
@@ -10234,18 +10478,7 @@ class ProgressHelper extends Helper
      */
     public function advance($step = 1, $redraw = false)
     {
-        if (null === $this->startTime) {
-            throw new \LogicException('You must start the progress bar before calling advance().');
-        }
-
-        if (0 === $this->current) {
-            $redraw = true;
-        }
-
-        $this->current += $step;
-        if ($redraw || 0 === $this->current % $this->redrawFreq) {
-            $this->display();
-        }
+        $this->setCurrent($this->current + $step, $redraw);
     }
 
     /**
@@ -10272,8 +10505,12 @@ class ProgressHelper extends Helper
             $redraw = true;
         }
 
+        $prevPeriod = intval($this->current / $this->redrawFreq);
+
         $this->current = $current;
-        if ($redraw || 0 === $this->current % $this->redrawFreq) {
+
+        $currPeriod = intval($this->current / $this->redrawFreq);
+        if ($redraw || $prevPeriod !== $currPeriod || $this->max === $this->current) {
             $this->display();
         }
     }
@@ -10296,6 +10533,18 @@ class ProgressHelper extends Helper
             $message = str_replace("%{$name}%", $value, $message);
         }
         $this->overwrite($this->output, $message);
+    }
+
+    /**
+     * Removes the progress bar from the current line.
+     *
+     * This is useful if you wish to write some output
+     * while a progress bar is running.
+     * Call display() to show the progress bar again.
+     */
+    public function clear()
+    {
+        $this->overwrite($this->output, '');
     }
 
     /**
@@ -10351,7 +10600,7 @@ class ProgressHelper extends Helper
         $vars    = array();
         $percent = 0;
         if ($this->max > 0) {
-            $percent = (double) $this->current / $this->max;
+            $percent = (float) $this->current / $this->max;
         }
 
         if (isset($this->formatVars['bar'])) {
@@ -10500,23 +10749,29 @@ class DescriptorHelper extends Helper
     /**
      * Describes an object if supported.
      *
+     * Available options are:
+     * * format: string, the output format name
+     * * raw_text: boolean, sets output type as raw
+     *
      * @param OutputInterface $output
      * @param object          $object
-     * @param string          $format
-     * @param boolean         $raw
+     * @param array           $options
+     *
+     * @throws \InvalidArgumentException
      */
-    public function describe(OutputInterface $output, $object, $format = null, $raw = false, $namespace = null)
+    public function describe(OutputInterface $output, $object, array $options = array())
     {
-        $options = array('raw_text' => $raw, 'format' => $format ?: 'txt', 'namespace' => $namespace);
-        $type = !$raw && 'txt' === $options['format'] ? OutputInterface::OUTPUT_NORMAL : OutputInterface::OUTPUT_RAW;
+        $options = array_merge(array(
+            'raw_text'  => false,
+            'format'    => 'txt',
+        ), $options);
 
         if (!isset($this->descriptors[$options['format']])) {
             throw new \InvalidArgumentException(sprintf('Unsupported format "%s".', $options['format']));
         }
 
         $descriptor = $this->descriptors[$options['format']];
-
-        $output->writeln($descriptor->describe($object, $options), $type);
+        $descriptor->describe($output, $object, $options);
     }
 
     /**
@@ -10563,7 +10818,7 @@ use Symfony\Component\Console\Formatter\OutputFormatterStyle;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class DialogHelper extends Helper
+class DialogHelper extends InputAwareHelper
 {
     private $inputStream;
     private static $shell;
@@ -10575,7 +10830,7 @@ class DialogHelper extends Helper
      * @param OutputInterface $output       An Output instance
      * @param string|array    $question     The question to ask
      * @param array           $choices      List of choices to pick from
-     * @param Boolean         $default      The default answer if the user enters nothing
+     * @param Boolean|string  $default      The default answer if the user enters nothing
      * @param Boolean|integer $attempts Max number of times to ask before giving up (false by default, which means infinite)
      * @param string          $errorMessage Message which will be shown if invalid value from choice list would be picked
      * @param Boolean         $multiselect  Select more than one value separated by comma
@@ -10642,6 +10897,10 @@ class DialogHelper extends Helper
      */
     public function ask(OutputInterface $output, $question, $default = null, array $autocomplete = null)
     {
+        if ($this->input && !$this->input->isInteractive()) {
+            return $default;
+        }
+
         $output->write($question);
 
         $inputStream = $this->inputStream ?: STDIN;
@@ -10877,7 +11136,7 @@ class DialogHelper extends Helper
     {
         $that = $this;
 
-        $interviewer = function() use ($output, $question, $default, $autocomplete, $that) {
+        $interviewer = function () use ($output, $question, $default, $autocomplete, $that) {
             return $that->ask($output, $question, $default, $autocomplete);
         };
 
@@ -10907,7 +11166,7 @@ class DialogHelper extends Helper
     {
         $that = $this;
 
-        $interviewer = function() use ($output, $question, $fallback, $that) {
+        $interviewer = function () use ($output, $question, $fallback, $that) {
             return $that->askHiddenResponse($output, $question, $fallback);
         };
 
@@ -10945,7 +11204,7 @@ class DialogHelper extends Helper
     }
 
     /**
-     * Return a valid unix shell
+     * Return a valid Unix shell
      *
      * @return string|Boolean  The valid shell name, false in case no valid shell is found
      */
@@ -11105,7 +11364,6 @@ class FormatterHelper extends Helper
 namespace Symfony\Component\Console\Output;
 
 use Symfony\Component\Console\Formatter\OutputFormatterInterface;
-use Symfony\Component\Console\Output\ConsoleOutputInterface;
 
 /**
  * ConsoleOutput is the default class for all CLI output. It uses STDOUT.
@@ -11296,7 +11554,7 @@ class StreamOutput extends Output
      *
      * Colorization is disabled if not supported by the stream:
      *
-     *  -  windows without ansicon and ConEmu
+     *  -  Windows without Ansicon and ConEmu
      *  -  non tty consoles
      *
      * @return Boolean true if the stream supports colorization, false otherwise
@@ -11325,7 +11583,53 @@ class StreamOutput extends Output
 
 namespace Symfony\Component\Console\Output;
 
-use Symfony\Component\Console\Output\OutputInterface;
+/**
+ * @author Jean-Fran√ßois Simon <contact@jfsimon.fr>
+ */
+class BufferedOutput extends Output
+{
+    /**
+     * @var string
+     */
+    private $buffer = '';
+
+    /**
+     * Empties buffer and returns its content.
+     *
+     * @return string
+     */
+    public function fetch()
+    {
+        $content = $this->buffer;
+        $this->buffer = '';
+
+        return $content;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function doWrite($message, $newline)
+    {
+        $this->buffer .= $message;
+
+        if ($newline) {
+            $this->buffer .= "\n";
+        }
+    }
+}
+<?php
+
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Symfony\Component\Console\Output;
 
 /**
  * ConsoleOutputInterface is the interface implemented by ConsoleOutput class.
@@ -11490,7 +11794,7 @@ abstract class Output implements OutputInterface
     public function __construct($verbosity = self::VERBOSITY_NORMAL, $decorated = false, OutputFormatterInterface $formatter = null)
     {
         $this->verbosity = null === $verbosity ? self::VERBOSITY_NORMAL : $verbosity;
-        $this->formatter = null === $formatter ? new OutputFormatter() : $formatter;
+        $this->formatter = $formatter ?: new OutputFormatter();
         $this->formatter->setDecorated($decorated);
     }
 
@@ -11540,6 +11844,26 @@ abstract class Output implements OutputInterface
     public function getVerbosity()
     {
         return $this->verbosity;
+    }
+
+    public function isQuiet()
+    {
+        return self::VERBOSITY_QUIET === $this->verbosity;
+    }
+
+    public function isVerbose()
+    {
+        return self::VERBOSITY_VERBOSE <= $this->verbosity;
+    }
+
+    public function isVeryVerbose()
+    {
+        return self::VERBOSITY_VERY_VERBOSE <= $this->verbosity;
+    }
+
+    public function isDebug()
+    {
+        return self::VERBOSITY_DEBUG <= $this->verbosity;
     }
 
     /**
@@ -11713,7 +12037,6 @@ interface OutputInterface
 
 namespace Symfony\Component\Console;
 
-use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Process\ProcessBuilder;
@@ -11734,7 +12057,7 @@ class Shell
     private $history;
     private $output;
     private $hasReadline;
-    private $processIsolation;
+    private $processIsolation = false;
 
     /**
      * Constructor.
@@ -11750,7 +12073,6 @@ class Shell
         $this->application = $application;
         $this->history = getenv('HOME').'/.history_'.$application->getName();
         $this->output = new ConsoleOutput();
-        $this->processIsolation = false;
     }
 
     /**
@@ -11807,7 +12129,7 @@ EOF
                 ;
 
                 $output = $this->output;
-                $process->run(function($type, $data) use ($output) {
+                $process->run(function ($type, $data) use ($output) {
                     $output->writeln($data);
                 });
 
@@ -12488,8 +12810,8 @@ interface InputInterface
     /**
      * Sets an option value by name.
      *
-     * @param string $name  The option name
-     * @param string $value The option value
+     * @param string         $name  The option name
+     * @param string|boolean $value The option value
      *
      * @throws \InvalidArgumentException When option given doesn't exist
      */
@@ -12756,9 +13078,12 @@ namespace Symfony\Component\Console\Input;
  */
 abstract class Input implements InputInterface
 {
+    /**
+     * @var InputDefinition
+     */
     protected $definition;
-    protected $options;
-    protected $arguments;
+    protected $options = array();
+    protected $arguments = array();
     protected $interactive = true;
 
     /**
@@ -12769,8 +13094,6 @@ abstract class Input implements InputInterface
     public function __construct(InputDefinition $definition = null)
     {
         if (null === $definition) {
-            $this->arguments = array();
-            $this->options = array();
             $this->definition = new InputDefinition();
         } else {
             $this->bind($definition);
@@ -12917,8 +13240,8 @@ abstract class Input implements InputInterface
     /**
      * Sets an option value by name.
      *
-     * @param string $name  The option name
-     * @param string $value The option value
+     * @param string         $name  The option name
+     * @param string|boolean $value The option value
      *
      * @throws \InvalidArgumentException When option given doesn't exist
      */
@@ -13316,6 +13639,7 @@ if (!defined('JSON_UNESCAPED_UNICODE')) {
 
 use Symfony\Component\Console\Descriptor\TextDescriptor;
 use Symfony\Component\Console\Descriptor\XmlDescriptor;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
  * A InputDefinition represents a set of valid command line arguments and options.
@@ -13724,8 +14048,10 @@ class InputDefinition
     public function asText()
     {
         $descriptor = new TextDescriptor();
+        $output = new BufferedOutput(BufferedOutput::VERBOSITY_NORMAL, true);
+        $descriptor->describe($output, $this, array('raw_output' => true));
 
-        return $descriptor->describe($this);
+        return $output->fetch();
     }
 
     /**
@@ -13741,8 +14067,43 @@ class InputDefinition
     {
         $descriptor = new XmlDescriptor();
 
-        return $descriptor->describe($this, array('as_dom' => $asDom));
+        if ($asDom) {
+            return $descriptor->getInputDefinitionDocument($this);
+        }
+
+        $output = new BufferedOutput();
+        $descriptor->describe($output, $this);
+
+        return $output->fetch();
     }
+}
+<?php
+
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Symfony\Component\Console\Input;
+
+/**
+ * InputAwareInterface should be implemented by classes that depends on the
+ * Console Input.
+ *
+ * @author Wouter J <waldio.webdesign@gmail.com>
+ */
+interface InputAwareInterface
+{
+    /**
+     * Sets the Console Input.
+     *
+     * @param InputInterface
+     */
+    public function setInput(InputInterface $input);
 }
 <?php
 
@@ -13878,7 +14239,7 @@ class OutputFormatter implements OutputFormatterInterface
      *
      * @api
      */
-    public function __construct($decorated = null, array $styles = array())
+    public function __construct($decorated = false, array $styles = array())
     {
         $this->decorated = (Boolean) $decorated;
 
@@ -14134,9 +14495,9 @@ class OutputFormatterStyle implements OutputFormatterStyleInterface
     /**
      * Initializes output formatter style.
      *
-     * @param string $foreground The style foreground color name
-     * @param string $background The style background color name
-     * @param array  $options    The style options
+     * @param string|null $foreground The style foreground color name
+     * @param string|null $background The style background color name
+     * @param array       $options    The style options
      *
      * @api
      */
@@ -14156,7 +14517,7 @@ class OutputFormatterStyle implements OutputFormatterStyleInterface
     /**
      * Sets style foreground color.
      *
-     * @param string $color The color name
+     * @param string|null $color The color name
      *
      * @throws \InvalidArgumentException When the color name isn't defined
      *
@@ -14184,7 +14545,7 @@ class OutputFormatterStyle implements OutputFormatterStyleInterface
     /**
      * Sets style background color.
      *
-     * @param string $color The color name
+     * @param string|null $color The color name
      *
      * @throws \InvalidArgumentException When the color name isn't defined
      *
@@ -14330,7 +14691,7 @@ class OutputFormatterStyleStack
     /**
      * Constructor.
      *
-     * @param OutputFormatterStyleInterface $emptyStyle
+     * @param OutputFormatterStyleInterface|null $emptyStyle
      */
     public function __construct(OutputFormatterStyleInterface $emptyStyle = null)
     {
@@ -14359,7 +14720,7 @@ class OutputFormatterStyleStack
     /**
      * Pops a style from the stack.
      *
-     * @param OutputFormatterStyleInterface $style
+     * @param OutputFormatterStyleInterface|null $style
      *
      * @return OutputFormatterStyleInterface
      *
@@ -14572,8 +14933,6 @@ class ConsoleEvent extends Event
 
 namespace Symfony\Component\Console\Event;
 
-use Symfony\Component\Console\Command\Command;
-
 /**
  * Allows to do things before the command is executed.
  *
@@ -14627,7 +14986,7 @@ class ConsoleTerminateEvent extends ConsoleEvent
      */
     public function setExitCode($exitCode)
     {
-        $this->exitCode = $exitCode;
+        $this->exitCode = (int) $exitCode;
     }
 
     /**
@@ -14672,7 +15031,7 @@ class ConsoleExceptionEvent extends ConsoleEvent
         parent::__construct($command, $input, $output);
 
         $this->setException($exception);
-        $this->exitCode = $exitCode;
+        $this->exitCode = (int) $exitCode;
     }
 
     /**
@@ -14736,6 +15095,7 @@ class CommandTester
     private $command;
     private $input;
     private $output;
+    private $statusCode;
 
     /**
      * Constructor.
@@ -14763,6 +15123,15 @@ class CommandTester
      */
     public function execute(array $input, array $options = array())
     {
+        // set the command name automatically if the application requires
+        // this argument and no command name was passed
+        if (!isset($input['command'])
+            && (null !== $application = $this->command->getApplication())
+            && $application->getDefinition()->hasArgument('command')
+        ) {
+            $input['command'] = $this->command->getName();
+        }
+
         $this->input = new ArrayInput($input);
         if (isset($options['interactive'])) {
             $this->input->setInteractive($options['interactive']);
@@ -14776,7 +15145,7 @@ class CommandTester
             $this->output->setVerbosity($options['verbosity']);
         }
 
-        return $this->command->run($this->input, $this->output);
+        return $this->statusCode = $this->command->run($this->input, $this->output);
     }
 
     /**
@@ -14818,6 +15187,16 @@ class CommandTester
     {
         return $this->output;
     }
+
+    /**
+     * Gets the status code returned by the last execution of the application.
+     *
+     * @return integer The status code
+     */
+    public function getStatusCode()
+    {
+        return $this->statusCode;
+    }
 }
 <?php
 
@@ -14853,6 +15232,7 @@ class ApplicationTester
     private $application;
     private $input;
     private $output;
+    private $statusCode;
 
     /**
      * Constructor.
@@ -14893,7 +15273,7 @@ class ApplicationTester
             $this->output->setVerbosity($options['verbosity']);
         }
 
-        return $this->application->run($this->input, $this->output);
+        return $this->statusCode = $this->application->run($this->input, $this->output);
     }
 
     /**
@@ -14934,6 +15314,16 @@ class ApplicationTester
     public function getOutput()
     {
         return $this->output;
+    }
+
+    /**
+     * Gets the status code returned by the last execution of the application.
+     *
+     * @return integer The status code
+     */
+    public function getStatusCode()
+    {
+        return $this->statusCode;
     }
 }
 <?php
@@ -15084,6 +15474,13 @@ if (isset($_SERVER['REQUEST_TIME_FLOAT'])) {
 else {
     PHP_Timer::$requestTime = microtime(TRUE);
 }
+sebastian/phpcpd: 2.0.1
+phpunit/php-timer: 1.0.5
+sebastian/finder-facade: 1.1.0
+sebastian/version: 1.0.3
+symfony/console: v2.4.2
+symfony/finder: v2.4.2
+theseer/fdomdocument: 1.5.0
 <?php
 /**
  * Copyright (c) 2010-2013 Arne Blankerts <arne@blankerts.de>
@@ -15270,7 +15667,8 @@ namespace TheSeer\fDOM {
 
     } // fDOMException
 
-}<?php
+}
+<?php
 /**
  * Copyright (c) 2010-2013 Arne Blankerts <arne@blankerts.de>
  * All rights reserved.
@@ -15360,6 +15758,7 @@ namespace TheSeer\fDOM {
  */
 
 namespace TheSeer\fDOM {
+    use TheSeer\fDOM\CSS\Translator;
 
     /**
      * fDOMDocument extension to PHP's DOMDocument.
@@ -15405,10 +15804,10 @@ namespace TheSeer\fDOM {
             libxml_use_internal_errors(TRUE);
             $rc = parent::__construct($version, $encoding);
 
-            $this->registerNodeClass('\DOMDocument', get_called_class());
-            $this->registerNodeClass('\DOMNode', 'TheSeer\fDOM\fDOMNode');
-            $this->registerNodeClass('\DOMElement', 'TheSeer\fDOM\fDOMElement');
-            $this->registerNodeClass('\DOMDocumentFragment', 'TheSeer\fDOM\fDOMDocumentFragment');
+            $this->registerNodeClass('DOMDocument', get_called_class());
+            $this->registerNodeClass('DOMNode', 'TheSeer\fDOM\fDOMNode');
+            $this->registerNodeClass('DOMElement', 'TheSeer\fDOM\fDOMElement');
+            $this->registerNodeClass('DOMDocumentFragment', 'TheSeer\fDOM\fDOMDocumentFragment');
 
             return $rc;
         }
@@ -15700,6 +16099,24 @@ namespace TheSeer\fDOM {
         }
 
         /**
+         * Use a CSS Level 3 Selector string to query select nodes
+         *
+         * @param string   $selector A CSS Level 3 Selector string
+         * @param \DOMNode $ctx
+         * @param bool     $registerNodeNS
+         *
+         * @return \DOMNodeList
+         */
+        public function select($selector, \DOMNode $ctx = NULL, $registerNodeNS = TRUE) {
+            $translator = new Translator();
+            $xpath = $translator->translate($selector);
+            if ($ctx != NULL) {
+                $xpath = '.' . $xpath;
+            }
+            return $this->query($xpath, $ctx, $registerNodeNS);
+        }
+
+        /**
          * Forward to DOMXPath->registerNamespace()
          *
          * @param string $prefix The prefix to use
@@ -15866,7 +16283,8 @@ namespace TheSeer\fDOM {
 
     } // fDOMDocument
 
-}<?php
+}
+<?php
 /**
  * Copyright (c) 2010-2013 Arne Blankerts <arne@blankerts.de>
  * All rights reserved.
@@ -15952,7 +16370,325 @@ namespace TheSeer\fDOM {
 
     } // fDOMDocumentFragment
 
-}<?php
+}
+<?php
+namespace TheSeer\fDOM\CSS {
+
+    class NthChildRule implements RuleInterface {
+
+        /**
+         * @param $selector
+         *
+         * @return string
+         */
+        public function apply($selector) {
+            return preg_replace_callback(
+                '/([a-zA-Z0-9\_\-\*]+):nth-child\(([^\)]*)\)/',
+                array($this, 'callback'),
+                $selector
+            );
+        }
+
+        private function callback(array $matches) {
+            switch($matches[2]){
+                case 'n': {
+                    return $matches[1];
+                }
+                case 'even': {
+                    return '*[position() mod 2=0 and position()>=0]/self::' . $matches[1];
+                }
+                case 'odd': {
+                    return $matches[1] . '[(count(preceding-sibling::*) + 1) mod 2=1]';
+                }
+                default: {
+                    $b = !isset($matches[2]) || empty($matches[2]) ? '0' : $matches[2];
+                    $b = preg_replace('/^([0-9]*)n.*?([0-9]*)$/', '$1+$2', $b);
+                    $b = explode('+', $b);
+                    if (!isset($b[1])) {
+                        $b[1] = '0';
+                    }
+                    return '*[(position()-' . $b[1] . ') mod ' . $b[0] . '=0 and position()>=' . $b[1] . ']/self::' . $matches[1];
+                }
+            }
+        }
+
+    }
+
+}
+<?php
+/**
+ * Copyright (c) 2010-2013 Arne Blankerts <arne@blankerts.de>
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ *
+ *   * Redistributions of source code must retain the above copyright notice,
+ *     this list of conditions and the following disclaimer.
+ *
+ *   * Redistributions in binary form must reproduce the above copyright notice,
+ *     this list of conditions and the following disclaimer in the documentation
+ *     and/or other materials provided with the distribution.
+ *
+ *   * Neither the name of Arne Blankerts nor the names of contributors
+ *     may be used to endorse or promote products derived from this software
+ *     without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT  * NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER ORCONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY,
+ * OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ *
+ * @category  PHP
+ * @package   TheSeer\fDOM
+ * @author    Arne Blankerts <arne@blankerts.de>
+ * @copyright Arne Blankerts <arne@blankerts.de>, All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @link      http://github.com/theseer/fdomdocument
+ *
+ */
+
+namespace TheSeer\fDOM\CSS {
+
+    /**
+     * Class Translator
+     *
+     * The regular expressions used in this class are heavily inspired by and mostly adopted from
+     * the css2xpath.js code by Andrea Giammarchi (http://code.google.com/p/css2xpath/).
+     * The JavaScript version (css2xpath.js) is licensed under the MIT License
+     *
+     */
+    class Translator {
+
+        /**
+         * @var array
+         */
+        private $rules;
+
+        /**
+         * @param string $selector A CSS Selector string
+         *
+         * @return string
+         */
+        public function translate($selector) {
+            foreach($this->getRules() as $rule) {
+                /** @var RuleInterface $rule */
+                $selector = $rule->apply($selector);
+            }
+            return '//' . $selector;
+        }
+
+        /**
+         * @return array
+         */
+        private function getRules() {
+            if ($this->rules != NULL) {
+                return $this->rules;
+            }
+
+            $this->rules = array(
+
+                // prefix|name
+                new RegexRule('/([a-zA-Z0-9\_\-\*]+)\|([a-zA-Z0-9\_\-\*]+)/', '$1:$2'),
+
+                // add @ for attribs
+                new RegexRule("/\[([^\]~\$\*\^\|\!]+)(=[^\]]+)?\]/", '[@$1$2]'),
+
+                // multiple queries
+                new RegexRule("/\s*,\s*/", '|'),
+
+                // , + ~ >
+                new RegexRule("/\s*(\+|~|>)\s*/", '$1'),
+
+                //* ~ + >
+                new RegexRule("/([a-zA-Z0-9\_\-\*])~([a-zA-Z0-9\_\-\*])/", '$1/following-sibling::$2'),
+                new RegexRule("/([a-zA-Z0-9\_\-\*])\+([a-zA-Z0-9\_\-\*])/", '$1/following-sibling::*[1]/self::$2'),
+                new RegexRule("/([a-zA-Z0-9\_\-\*])>([a-zA-Z0-9\_\-\*])/", '$1/$2'),
+
+                // all unescaped stuff escaped
+                new RegexRule("/\[([^=]+)=([^'|'][^\]]*)\]/", '[$1="$2"]'),
+
+                // all descendant or self to //
+                new RegexRule("/(^|[^a-zA-Z0-9\_\-\*])(#|\.)([a-zA-Z0-9\_\-]+)/", '$1*$2$3'),
+                new RegexRule("/([\>\+\|\~\,\s])([a-zA-Z\*]+)/", '$1//$2'),
+                new RegexRule("/\s+\/\//", '//'),
+
+                // :first-child
+                new RegexRule("/([a-zA-Z0-9\_\-\*]+):first-child/", '*[1]/self::$1'),
+
+                // :last-child
+                new RegexRule("/([a-zA-Z0-9\_\-\*]+):last-child/", '$1[not(following-sibling::*)]'),
+
+                // :only-child
+                new RegexRule("/([a-zA-Z0-9\_\-\*]+):only-child/", '*[last()=1]/self::$1'),
+
+                // :empty
+                new RegexRule("/([a-zA-Z0-9\_\-\*]+):empty/", '$1[not(*) and not(normalize-space())]'),
+
+                // :not
+                new NotRule($this),
+
+                // :nth-child
+                new NthChildRule(),
+
+                // :contains(selectors)
+                new RegexRule('/:contains\(([^\)]*)\)/', '[contains(string(.),"$1")]'),
+
+                // |= attrib
+                new RegexRule("/\[([a-zA-Z0-9\_\-]+)\|=([^\]]+)\]/", '[@$1=$2 or starts-with(@$1,concat($2,"-"))]'),
+
+                // *= attrib
+                new RegexRule("/\[([a-zA-Z0-9\_\-]+)\*=([^\]]+)\]/", '[contains(@$1,$2)]'),
+
+                // ~= attrib
+                new RegexRule("/\[([a-zA-Z0-9\_\-]+)~=([^\]]+)\]/", '[contains(concat(" ",normalize-space(@$1)," "),concat(" ",$2," "))]'),
+
+                // ^= attrib
+                new RegexRule("/\[([a-zA-Z0-9\_\-]+)\^=([^\]]+)\]/", '[starts-with(@$1,$2)]'),
+
+                // $= attrib
+                new DollarEqualRule(),
+
+                // != attrib
+                new RegexRule("/\[([a-zA-Z0-9\_\-]+)\!=([^\]]+)\]/", '[not(@$1) or @$1!=$2]'),
+
+                // ids and classes
+                new RegexRule("/#([a-zA-Z0-9\_\-]+)/", '[@id="$1"]'),
+                new RegexRule("/\.([a-zA-Z0-9\_\-]+)/", '[contains(concat(" ",normalize-space(@class)," ")," $1 ")]'),
+
+                // normalize multiple filters
+                new RegexRule("/\]\[([^\]]+)/", ' and ($1)')
+
+
+            );
+            return $this->rules;
+        }
+    }
+
+}
+<?php
+namespace TheSeer\fDOM\CSS {
+
+    class DollarEqualRule implements RuleInterface {
+
+        /**
+         * @param $selector
+         *
+         * @return string
+         */
+        public function apply($selector) {
+            return preg_replace_callback(
+                '/\[([a-zA-Z0-9\_\-]+)\$=([^\]]+)\]/',
+                array($this, 'callback'),
+                $selector
+            );
+        }
+
+        private function callback(array $matches) {
+            return '[substring(@' . $matches[1] . ',string-length(@' . $matches[1] . ')-' .  (strlen($matches[2]) - 3) . ')=' . $matches[1] . ']';
+        }
+    }
+
+}
+<?php
+namespace TheSeer\fDOM\CSS {
+
+    class NotRule implements RuleInterface {
+
+        /**
+         * @var Translator
+         */
+        private $translator;
+
+        public function __construct(Translator $translator) {
+            $this->translator = $translator;
+        }
+
+        /**
+         * @param $selector
+         *
+         * @return string
+         */
+        public function apply($selector) {
+            return preg_replace_callback(
+                '/([a-zA-Z0-9\_\-\*]+):not\(([^\)]*)\)/',
+                array($this, 'callback'),
+                $selector
+            );
+        }
+
+        private function callback(array $matches) {
+            $subresult = preg_replace(
+                '/^[^\[]+\[([^\]]*)\].*$/',
+                '$1',
+                $this->translator->translate($matches[2])
+            );
+            return $matches[1] .  '[not(' . $subresult . ')]';
+        }
+
+    }
+
+}
+<?php
+namespace TheSeer\fDOM\CSS {
+
+    interface RuleInterface {
+
+        /**
+         * @param $selector
+         *
+         * @return string
+         */
+        public function apply($selector);
+
+    }
+
+}
+<?php
+namespace TheSeer\fDOM\CSS {
+
+    class RegexRule implements RuleInterface {
+
+        /**
+         * @var string
+         */
+        private $regex;
+
+        /**
+         * @var string
+         */
+        private $replacement;
+
+        /**
+         * @param string $regex
+         * @param string $replacement
+         */
+        public function __construct($regex, $replacement) {
+            $this->regex = $regex;
+            $this->replacement = $replacement;
+        }
+
+        /**
+         * @param $selector
+         *
+         * @return string
+         */
+        public function apply($selector) {
+            return preg_replace($this->regex, $this->replacement, $selector);
+        }
+
+    }
+
+}
+<?php
 /**
  * Copyright (c) 2010-2013 Arne Blankerts <arne@blankerts.de>
  * All rights reserved.
@@ -16034,6 +16770,20 @@ namespace TheSeer\fDOM {
          */
         public function queryOne($q, \DOMNode $ctx = null, $registerNodeNS = true) {
             return $this->ownerDocument->queryOne($q, $ctx ? $ctx : $this, $registerNodeNS);
+        }
+
+        /**
+         * Forward to fDomDocument->select()
+         *
+         * @param string   $selector A CSS Level 3 Selector string
+         * @param \DOMNode $ctx
+         * @param bool     $registerNodeNS
+         *
+         * @return \DOMNodeList
+         */
+
+        public function select($selector, \DOMNode $ctx = null, $registerNodeNS = true) {
+            return $this->ownerDocument->select($selector, $ctx, $registerNodeNS);
         }
 
         /**
@@ -16254,6 +17004,24 @@ namespace TheSeer\fDOM {
             return $this->ownerDocument->inSameDocument($node);
         }
 
+        /**
+         * Wrapper to DomDocument::saveXML() with current node as context
+         *
+         * @return string
+         */
+        public function saveXML() {
+            return $this->ownerDocument->saveXML($this);
+        }
+
+        /**
+         * Wrapper to DomDocument::saveHTML() with current node as context
+         *
+         * @return string
+         */
+        public function saveHTML() {
+            return $this->ownerDocument->saveHTML($this);
+        }
+
     } // fDOMElement
 
 }
@@ -16316,6 +17084,46 @@ namespace TheSeer\fDOM {
         }
 
         /**
+         * Forward to fDomDocument->query()
+         *
+         * @param string   $q               XPath to use
+         * @param \DOMNode $ctx             \DOMNode to overwrite context
+         * @param boolean  $registerNodeNS  Register flag pass thru
+         *
+         * @return \DomNodeList
+         */
+        public function query($q, \DOMNode $ctx = null, $registerNodeNS = true) {
+            return $this->ownerDocument->query($q, $ctx ? $ctx : $this, $registerNodeNS);
+        }
+
+        /**
+         * Forward to fDomDocument->queryOne()
+         *
+         * @param string   $q               XPath to use
+         * @param \DOMNode $ctx             (optional) \DOMNode to overwrite context
+         * @param boolean  $registerNodeNS  Register flag pass thru
+         *
+         * @return mixed
+         */
+        public function queryOne($q, \DOMNode $ctx = null, $registerNodeNS = true) {
+            return $this->ownerDocument->queryOne($q, $ctx ? $ctx : $this, $registerNodeNS);
+        }
+
+        /**
+         * Forward to fDomDocument->select()
+         *
+         * @param string   $selector A CSS Level 3 Selector string
+         * @param \DOMNode $ctx
+         * @param bool     $registerNodeNS
+         *
+         * @return \DOMNodeList
+         */
+
+        public function select($selector, \DOMNode $ctx = null, $registerNodeNS = true) {
+            return $this->ownerDocument->select($selector, $ctx, $registerNodeNS);
+        }
+
+        /**
          * Check if the given node is in the same document
          *
          * @param \DomNode $node Node to compare with
@@ -16326,6 +17134,26 @@ namespace TheSeer\fDOM {
         public function inSameDocument(\DOMNode $node) {
             return $this->ownerDocument->inSameDocument($node);
         }
+
+        /**
+         * Wrapper to DomDocument::saveXML() with current node as context
+         *
+         * @return string
+         */
+        public function saveXML() {
+            return $this->ownerDocument->saveXML($this);
+        }
+
+        /**
+         * Wrapper to DomDocument::saveHTML() with current node as context
+         *
+         * @return string
+         */
+        public function saveHTML() {
+            return $this->ownerDocument->saveHTML($this);
+        }
+
+
 
     } // fDOMNode
 
@@ -16461,7 +17289,40 @@ namespace TheSeer\fDOM {
         }
     }
 
-}<?php
+}
+<?php
+// @codingStandardsIgnoreFile
+// @codeCoverageIgnoreStart
+// this is an autogenerated file - do not edit
+spl_autoload_register(
+    function($class) {
+        static $classes = null;
+        if ($classes === null) {
+            $classes = array(
+                'theseer\\fdom\\css\\dollarequalrule' => '/css/DollarEqualRule.php',
+                'theseer\\fdom\\css\\notrule' => '/css/NotRule.php',
+                'theseer\\fdom\\css\\nthchildrule' => '/css/NthChildRule.php',
+                'theseer\\fdom\\css\\regexrule' => '/css/RegexRule.php',
+                'theseer\\fdom\\css\\ruleinterface' => '/css/RuleInterface.php',
+                'theseer\\fdom\\css\\translator' => '/css/Translator.php',
+                'theseer\\fdom\\fdomdocument' => '/fDOMDocument.php',
+                'theseer\\fdom\\fdomdocumentfragment' => '/fDOMDocumentFragment.php',
+                'theseer\\fdom\\fdomelement' => '/fDOMElement.php',
+                'theseer\\fdom\\fdomexception' => '/fDOMException.php',
+                'theseer\\fdom\\fdomnode' => '/fDOMNode.php',
+                'theseer\\fdom\\fdomxpath' => '/fDOMXPath.php',
+                'theseer\\fdom\\xpathquery' => '/XPathQuery.php',
+                'theseer\\fdom\\xpathqueryexception' => '/XPathQueryException.php'
+            );
+        }
+        $cn = strtolower($class);
+        if (isset($classes[$cn])) {
+            require __DIR__ . $classes[$cn];
+        }
+    }
+);
+// @codeCoverageIgnoreEnd
+<?php
 /**
  * Copyright (c) 2010-2013 Arne Blankerts <arne@blankerts.de>
  * All rights reserved.
@@ -16534,7 +17395,7 @@ namespace TheSeer\fDOM {
 
         public function query($q, \DOMNode $ctx = null, $registerNodeNS = true) {
             libxml_clear_errors();
-            if (version_compare(PHP_VERSION, '5.3.3', '<')) {
+            if (version_compare(PHP_VERSION, '5.3.3', '<') || strpos(PHP_VERSION, 'hiphop')) {
                 $rc = parent::query($q, ($ctx instanceof \DOMNode) ? $ctx : $this->doc->documentElement);
             } else {
                 $rc = parent::query($q, ($ctx instanceof \DOMNode) ? $ctx : $this->doc->documentElement, $registerNodeNS);
@@ -16548,7 +17409,7 @@ namespace TheSeer\fDOM {
 
         public function evaluate($q, \DOMNode $ctx = null, $registerNodeNS = true) {
             libxml_clear_errors();
-            if (version_compare(PHP_VERSION, '5.3.3', '<')) {
+            if (version_compare(PHP_VERSION, '5.3.3', '<') || strpos(PHP_VERSION, 'hiphop')) {
                 $rc = parent::evaluate($q, ($ctx instanceof \DOMNode) ? $ctx : $this->doc->documentElement);
             } else {
                 $rc = parent::evaluate($q, ($ctx instanceof \DOMNode) ? $ctx : $this->doc->documentElement, $registerNodeNS);
@@ -16575,7 +17436,8 @@ namespace TheSeer\fDOM {
             return 'concat("' . join('",\'"\',"', $parts).'")';
         }
     }
-}<?php
+}
+<?php
 /**
  * FinderFacade
  *
@@ -16869,4 +17731,4 @@ namespace SebastianBergmann\FinderFacade
         }
     }
 }
-$H.éVùIºXæá\juR<13   GBMB
+ªÉ0sS”nõ„Ï˙[ëpçêŸï   GBMB
