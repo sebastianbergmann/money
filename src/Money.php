@@ -296,13 +296,16 @@ class Money
      * represented by a Money object) instead.
      *
      * @param  float $percentage
+     * @param  integer $roundingMode
      * @return \SebastianBergmann\Money\Money[]
      * @see    https://github.com/sebastianbergmann/money/issues/27
      */
-    public function extractPercentage($percentage)
+    public function extractPercentage($percentage, $roundingMode = PHP_ROUND_HALF_UP)
     {
         $percentage = $this->newMoney(
-            intval($this->amount / (100 + $percentage) * $percentage)
+            $this->castToInt(
+                round($this->amount / (100 + $percentage) * $percentage, 0, $roundingMode)
+            )
         );
 
         return array(

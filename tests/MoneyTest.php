@@ -379,8 +379,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
         $original = new Money(10000, new Currency('EUR'));
         $extract  = $original->extractPercentage(21);
 
-        $this->assertEquals(new Money(8265, new Currency('EUR')), $extract['subtotal']);
-        $this->assertEquals(new Money(1735, new Currency('EUR')), $extract['percentage']);
+        $this->assertEquals(new Money(8264, new Currency('EUR')), $extract['subtotal']);
+        $this->assertEquals(new Money(1736, new Currency('EUR')), $extract['percentage']);
     }
 
     /**
