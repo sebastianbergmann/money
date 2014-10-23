@@ -1168,11 +1168,28 @@ class Currency
     {
         if (!isset(self::$currencies[$currencyCode])) {
             throw new InvalidArgumentException(
-                '$currencyCode must be an ISO 4217 currency code'
+                sprintf('Unknown currency code "%s"', $currencyCode)
             );
         }
 
         $this->currencyCode = $currencyCode;
+    }
+
+    /**
+     * @param string $code
+     * @param string $displayName
+     * @param integer $numericCode
+     * @param integer $defaultFractionDigits
+     * @param integer $subUnit
+     */
+    public static function addCurrency($code, $displayName, $numericCode, $defaultFractionDigits, $subUnit)
+    {
+        self::$currencies[$code] = array(
+            'display_name' => $displayName,
+            'numeric_code' => $numericCode,
+            'default_fraction_digits' => $defaultFractionDigits,
+            'sub_unit' => $subUnit,
+        );
     }
 
     /**

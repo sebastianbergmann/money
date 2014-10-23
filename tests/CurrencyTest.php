@@ -66,6 +66,27 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @backupStaticAttributes enabled
+     * @covers \SebastianBergmann\Money\Currency::addCurrency
+     * @uses   \SebastianBergmann\Money\Currency::__construct
+     */
+    public function testCustomCurrencyCanBeRegistered()
+    {
+        Currency::addCurrency(
+            'BTC',
+            'Bitcoin',
+            999,
+            4,
+            1000
+        );
+
+        $this->assertInstanceOf(
+            'SebastianBergmann\Money\Currency',
+            new Currency('BTC')
+        );
+    }
+
+    /**
      * @covers  \SebastianBergmann\Money\Currency::__toString
      * @depends testObjectCanBeConstructedForValidConstructorArgument
      */
