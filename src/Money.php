@@ -103,7 +103,7 @@ class Money
      *
      * @param  string                                   $value
      * @param  \SebastianBergmann\Money\Currency|string $currency
-     * @return \SebastianBergmann\Money\Money
+     * @return static
      * @throws \SebastianBergmann\Money\InvalidArgumentException
      */
     public static function fromString($value, $currency)
@@ -157,7 +157,7 @@ class Money
      * of the sum of this Money object and another.
      *
      * @param  \SebastianBergmann\Money\Money $other
-     * @return \SebastianBergmann\Money\Money
+     * @return static
      * @throws \SebastianBergmann\Money\CurrencyMismatchException
      * @throws \SebastianBergmann\Money\OverflowException
      */
@@ -177,7 +177,7 @@ class Money
      * of the difference of this Money object and another.
      *
      * @param  \SebastianBergmann\Money\Money $other
-     * @return \SebastianBergmann\Money\Money
+     * @return static
      * @throws \SebastianBergmann\Money\CurrencyMismatchException
      * @throws \SebastianBergmann\Money\OverflowException
      */
@@ -196,7 +196,7 @@ class Money
      * Returns a new Money object that represents the negated monetary value
      * of this Money object.
      *
-     * @return \SebastianBergmann\Money\Money
+     * @return static
      */
     public function negate()
     {
@@ -209,7 +209,7 @@ class Money
      *
      * @param  float   $factor
      * @param  integer $roundingMode
-     * @return \SebastianBergmann\Money\Money
+     * @return static
      * @throws \SebastianBergmann\Money\InvalidArgumentException
      */
     public function multiply($factor, $roundingMode = PHP_ROUND_HALF_UP)
@@ -232,7 +232,7 @@ class Money
      * among N targets.
      *
      * @param  integer $n
-     * @return \SebastianBergmann\Money\Money[]
+     * @return static[]
      * @throws \SebastianBergmann\Money\InvalidArgumentException
      */
     public function allocateToTargets($n)
@@ -262,7 +262,7 @@ class Money
      * using a list of ratios.
      *
      * @param  array $ratios
-     * @return \SebastianBergmann\Money\Money[]
+     * @return static[]
      */
     public function allocateByRatios(array $ratios)
     {
@@ -297,7 +297,7 @@ class Money
      *
      * @param  float $percentage
      * @param  integer $roundingMode
-     * @return \SebastianBergmann\Money\Money[]
+     * @return static[]
      * @see    https://github.com/sebastianbergmann/money/issues/27
      */
     public function extractPercentage($percentage, $roundingMode = PHP_ROUND_HALF_UP)
@@ -456,7 +456,7 @@ class Money
 
     /**
      * @param  integer $amount
-     * @return \SebastianBergmann\Money\Money
+     * @return static
      */
     private function newMoney($amount)
     {
