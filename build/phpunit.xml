@@ -3,7 +3,8 @@
 <phpunit backupGlobals="false"
          bootstrap="../src/autoload.php"
          strict="true"
-         verbose="true">
+         verbose="true"
+         timeoutForSmallTests="10">
   <testsuites>
     <testsuite name="Money">
       <directory suffix="Test.php">../tests</directory>
