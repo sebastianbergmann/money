@@ -370,6 +370,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @uses   \SebastianBergmann\Money\Money::subtract
      * @uses   \SebastianBergmann\Money\Money::assertSameCurrency
      * @uses   \SebastianBergmann\Money\Money::assertIsInteger
+     * @uses   \SebastianBergmann\Money\Money::assertInsideIntegerBounds
+     * @uses   \SebastianBergmann\Money\Money::castToInt
      * @uses   \SebastianBergmann\Money\Money::newMoney
      * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
      * @uses   \SebastianBergmann\Money\Currency
