@@ -54,7 +54,7 @@ namespace SebastianBergmann\Money;
  * @see        http://martinfowler.com/bliki/ValueObject.html
  * @see        http://martinfowler.com/eaaCatalog/money.html
  */
-class Money
+class Money implements \JsonSerializable
 {
     /**
      * @var integer
@@ -128,6 +128,20 @@ class Money
                 )
             ),
             $currency
+        );
+    }
+
+    /**
+     * Specify data which should be serialized to JSON
+     *
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * @link   http://php.net/manual/en/jsonserializable.jsonserialize.php
+     */
+    public function jsonSerialize()
+    {
+        return array(
+            'amount'   => $this->amount,
+            'currency' => $this->currency->getCurrencyCode()
         );
     }
 

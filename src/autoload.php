@@ -7,6 +7,7 @@ spl_autoload_register(
         static $classes = null;
         if ($classes === null) {
             $classes = array(
+                'jsonserializable' => '/JsonSerializable.php',
                 'sebastianbergmann\\money\\aed' => '/currency/AED.php',
                 'sebastianbergmann\\money\\afn' => '/currency/AFN.php',
                 'sebastianbergmann\\money\\all' => '/currency/ALL.php',

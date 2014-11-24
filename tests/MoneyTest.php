@@ -569,4 +569,19 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
         $a->compareTo($b);
     }
+
+    /**
+     * @covers   \SebastianBergmann\Money\Money::jsonSerialize
+     * @uses     \SebastianBergmann\Money\Money::__construct
+     * @uses     \SebastianBergmann\Money\Currency
+     * @uses     \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @requires PHP 5.4.0
+     */
+    public function testCanBeSerializedToJson()
+    {
+        $this->assertEquals(
+            '{"amount":1,"currency":"EUR"}',
+            json_encode(new EUR(1))
+        );
+    }
 }
