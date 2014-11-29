@@ -103,7 +103,7 @@ class Money implements \JsonSerializable
      *
      * @param  string                                   $value
      * @param  \SebastianBergmann\Money\Currency|string $currency
-     * @return \SebastianBergmann\Money\Money
+     * @return static
      * @throws \SebastianBergmann\Money\InvalidArgumentException
      */
     public static function fromString($value, $currency)
@@ -171,7 +171,7 @@ class Money implements \JsonSerializable
      * of the sum of this Money object and another.
      *
      * @param  \SebastianBergmann\Money\Money $other
-     * @return \SebastianBergmann\Money\Money
+     * @return static
      * @throws \SebastianBergmann\Money\CurrencyMismatchException
      * @throws \SebastianBergmann\Money\OverflowException
      */
@@ -191,7 +191,7 @@ class Money implements \JsonSerializable
      * of the difference of this Money object and another.
      *
      * @param  \SebastianBergmann\Money\Money $other
-     * @return \SebastianBergmann\Money\Money
+     * @return static
      * @throws \SebastianBergmann\Money\CurrencyMismatchException
      * @throws \SebastianBergmann\Money\OverflowException
      */
@@ -210,7 +210,7 @@ class Money implements \JsonSerializable
      * Returns a new Money object that represents the negated monetary value
      * of this Money object.
      *
-     * @return \SebastianBergmann\Money\Money
+     * @return static
      */
     public function negate()
     {
@@ -223,7 +223,7 @@ class Money implements \JsonSerializable
      *
      * @param  float   $factor
      * @param  integer $roundingMode
-     * @return \SebastianBergmann\Money\Money
+     * @return static
      * @throws \SebastianBergmann\Money\InvalidArgumentException
      */
     public function multiply($factor, $roundingMode = PHP_ROUND_HALF_UP)
@@ -246,7 +246,7 @@ class Money implements \JsonSerializable
      * among N targets.
      *
      * @param  integer $n
-     * @return \SebastianBergmann\Money\Money[]
+     * @return static[]
      * @throws \SebastianBergmann\Money\InvalidArgumentException
      */
     public function allocateToTargets($n)
@@ -276,7 +276,7 @@ class Money implements \JsonSerializable
      * using a list of ratios.
      *
      * @param  array $ratios
-     * @return \SebastianBergmann\Money\Money[]
+     * @return static[]
      */
     public function allocateByRatios(array $ratios)
     {
@@ -311,7 +311,7 @@ class Money implements \JsonSerializable
      *
      * @param  float $percentage
      * @param  integer $roundingMode
-     * @return \SebastianBergmann\Money\Money[]
+     * @return static[]
      * @see    https://github.com/sebastianbergmann/money/issues/27
      */
     public function extractPercentage($percentage, $roundingMode = PHP_ROUND_HALF_UP)
@@ -470,7 +470,7 @@ class Money implements \JsonSerializable
 
     /**
      * @param  integer $amount
-     * @return \SebastianBergmann\Money\Money
+     * @return static
      */
     private function newMoney($amount)
     {
