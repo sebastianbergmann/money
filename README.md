@@ -2,6 +2,7 @@
 [![Build Status](https://scrutinizer-ci.com/g/sebastianbergmann/money/badges/build.png?b=master)](https://scrutinizer-ci.com/g/sebastianbergmann/money/build-status/master)
 [![Code Coverage](https://scrutinizer-ci.com/g/sebastianbergmann/money/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/sebastianbergmann/money/?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sebastianbergmann/money/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sebastianbergmann/money/?branch=master)
+[![Reference Status](https://www.versioneye.com/php/sebastian:money/reference_badge.svg?style=flat)](https://www.versioneye.com/php/sebastian:money/references)
 
 # Money
 
