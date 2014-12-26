@@ -1167,6 +1167,10 @@ class Currency
     public function __construct($currencyCode)
     {
         if (!isset(self::$currencies[$currencyCode])) {
+            $currencyCode = strtoupper($currencyCode);
+        }
+
+        if (!isset(self::$currencies[$currencyCode])) {
             throw new InvalidArgumentException(
                 sprintf('Unknown currency code "%s"', $currencyCode)
             );

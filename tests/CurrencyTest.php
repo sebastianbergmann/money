@@ -56,13 +56,23 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers \SebastianBergmann\Money\Currency::__construct
      */
-    public function testObjectCanBeConstructedForValidConstructorArgument()
+    public function testCanBeConstructedFromUppercaseString()
     {
         $c = new Currency('EUR');
 
         $this->assertInstanceOf('SebastianBergmann\\Money\\Currency', $c);
 
         return $c;
+    }
+
+    /**
+     * @covers \SebastianBergmann\Money\Currency::__construct
+     */
+    public function testCanBeConstructedFromLowercaseString()
+    {
+        $c = new Currency('eur');
+
+        $this->assertInstanceOf('SebastianBergmann\\Money\\Currency', $c);
     }
 
     /**
@@ -88,7 +98,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers  \SebastianBergmann\Money\Currency::__toString
-     * @depends testObjectCanBeConstructedForValidConstructorArgument
+     * @depends testCanBeConstructedFromUppercaseString
      */
     public function testCanBeCastToString(Currency $c)
     {
@@ -97,7 +107,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers  \SebastianBergmann\Money\Currency::getCurrencyCode
-     * @depends testObjectCanBeConstructedForValidConstructorArgument
+     * @depends testCanBeConstructedFromUppercaseString
      */
     public function testCurrencyCodeCanBeRetrieved(Currency $c)
     {
@@ -106,7 +116,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers  \SebastianBergmann\Money\Currency::getDefaultFractionDigits
-     * @depends testObjectCanBeConstructedForValidConstructorArgument
+     * @depends testCanBeConstructedFromUppercaseString
      */
     public function testDefaultFractionDigitsCanBeRetrieved(Currency $c)
     {
@@ -115,7 +125,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers  \SebastianBergmann\Money\Currency::getDisplayName
-     * @depends testObjectCanBeConstructedForValidConstructorArgument
+     * @depends testCanBeConstructedFromUppercaseString
      */
     public function testDisplayNameCanBeRetrieved(Currency $c)
     {
@@ -124,7 +134,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers  \SebastianBergmann\Money\Currency::getNumericCode
-     * @depends testObjectCanBeConstructedForValidConstructorArgument
+     * @depends testCanBeConstructedFromUppercaseString
      */
     public function testNumericCodeCanBeRetrieved(Currency $c)
     {
@@ -133,7 +143,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers  \SebastianBergmann\Money\Currency::getSubUnit
-     * @depends testObjectCanBeConstructedForValidConstructorArgument
+     * @depends testCanBeConstructedFromUppercaseString
      */
     public function testSubUnitCanBeRetrieved(Currency $c)
     {
