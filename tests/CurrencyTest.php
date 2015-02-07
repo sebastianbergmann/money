@@ -65,6 +65,23 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \SebastianBergmann\Money\Currency::getCurrencies
+     */
+    public function testRegisterdCurrenciesCanBeAccessed()
+    {
+        $currencies = Currency::getCurrencies();
+
+        $this->assertTrue(is_array($currencies), 'Registered currencies should be an array');
+        $this->assertArrayHasKey('EUR', $currencies);
+        $this->assertTrue(is_array($currencies['EUR']), 'Registered currencies should be an array');
+        $this->assertArrayHasKey('display_name', $currencies['EUR']);
+        $this->assertArrayHasKey('numeric_code', $currencies['EUR']);
+        $this->assertArrayHasKey('default_fraction_digits', $currencies['EUR']);
+        $this->assertArrayHasKey('sub_unit', $currencies['EUR']);
+
+    }
+
+    /**
      * @covers  \SebastianBergmann\Money\Currency::__toString
      * @depends testCanBeConstructedFromUppercaseString
      */
