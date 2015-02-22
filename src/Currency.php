@@ -465,7 +465,7 @@ class Currency
         'display_name' => 'Yen',
         'numeric_code' => 392,
         'default_fraction_digits' => 0,
-        'sub_unit' => 100,
+        'sub_unit' => 1,
       ],
       'KES' => [
         'display_name' => 'Kenyan Shilling',
