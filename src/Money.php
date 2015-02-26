@@ -116,10 +116,15 @@ class Money implements \JsonSerializable
     /**
      * Returns the monetary value represented by this object.
      *
-     * @return integer
+     * @param bool $convert
+     * @return integer|float
      */
-    public function getAmount()
+    public function getAmount($convert = false)
     {
+        if ($convert) {
+            return round($this->amount / $this->currency->getSubUnit(), $this->currency->getDefaultFractionDigits());
+        }
+        
         return $this->amount;
     }
 
