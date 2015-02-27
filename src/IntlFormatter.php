@@ -48,7 +48,7 @@ class IntlFormatter implements Formatter
     public function format(Money $money)
     {
         return $this->numberFormatter->formatCurrency(
-            $money->getAmount() / $money->getCurrency()->getSubUnit(),
+            $money->getConvertedAmount(),
             $money->getCurrency()->getCurrencyCode()
         );
     }
