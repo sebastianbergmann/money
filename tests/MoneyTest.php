@@ -109,6 +109,15 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \SebastianBergmann\Money\Money::getConvertedAmount
+     */
+    public function testConvertedAmountCanBeRetrieved()
+    {
+        $m = new Money(1234, 'EUR');
+        $this->assertSame(12.34, $m->getConvertedAmount());
+    }
+
+    /**
      * @covers  \SebastianBergmann\Money\Money::getCurrency
      * @uses    \SebastianBergmann\Money\Currency
      * @depends testObjectCanBeConstructedForValidConstructorArguments
