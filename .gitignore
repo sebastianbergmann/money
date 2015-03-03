@@ -6,3 +6,4 @@ build/pdepend
 build/phpdox
 cache.properties
 .idea
+vendor
