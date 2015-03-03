@@ -33,11 +33,16 @@ $m = new Money(100, new Currency('EUR'));
 
 // Access the Money object's monetary value
 print $m->getAmount();
+
+// Access the Money object's monetary value converted to its base units
+print $m->getConvertedAmount();
 ```
 
 The code above produces the output shown below:
 
     100
+    
+    1.00
 
 #### Creating a Money object from a string value
 
