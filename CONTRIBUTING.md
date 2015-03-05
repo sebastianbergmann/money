@@ -2,7 +2,7 @@
 
 Contributions are **welcome** and will be fully **credited**.
 
-We accept contributions via Pull Requests on [Github](https://github.com/sebastianbergmann/money).
+We accept contributions via pull requests on [Github](https://github.com/sebastianbergmann/money).
 
 
 ## Pull Requests
@@ -13,7 +13,7 @@ We accept contributions via Pull Requests on [Github](https://github.com/sebasti
 
 - **Consider our release cycle** - We follow [SemVer v2.0.0](http://semver.org/). Randomly breaking public APIs is not an option.
 
-- **Create feature branches** - Do not ask us to pull from your master branch.
+- **Create topic branches** - Do not ask us to pull from your master branch.
 
 - **One pull request per feature** - If you want to do more than one thing, please send multiple pull requests.
 
@@ -22,7 +22,9 @@ We accept contributions via Pull Requests on [Github](https://github.com/sebasti
 
 ## Running Tests
 
+    $ ant phpunit
+
+or
+
     $ phpunit -c build
 
-
-**Happy coding**!
