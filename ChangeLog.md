@@ -5,7 +5,7 @@ All notable changes to `sebastianbergmann/money` will be documented in this file
 ## [2.0.0] - not yet released
 
 ### Removed
-* Dropped support for PHP < 5.4.0
+* Removed support for PHP < 5.4.0
 
 ## [1.5.1] - 2015-02-22
 
@@ -14,6 +14,8 @@ All notable changes to `sebastianbergmann/money` will be documented in this file
 * Added support for arbitrary currencies that are not part of ISO 4217 to the `Currency` class
 * Added support for lower-case currency strings
 * The `Money` class now implements PHP's built-in `JsonSerializable` interface
+
+### Changed
 * Changed the sub-unit of Japanese Yen from `100` to `1`
 
 ## [1.5.0] - 2014-09-05
@@ -25,6 +27,8 @@ All notable changes to `sebastianbergmann/money` will be documented in this file
 
 ### Added
 * Added the `Money::createFromString()` named constructor to create `Money` objects from strings such as `"12.34"`
+
+### Changed
 * Changed `Money::__construct()` to accept an ISO 4217 currency code as its second argument
 
 ## [1.3.1] - 2014-07-21
