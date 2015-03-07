@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <phpunit backupGlobals="false"
          bootstrap="../src/autoload.php"
          strict="true"
          verbose="true"
          timeoutForSmallTests="10">
-  <testsuites>
-    <testsuite name="Money">
-      <directory suffix="Test.php">../tests</directory>
-    </testsuite>
-  </testsuites>
+    <testsuites>
+        <testsuite name="Money">
+            <directory suffix="Test.php">../tests</directory>
+        </testsuite>
+    </testsuites>
 
-  <logging>
-    <log type="coverage-html" target="coverage"/>
-    <log type="coverage-clover" target="logs/clover.xml"/>
-    <log type="coverage-crap4j" target="logs/crap4j.xml"/>
-    <log type="coverage-xml" target="logs/coverage"/>
-    <log type="junit" target="logs/junit.xml"/>
-  </logging>
+    <logging>
+        <log type="coverage-html" target="coverage"/>
+        <log type="coverage-clover" target="logs/clover.xml"/>
+        <log type="coverage-crap4j" target="logs/crap4j.xml"/>
+        <log type="coverage-xml" target="logs/coverage"/>
+        <log type="junit" target="logs/junit.xml"/>
+    </logging>
 
-  <filter>
-    <whitelist addUncoveredFilesFromWhitelist="true">
-      <directory suffix=".php">../src</directory>
-      <exclude>
-        <file>../src/autoload.php</file>
-      </exclude>
-    </whitelist>
-  </filter>
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">../src</directory>
+            <exclude>
+                <file>../src/autoload.php</file>
+            </exclude>
+        </whitelist>
+    </filter>
 </phpunit>
 
