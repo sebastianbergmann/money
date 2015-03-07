@@ -110,6 +110,9 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \SebastianBergmann\Money\Money::getConvertedAmount
+     * @uses   \SebastianBergmann\Money\Money::__construct
+     * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses   \SebastianBergmann\Money\Currency
      */
     public function testConvertedAmountCanBeRetrieved()
     {
