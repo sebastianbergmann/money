@@ -4,6 +4,9 @@ All notable changes to `sebastianbergmann/money` will be documented in this file
 
 ## [2.0.0] - not yet released
 
+### Added
+* Added the `Money::getConvertedAmount()` method for converting a `Money` object's amount into its base units
+
 ### Removed
 * Removed support for PHP < 5.4.0
 
