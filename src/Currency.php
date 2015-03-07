@@ -1165,6 +1165,14 @@ class Currency
     }
 
     /**
+     * @return array the list of configured currencies
+     */
+    public static function getCurrencies()
+    {
+        return self::$currencies;
+    }
+
+    /**
      * Returns the ISO 4217 currency code of this currency.
      *
      * @return string
