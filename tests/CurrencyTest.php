@@ -71,9 +71,9 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     {
         $currencies = Currency::getCurrencies();
 
-        $this->assertTrue(is_array($currencies), 'Registered currencies should be an array');
+        $this->assertInternalType('array', $currencies);
         $this->assertArrayHasKey('EUR', $currencies);
-        $this->assertTrue(is_array($currencies['EUR']), 'Registered currencies should be an array');
+        $this->assertInternalType('array', $currencies['EUR']);
         $this->assertArrayHasKey('display_name', $currencies['EUR']);
         $this->assertArrayHasKey('numeric_code', $currencies['EUR']);
         $this->assertArrayHasKey('default_fraction_digits', $currencies['EUR']);
