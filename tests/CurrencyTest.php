@@ -78,7 +78,6 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('numeric_code', $currencies['EUR']);
         $this->assertArrayHasKey('default_fraction_digits', $currencies['EUR']);
         $this->assertArrayHasKey('sub_unit', $currencies['EUR']);
-
     }
 
     /**
