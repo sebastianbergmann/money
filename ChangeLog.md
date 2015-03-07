@@ -6,6 +6,7 @@ All notable changes to `sebastianbergmann/money` will be documented in this file
 
 ### Added
 * Added the `Money::getConvertedAmount()` method for converting a `Money` object's amount into its base units
+* Added the `Currency::getCurrencies()` method for retrieving the registered currencies
 
 ### Removed
 * Removed support for PHP < 5.4.0
