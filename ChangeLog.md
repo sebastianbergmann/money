@@ -9,7 +9,7 @@ All notable changes to `sebastianbergmann/money` will be documented in this file
 * Added the `Currency::getCurrencies()` method for retrieving the registered currencies
 
 ### Removed
-* Removed support for PHP < 5.4.0
+* Removed support for PHP < 5.5.0
 
 ## [1.5.1] - 2015-02-22
 

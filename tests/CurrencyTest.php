@@ -28,7 +28,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     {
         $c = new Currency('EUR');
 
-        $this->assertInstanceOf('SebastianBergmann\\Money\\Currency', $c);
+        $this->assertInstanceOf(Currency::class, $c);
 
         return $c;
     }
@@ -40,7 +40,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     {
         $c = new Currency('eur');
 
-        $this->assertInstanceOf('SebastianBergmann\\Money\\Currency', $c);
+        $this->assertInstanceOf(Currency::class, $c);
     }
 
     /**
@@ -58,10 +58,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
             1000
         );
 
-        $this->assertInstanceOf(
-            'SebastianBergmann\Money\Currency',
-            new Currency('BTC')
-        );
+        $this->assertInstanceOf(Currency::class, new Currency('BTC'));
     }
 
     /**

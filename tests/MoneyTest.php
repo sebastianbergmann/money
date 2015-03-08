@@ -52,7 +52,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     {
         $m = new Money(0, new Currency('EUR'));
 
-        $this->assertInstanceOf('SebastianBergmann\\Money\\Money', $m);
+        $this->assertInstanceOf(Money::class, $m);
 
         return $m;
     }
@@ -66,7 +66,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     {
         $m = new Money(0, 'EUR');
 
-        $this->assertInstanceOf('SebastianBergmann\\Money\\Money', $m);
+        $this->assertInstanceOf(Money::class, $m);
 
         return $m;
     }
@@ -551,11 +551,10 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers   \SebastianBergmann\Money\Money::jsonSerialize
-     * @uses     \SebastianBergmann\Money\Money::__construct
-     * @uses     \SebastianBergmann\Money\Currency
-     * @uses     \SebastianBergmann\Money\Money::handleCurrencyArgument
-     * @requires PHP 5.4.0
+     * @covers \SebastianBergmann\Money\Money::jsonSerialize
+     * @uses   \SebastianBergmann\Money\Money::__construct
+     * @uses   \SebastianBergmann\Money\Currency
+     * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
      */
     public function testCanBeSerializedToJson()
     {
