@@ -102,6 +102,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers  \SebastianBergmann\Money\Money::getAmount
      * @depends testObjectCanBeConstructedForValidConstructorArguments
+     * @param   Money $m
      */
     public function testAmountCanBeRetrieved(Money $m)
     {
@@ -124,6 +125,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers  \SebastianBergmann\Money\Money::getCurrency
      * @uses    \SebastianBergmann\Money\Currency
      * @depends testObjectCanBeConstructedForValidConstructorArguments
+     * @param   Money $m
      */
     public function testCurrencyCanBeRetrieved(Money $m)
     {
