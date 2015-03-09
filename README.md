@@ -90,7 +90,7 @@ use SebastianBergmann\Money\IntlFormatter;
 $m = new Money(100, new Currency('EUR'));
 
 // Format a Money object using PHP's built-in NumberFormatter (German locale)
-$f = new IntlFormatter('de_DE');
+$f = IntlFormatter::fromLocale('de_DE');
 
 print $f->format($m);
 ```

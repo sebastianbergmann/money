@@ -29,14 +29,25 @@ class IntlFormatter implements Formatter
     private $numberFormatter;
 
     /**
-     * @param string $locale
+     * @param  string $locale
+     * @return static
      */
-    public function __construct($locale)
+    public static function fromLocale($locale)
     {
-        $this->numberFormatter = new NumberFormatter(
-            $locale,
-            NumberFormatter::CURRENCY
+        return new static(
+            new NumberFormatter(
+                $locale,
+                NumberFormatter::CURRENCY
+            )
         );
+    }
+
+    /**
+     * @param NumberFormatter $numberFormatter
+     */
+    public function __construct(NumberFormatter $numberFormatter)
+    {
+        $this->numberFormatter = $numberFormatter;
     }
 
     /**

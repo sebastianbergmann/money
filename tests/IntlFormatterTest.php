@@ -13,6 +13,7 @@ namespace SebastianBergmann\Money;
 class IntlFormatterTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * @covers \SebastianBergmann\Money\IntlFormatter::fromLocale
      * @covers \SebastianBergmann\Money\IntlFormatter::__construct
      * @covers \SebastianBergmann\Money\IntlFormatter::format
      * @uses   \SebastianBergmann\Money\Currency
@@ -20,7 +21,7 @@ class IntlFormatterTest extends \PHPUnit_Framework_TestCase
      */
     public function testMoneyObjectCanBeFormattedAsString()
     {
-        $f = new IntlFormatter('de_DE');
+        $f = IntlFormatter::fromLocale('de_DE');
         $m = new Money(100, new Currency('EUR'));
 
         $this->assertEquals('1,00 €', $f->format($m));
