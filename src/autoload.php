@@ -58,7 +58,6 @@ spl_autoload_register(
                 'sebastianbergmann\\money\\ern' => '/currency/ERN.php',
                 'sebastianbergmann\\money\\etb' => '/currency/ETB.php',
                 'sebastianbergmann\\money\\eur' => '/currency/EUR.php',
-                'sebastianbergmann\\money\\exception' => '/interfaces/Exception.php',
                 'sebastianbergmann\\money\\fjd' => '/currency/FJD.php',
                 'sebastianbergmann\\money\\fkp' => '/currency/FKP.php',
                 'sebastianbergmann\\money\\formatter' => '/interfaces/Formatter.php',
