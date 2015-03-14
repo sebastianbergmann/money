@@ -14,6 +14,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @covers            \SebastianBergmann\Money\Money::__construct
+     * @covers            \SebastianBergmann\Money\Money::setCurrency
+     * @covers            \SebastianBergmann\Money\Money::setAmount
      * @uses              \SebastianBergmann\Money\Currency
      * @expectedException \SebastianBergmann\Money\InvalidArgumentException
      */
@@ -24,7 +26,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers            \SebastianBergmann\Money\Money::__construct
-     * @covers            \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @covers            \SebastianBergmann\Money\Money::setCurrency
+     * @covers            \SebastianBergmann\Money\Money::setAmount
      * @uses              \SebastianBergmann\Money\Currency
      * @expectedException \SebastianBergmann\Money\InvalidArgumentException
      */
@@ -44,8 +47,21 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers            \SebastianBergmann\Money\Money::__construct
+     * @covers            \SebastianBergmann\Money\Money::setCurrency
+     * @covers            \SebastianBergmann\Money\Money::setAmount
+     * @uses              \SebastianBergmann\Money\Currency
+     * @expectedException \SebastianBergmann\Money\InvalidArgumentException
+     */
+    public function testExceptionIsRaisedForInvalidConstructorArguments4()
+    {
+        new Money('nonnumericstring', new Currency('EUR'));
+    }
+
+    /**
      * @covers \SebastianBergmann\Money\Money::__construct
-     * @covers \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @covers \SebastianBergmann\Money\Money::setCurrency
+     * @covers \SebastianBergmann\Money\Money::setAmount
      * @uses   \SebastianBergmann\Money\Currency
      */
     public function testObjectCanBeConstructedForValidConstructorArguments()
@@ -59,7 +75,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \SebastianBergmann\Money\Money::__construct
-     * @covers \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @covers \SebastianBergmann\Money\Money::setCurrency
+     * @covers \SebastianBergmann\Money\Money::setAmount
      * @uses   \SebastianBergmann\Money\Currency
      */
     public function testObjectCanBeConstructedForValidConstructorArguments2()
@@ -73,6 +90,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \SebastianBergmann\Money\Money::fromString
+     * @covers \SebastianBergmann\Money\Money::setCurrency
+     * @covers \SebastianBergmann\Money\Money::setAmount
      * @uses   \SebastianBergmann\Money\Money::__construct
      * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
      * @uses   \SebastianBergmann\Money\Currency
@@ -87,6 +106,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \SebastianBergmann\Money\Money::fromString
+     * @covers \SebastianBergmann\Money\Money::setCurrency
+     * @covers \SebastianBergmann\Money\Money::setAmount
      * @uses   \SebastianBergmann\Money\Money::__construct
      * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
      * @uses   \SebastianBergmann\Money\Currency
@@ -97,6 +118,110 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
             new Money(1234, new Currency('EUR')),
             Money::fromString('12.34', 'EUR')
         );
+    }
+
+    /**
+     * @covers \SebastianBergmann\Money\Money::setAmount
+     * @uses   \SebastianBergmann\Money\Money::__construct
+     * @uses   \SebastianBergmann\Money\Money::setCurrency
+     * @uses   \SebastianBergmann\Money\Money::getAmount
+     * @uses   \SebastianBergmann\Money\Currency
+     */
+    public function testObjectCanBeConstructedFromInteger()
+    {
+        $m = new Money(1234, 'EUR');
+        $this->assertEquals(1234, $m->getAmount());
+    }
+
+    /**
+     * @covers \SebastianBergmann\Money\Money::setAmount
+     * @uses   \SebastianBergmann\Money\Money::__construct
+     * @uses   \SebastianBergmann\Money\Money::setCurrency
+     * @uses   \SebastianBergmann\Money\Money::getAmount
+     * @uses   \SebastianBergmann\Money\Currency
+     */
+    public function testObjectCanBeConstructedAndConvertedFromInteger()
+    {
+        $m = new Money(1234, 'EUR', true);
+        $this->assertEquals(123400, $m->getAmount());
+    }
+
+    /**
+     * @covers \SebastianBergmann\Money\Money::setAmount
+     * @uses   \SebastianBergmann\Money\Money::__construct
+     * @uses   \SebastianBergmann\Money\Money::setCurrency
+     * @uses   \SebastianBergmann\Money\Money::getAmount
+     * @uses   \SebastianBergmann\Money\Currency
+     */
+    public function testObjectCanBeConstructedFromFloat()
+    {
+        $m = new Money(1234.56, 'EUR');
+        $this->assertEquals(1235, $m->getAmount());
+    }
+
+    /**
+     * @covers \SebastianBergmann\Money\Money::setAmount
+     * @uses   \SebastianBergmann\Money\Money::__construct
+     * @uses   \SebastianBergmann\Money\Money::setCurrency
+     * @uses   \SebastianBergmann\Money\Money::getAmount
+     * @uses   \SebastianBergmann\Money\Currency
+     */
+    public function testObjectCanBeConstructedAndConvertedFromFloat()
+    {
+        $m = new Money(1234.56, 'EUR', true);
+        $this->assertEquals(123456, $m->getAmount());
+    }
+
+    /**
+     * @covers \SebastianBergmann\Money\Money::setAmount
+     * @uses   \SebastianBergmann\Money\Money::__construct
+     * @uses   \SebastianBergmann\Money\Money::setCurrency
+     * @uses   \SebastianBergmann\Money\Money::getAmount
+     * @uses   \SebastianBergmann\Money\Currency
+     */
+    public function testObjectCanBeConstructedFromIntegerString()
+    {
+        $m = new Money('1234', 'EUR');
+        $this->assertEquals(1234, $m->getAmount());
+    }
+
+    /**
+     * @covers \SebastianBergmann\Money\Money::setAmount
+     * @uses   \SebastianBergmann\Money\Money::__construct
+     * @uses   \SebastianBergmann\Money\Money::setCurrency
+     * @uses   \SebastianBergmann\Money\Money::getAmount
+     * @uses   \SebastianBergmann\Money\Currency
+     */
+    public function testObjectCanBeConstructedAndConvertedFromIntegerString()
+    {
+        $m = new Money('1234', 'EUR', true);
+        $this->assertEquals(123400, $m->getAmount());
+    }
+
+    /**
+     * @covers \SebastianBergmann\Money\Money::setAmount
+     * @uses   \SebastianBergmann\Money\Money::__construct
+     * @uses   \SebastianBergmann\Money\Money::setCurrency
+     * @uses   \SebastianBergmann\Money\Money::getAmount
+     * @uses   \SebastianBergmann\Money\Currency
+     */
+    public function testObjectCanBeConstructedFromFloatString()
+    {
+        $m = new Money('1234.56', 'EUR');
+        $this->assertEquals(1235, $m->getAmount());
+    }
+
+    /**
+     * @covers \SebastianBergmann\Money\Money::setAmount
+     * @uses   \SebastianBergmann\Money\Money::__construct
+     * @uses   \SebastianBergmann\Money\Money::setCurrency
+     * @uses   \SebastianBergmann\Money\Money::getAmount
+     * @uses   \SebastianBergmann\Money\Currency
+     */
+    public function testObjectCanBeConstructedAndConvertedFromFloatString()
+    {
+        $m = new Money('1234.56', 'EUR', true);
+        $this->assertEquals(123456, $m->getAmount());
     }
 
     /**
@@ -112,7 +237,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers \SebastianBergmann\Money\Money::getConvertedAmount
      * @uses   \SebastianBergmann\Money\Money::__construct
-     * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses   \SebastianBergmann\Money\Money::setCurrency
+     * @uses   \SebastianBergmann\Money\Money::setAmount
      * @uses   \SebastianBergmann\Money\Currency
      */
     public function testConvertedAmountCanBeRetrieved()
@@ -137,7 +263,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers \SebastianBergmann\Money\Money::newMoney
      * @covers \SebastianBergmann\Money\Money::assertSameCurrency
      * @uses   \SebastianBergmann\Money\Money::__construct
-     * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses   \SebastianBergmann\Money\Money::setCurrency
+     * @uses   \SebastianBergmann\Money\Money::setAmount
      * @uses   \SebastianBergmann\Money\Money::getAmount
      * @uses   \SebastianBergmann\Money\Money::getCurrency
      * @uses   \SebastianBergmann\Money\Money::assertIsInteger
@@ -160,7 +287,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers            \SebastianBergmann\Money\Money::assertSameCurrency
      * @covers            \SebastianBergmann\Money\Money::assertIsInteger
      * @uses              \SebastianBergmann\Money\Money::__construct
-     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses              \SebastianBergmann\Money\Money::setCurrency
+     * @uses              \SebastianBergmann\Money\Money::setAmount
      * @uses              \SebastianBergmann\Money\Money::getAmount
      * @uses              \SebastianBergmann\Money\Money::getCurrency
      * @uses              \SebastianBergmann\Money\Currency
@@ -176,7 +304,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers            \SebastianBergmann\Money\Money::assertInsideIntegerBounds
      * @uses              \SebastianBergmann\Money\Money::__construct
-     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses              \SebastianBergmann\Money\Money::setCurrency
+     * @uses              \SebastianBergmann\Money\Money::setAmount
      * @uses              \SebastianBergmann\Money\Money::multiply
      * @uses              \SebastianBergmann\Money\Money::castToInt
      * @uses              \SebastianBergmann\Money\Currency
@@ -192,7 +321,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers            \SebastianBergmann\Money\Money::add
      * @covers            \SebastianBergmann\Money\Money::assertSameCurrency
      * @uses              \SebastianBergmann\Money\Money::__construct
-     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses              \SebastianBergmann\Money\Money::setCurrency
+     * @uses              \SebastianBergmann\Money\Money::setAmount
      * @uses              \SebastianBergmann\Money\Money::getAmount
      * @uses              \SebastianBergmann\Money\Money::getCurrency
      * @uses              \SebastianBergmann\Money\Currency
@@ -211,7 +341,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers \SebastianBergmann\Money\Money::newMoney
      * @covers \SebastianBergmann\Money\Money::assertSameCurrency
      * @uses   \SebastianBergmann\Money\Money::__construct
-     * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses   \SebastianBergmann\Money\Money::setCurrency
+     * @uses   \SebastianBergmann\Money\Money::setAmount
      * @uses   \SebastianBergmann\Money\Money::getAmount
      * @uses   \SebastianBergmann\Money\Money::getCurrency
      * @uses   \SebastianBergmann\Money\Money::assertIsInteger
@@ -234,7 +365,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers            \SebastianBergmann\Money\Money::assertSameCurrency
      * @covers            \SebastianBergmann\Money\Money::assertIsInteger
      * @uses              \SebastianBergmann\Money\Money::__construct
-     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses              \SebastianBergmann\Money\Money::setCurrency
+     * @uses              \SebastianBergmann\Money\Money::setAmount
      * @uses              \SebastianBergmann\Money\Money::getAmount
      * @uses              \SebastianBergmann\Money\Money::getCurrency
      * @uses              \SebastianBergmann\Money\Currency
@@ -251,7 +383,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers            \SebastianBergmann\Money\Money::subtract
      * @covers            \SebastianBergmann\Money\Money::assertSameCurrency
      * @uses              \SebastianBergmann\Money\Money::__construct
-     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses              \SebastianBergmann\Money\Money::setCurrency
+     * @uses              \SebastianBergmann\Money\Money::setAmount
      * @uses              \SebastianBergmann\Money\Money::getAmount
      * @uses              \SebastianBergmann\Money\Money::getCurrency
      * @uses              \SebastianBergmann\Money\Currency
@@ -269,7 +402,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers \SebastianBergmann\Money\Money::negate
      * @covers \SebastianBergmann\Money\Money::newMoney
      * @uses   \SebastianBergmann\Money\Money::__construct
-     * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses   \SebastianBergmann\Money\Money::setCurrency
+     * @uses   \SebastianBergmann\Money\Money::setAmount
      * @uses   \SebastianBergmann\Money\Money::getAmount
      * @uses   \SebastianBergmann\Money\Currency
      */
@@ -287,7 +421,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers \SebastianBergmann\Money\Money::newMoney
      * @covers \SebastianBergmann\Money\Money::castToInt
      * @uses   \SebastianBergmann\Money\Money::__construct
-     * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses   \SebastianBergmann\Money\Money::setCurrency
+     * @uses   \SebastianBergmann\Money\Money::setAmount
      * @uses   \SebastianBergmann\Money\Money::getAmount
      * @uses   \SebastianBergmann\Money\Money::assertInsideIntegerBounds
      * @uses   \SebastianBergmann\Money\Currency
@@ -304,7 +439,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers            \SebastianBergmann\Money\Money::multiply
      * @uses              \SebastianBergmann\Money\Money::__construct
-     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses              \SebastianBergmann\Money\Money::setCurrency
+     * @uses              \SebastianBergmann\Money\Money::setAmount
      * @uses              \SebastianBergmann\Money\Currency
      * @expectedException \SebastianBergmann\Money\InvalidArgumentException
      */
@@ -318,7 +454,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers \SebastianBergmann\Money\Money::allocateToTargets
      * @covers \SebastianBergmann\Money\Money::newMoney
      * @uses   \SebastianBergmann\Money\Money::__construct
-     * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses   \SebastianBergmann\Money\Money::setCurrency
+     * @uses   \SebastianBergmann\Money\Money::setAmount
      * @uses   \SebastianBergmann\Money\Money::getAmount
      * @uses   \SebastianBergmann\Money\Currency
      */
@@ -355,7 +492,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @uses   \SebastianBergmann\Money\Money::assertInsideIntegerBounds
      * @uses   \SebastianBergmann\Money\Money::castToInt
      * @uses   \SebastianBergmann\Money\Money::newMoney
-     * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses   \SebastianBergmann\Money\Money::setCurrency
+     * @uses   \SebastianBergmann\Money\Money::setAmount
      * @uses   \SebastianBergmann\Money\Currency
      */
     public function testPercentageCanBeExtracted()
@@ -370,7 +508,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers            \SebastianBergmann\Money\Money::allocateToTargets
      * @uses              \SebastianBergmann\Money\Money::__construct
-     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses              \SebastianBergmann\Money\Money::setCurrency
+     * @uses              \SebastianBergmann\Money\Money::setAmount
      * @uses              \SebastianBergmann\Money\Currency
      * @expectedException \SebastianBergmann\Money\InvalidArgumentException
      */
@@ -385,7 +524,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers \SebastianBergmann\Money\Money::newMoney
      * @covers \SebastianBergmann\Money\Money::castToInt
      * @uses   \SebastianBergmann\Money\Money::__construct
-     * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses   \SebastianBergmann\Money\Money::setCurrency
+     * @uses   \SebastianBergmann\Money\Money::setAmount
      * @uses   \SebastianBergmann\Money\Money::getAmount
      * @uses   \SebastianBergmann\Money\Money::assertInsideIntegerBounds
      * @uses   \SebastianBergmann\Money\Currency
@@ -408,7 +548,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers \SebastianBergmann\Money\Money::compareTo
      * @covers \SebastianBergmann\Money\Money::assertSameCurrency
      * @uses   \SebastianBergmann\Money\Money::__construct
-     * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses   \SebastianBergmann\Money\Money::setCurrency
+     * @uses   \SebastianBergmann\Money\Money::setAmount
      * @uses   \SebastianBergmann\Money\Money::getAmount
      * @uses   \SebastianBergmann\Money\Money::getCurrency
      * @uses   \SebastianBergmann\Money\Currency
@@ -427,7 +568,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers  \SebastianBergmann\Money\Money::greaterThan
      * @covers  \SebastianBergmann\Money\Money::assertSameCurrency
      * @uses    \SebastianBergmann\Money\Money::__construct
-     * @uses    \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses    \SebastianBergmann\Money\Money::setCurrency
+     * @uses    \SebastianBergmann\Money\Money::setAmount
      * @uses    \SebastianBergmann\Money\Money::compareTo
      * @uses    \SebastianBergmann\Money\Money::getAmount
      * @uses    \SebastianBergmann\Money\Money::getCurrency
@@ -447,7 +589,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers  \SebastianBergmann\Money\Money::lessThan
      * @covers  \SebastianBergmann\Money\Money::assertSameCurrency
      * @uses    \SebastianBergmann\Money\Money::__construct
-     * @uses    \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses    \SebastianBergmann\Money\Money::setCurrency
+     * @uses    \SebastianBergmann\Money\Money::setAmount
      * @uses    \SebastianBergmann\Money\Money::compareTo
      * @uses    \SebastianBergmann\Money\Money::getAmount
      * @uses    \SebastianBergmann\Money\Money::getCurrency
@@ -467,7 +610,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers  \SebastianBergmann\Money\Money::equals
      * @covers  \SebastianBergmann\Money\Money::assertSameCurrency
      * @uses    \SebastianBergmann\Money\Money::__construct
-     * @uses    \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses    \SebastianBergmann\Money\Money::setCurrency
+     * @uses    \SebastianBergmann\Money\Money::setAmount
      * @uses    \SebastianBergmann\Money\Money::compareTo
      * @uses    \SebastianBergmann\Money\Money::getAmount
      * @uses    \SebastianBergmann\Money\Money::getCurrency
@@ -489,7 +633,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers  \SebastianBergmann\Money\Money::greaterThanOrEqual
      * @covers  \SebastianBergmann\Money\Money::assertSameCurrency
      * @uses    \SebastianBergmann\Money\Money::__construct
-     * @uses    \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses    \SebastianBergmann\Money\Money::setCurrency
+     * @uses    \SebastianBergmann\Money\Money::setAmount
      * @uses    \SebastianBergmann\Money\Money::greaterThan
      * @uses    \SebastianBergmann\Money\Money::equals
      * @uses    \SebastianBergmann\Money\Money::compareTo
@@ -514,7 +659,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers  \SebastianBergmann\Money\Money::lessThanOrEqual
      * @covers  \SebastianBergmann\Money\Money::assertSameCurrency
      * @uses    \SebastianBergmann\Money\Money::__construct
-     * @uses    \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses    \SebastianBergmann\Money\Money::setCurrency
+     * @uses    \SebastianBergmann\Money\Money::setAmount
      * @uses    \SebastianBergmann\Money\Money::lessThan
      * @uses    \SebastianBergmann\Money\Money::equals
      * @uses    \SebastianBergmann\Money\Money::compareTo
@@ -539,7 +685,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers            \SebastianBergmann\Money\Money::compareTo
      * @covers            \SebastianBergmann\Money\Money::assertSameCurrency
      * @uses              \SebastianBergmann\Money\Money::__construct
-     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses              \SebastianBergmann\Money\Money::setCurrency
+     * @uses              \SebastianBergmann\Money\Money::setAmount
      * @uses              \SebastianBergmann\Money\Money::getCurrency
      * @uses              \SebastianBergmann\Money\Currency
      * @expectedException \SebastianBergmann\Money\CurrencyMismatchException
@@ -556,7 +703,8 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers \SebastianBergmann\Money\Money::jsonSerialize
      * @uses   \SebastianBergmann\Money\Money::__construct
      * @uses   \SebastianBergmann\Money\Currency
-     * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses   \SebastianBergmann\Money\Money::setCurrency
+     * @uses   \SebastianBergmann\Money\Money::setAmount
      */
     public function testCanBeSerializedToJson()
     {
@@ -565,4 +713,5 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
             json_encode(new EUR(1))
         );
     }
+
 }

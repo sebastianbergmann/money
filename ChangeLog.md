@@ -8,9 +8,14 @@ All notable changes to `sebastianbergmann/money` will be documented in this file
 * Added the `Money::getConvertedAmount()` method for converting a `Money` object's amount into its base units
 * Added the `Currency::getCurrencies()` method for retrieving the registered currencies
 * Added the `IntlFormatter::fromLocale()` named constructor to create `IntlFormatter` objects for a specified locale
+* Added the ability to pass in multiple types of values to the `Money` constructor, not just integers. It will now take integers, floats, strings integers (`[0-9]+`), and string floats (`[0-9]+(\.[0-9]+)?`), and convert them appropriately for internal storage as integers.
+* Added a 3rd parameter to the `Money` constructor which allows the user to pass in a value in either the currency's subunits (ex. cents) or base units (ex. dollar). Parameters defaults to `false` and the value is interpreted as subunits, but if `true` is passed `Money` class will treat the value as base units, and convert them for internal storage appropriately.
 
 ### Changed
 * The constructor of the `IntlFormatter` class now expects a `NumberFormatter` object
+
+## Deprecated
+* `Money::fromString()` method which allowed to create a money object from a string. A string value can now be passed to the constructor, and `Money` will interpret it appropriately
 
 ### Removed
 * Removed support for PHP < 5.5.0
