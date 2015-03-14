@@ -45,18 +45,18 @@ class Money implements \JsonSerializable
     ];
 
     /**
-     * @param  integer                                  $amount
-     * @param  \SebastianBergmann\Money\Currency|string $currency
+     * @param integer $amount
+     * @param \SebastianBergmann\Money\Currency|string $currency
+     * @param bool $convert
      * @throws \SebastianBergmann\Money\InvalidArgumentException
      */
-    public function __construct($amount, $currency)
+    public function __construct($amount, $currency, $convert = false)
     {
-        if (!is_int($amount)) {
-            throw new InvalidArgumentException('$amount must be an integer');
-        }
+        //set currency
+        $this->setCurrency($currency);
 
-        $this->amount   = $amount;
-        $this->currency = $this->handleCurrencyArgument($currency);
+        //set amount
+        $this->setAmount($amount, $convert);
     }
 
     /**
@@ -73,6 +73,7 @@ class Money implements \JsonSerializable
      * @param  \SebastianBergmann\Money\Currency|string $currency
      * @return static
      * @throws \SebastianBergmann\Money\InvalidArgumentException
+     * @deprecated
      */
     public static function fromString($value, $currency)
     {
@@ -459,17 +460,92 @@ class Money implements \JsonSerializable
      * @param  \SebastianBergmann\Money\Currency|string $currency
      * @return \SebastianBergmann\Money\Currency
      * @throws \SebastianBergmann\Money\InvalidArgumentException
+     * @deprecated
      */
     private static function handleCurrencyArgument($currency)
     {
         if (!$currency instanceof Currency && !is_string($currency)) {
             throw new InvalidArgumentException('$currency must be an object of type Currency or a string');
         }
-
         if (is_string($currency)) {
             $currency = new Currency($currency);
         }
-
         return $currency;
+    }
+
+    /**
+     * set the currency
+     *
+     * @param  \SebastianBergmann\Money\Currency|string $currency
+     * @throws \SebastianBergmann\Money\InvalidArgumentException
+     */
+    private function setCurrency($currency)
+    {
+        //currency object passed
+        if($currency instanceof Currency){
+            $this->currency = $currency;
+        }
+
+        //string passed
+        elseif(is_string($currency)){
+            $this->currency = new Currency($currency);
+        }
+
+        //error
+        else{
+            throw new InvalidArgumentException('$currency must be an object of type Currency or a string');
+        }
+    }
+
+    /**
+     * set the amount for the money
+     *
+     * @param integer|float|string $amount
+     * @param bool $convert
+     */
+    private function setAmount($amount, $convert = false){
+
+        //value is integer, simply assign
+        if(is_int($amount)){
+            $this->amount = ($convert) ? $amount * $this->currency->getSubUnit() : $amount;
+        }
+
+        //value is float, convert and assign
+        elseif(is_float($amount)){
+
+            //convert
+            $amount = ($convert) ? $amount * $this->currency->getSubUnit() : $amount;
+
+            //set
+            $this->amount = (int) round($amount, 0);
+        }
+
+        //value is an integer string
+        elseif(preg_match('/^[0-9]+$/', $amount)){
+
+            //cast
+            $amount = (int) $amount;
+
+            //assign
+            $this->amount = ($convert) ? $amount * $this->currency->getSubUnit() : $amount;
+        }
+
+        //value is a float string
+        elseif(preg_match('/^[0-9]+(\.[0-9]+)?$/', $amount)){
+
+            //cast
+            $amount = (float) $amount;
+
+            //convert
+            $amount = ($convert) ? $amount * $this->currency->getSubUnit() : $amount;
+
+            //assign
+            $this->amount = (int) round($amount, 0);
+        }
+
+        //problem
+        else{
+            throw new InvalidArgumentException('The amount could not be evaluated as numeric.');
+        }
     }
 }
