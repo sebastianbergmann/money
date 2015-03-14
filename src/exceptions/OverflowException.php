@@ -19,6 +19,6 @@ namespace SebastianBergmann\Money;
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.github.com/sebastianbergmann/money
  */
-class OverflowException extends \OverflowException implements Exception
+class OverflowException extends \OverflowException
 {
 }
