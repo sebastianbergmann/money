@@ -14,6 +14,7 @@ All notable changes to `sebastianbergmann/money` will be documented in this file
 
 ### Removed
 * Removed support for PHP < 5.5.0
+* Removed Currency Specific subclasses of `Money`. All objects should be created specifically with the `Money` class.
 
 ## [1.5.1] - 2015-02-22
 
