@@ -61,24 +61,6 @@ The code above produces the output shown below:
 
     1234
 
-#### Using a Currency-specific subclass of Money
-
-```php
-use SebastianBergmann\Money\EUR;
-
-// Create Money object that represents 1 EUR
-$m = new EUR(100);
-
-// Access the Money object's monetary value
-print $m->getAmount();
-```
-
-The code above produces the output shown below:
-
-    100
-
-Please note that there is no subclass of `Money` that is specific to Turkish Lira as `TRY` is not a valid class name in PHP.
-
 #### Formatting a Money object using PHP's built-in NumberFormatter
 
 ```php
