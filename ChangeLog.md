@@ -2,7 +2,7 @@
 
 All notable changes to `sebastianbergmann/money` will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [2.0.0] - not yet released
+## [1.6.0] - 2015-04-02
 
 ### Added
 * Added the `Money::getConvertedAmount()` method for converting a `Money` object's amount into its base units
