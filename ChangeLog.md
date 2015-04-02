@@ -72,7 +72,8 @@ All notable changes to `sebastianbergmann/money` will be documented in this file
 ### Added
 * Initial release
 
-[2.0.0]: https://github.com/sebastianbergmann/money/compare/v1.5.1...HEAD
+[2.0.0]: https://github.com/sebastianbergmann/money/compare/v1.6.0...HEAD
+[1.6.0]: https://github.com/sebastianbergmann/money/compare/v1.5.1...v1.6.0
 [1.5.1]: https://github.com/sebastianbergmann/money/compare/v1.5.0...v1.5.1
 [1.5.0]: https://github.com/sebastianbergmann/money/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/sebastianbergmann/money/compare/v1.3.1...v1.4.0
