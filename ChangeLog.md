@@ -5,8 +5,6 @@ All notable changes to `sebastianbergmann/money` will be documented in this file
 ## [2.0.0] - not yet released
 
 ### Added
-* Added the `Money::getConvertedAmount()` method for converting a `Money` object's amount into its base units
-* Added the `Currency::getCurrencies()` method for retrieving the registered currencies
 * Added the `IntlFormatter::fromLocale()` named constructor to create `IntlFormatter` objects for a specified locale
 
 ### Changed
@@ -14,6 +12,15 @@ All notable changes to `sebastianbergmann/money` will be documented in this file
 
 ### Removed
 * Removed support for PHP < 5.5.0
+
+## [1.6.0] - 2015-04-02
+
+### Added
+* Added the `Money::getConvertedAmount()` method for converting a `Money` object's amount into its base units
+* Added the `Currency::getCurrencies()` method for retrieving the registered currencies
+
+### Removed
+* Removed support for PHP < 5.4.0
 
 ## [1.5.1] - 2015-02-22
 
