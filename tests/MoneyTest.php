@@ -17,7 +17,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @uses              \SebastianBergmann\Money\Currency
      * @expectedException \SebastianBergmann\Money\InvalidArgumentException
      */
-    public function testExceptionIsRaisedForInvalidConstructorArguments()
+    public function testCannotBeConstructedFromNonIntegerValue()
     {
         new Money(null, new Currency('EUR'));
     }
@@ -28,7 +28,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @uses              \SebastianBergmann\Money\Currency
      * @expectedException \SebastianBergmann\Money\InvalidArgumentException
      */
-    public function testExceptionIsRaisedForInvalidConstructorArguments2()
+    public function testCannotBeConstructedUsingInvalidCurrencyArgument()
     {
         new Money(0, null);
     }
@@ -38,7 +38,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @uses              \SebastianBergmann\Money\Currency
      * @expectedException \SebastianBergmann\Money\InvalidArgumentException
      */
-    public function testExceptionIsRaisedForInvalidConstructorArguments3()
+    public function testCannotBeConstructedUsingInvalidValueArgument()
     {
         Money::fromString(1234, new Currency('EUR'));
     }
@@ -48,7 +48,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers \SebastianBergmann\Money\Money::handleCurrencyArgument
      * @uses   \SebastianBergmann\Money\Currency
      */
-    public function testObjectCanBeConstructedForValidConstructorArguments()
+    public function testObjectCanBeConstructedFromIntegerValueAndCurrencyObject()
     {
         $m = new Money(0, new Currency('EUR'));
 
@@ -62,7 +62,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers \SebastianBergmann\Money\Money::handleCurrencyArgument
      * @uses   \SebastianBergmann\Money\Currency
      */
-    public function testObjectCanBeConstructedForValidConstructorArguments2()
+    public function testObjectCanBeConstructedFromIntegerValueAndCurrencyString()
     {
         $m = new Money(0, 'EUR');
 
@@ -77,7 +77,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
      * @uses   \SebastianBergmann\Money\Currency
      */
-    public function testObjectCanBeConstructedFromStringValue()
+    public function testObjectCanBeConstructedFromStringValueAndCurrencyObject()
     {
         $this->assertEquals(
             new Money(1234, new Currency('EUR')),
@@ -91,7 +91,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
      * @uses   \SebastianBergmann\Money\Currency
      */
-    public function testObjectCanBeConstructedFromStringValue2()
+    public function testObjectCanBeConstructedFromStringValueAndCurrencyString()
     {
         $this->assertEquals(
             new Money(1234, new Currency('EUR')),
