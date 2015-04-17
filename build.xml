@@ -20,9 +20,9 @@
  </target>
 
  <target name="generate-code" description="Generate Currency-specific subclasses of Money and autoloader code">
-  <exec executable="${basedir}/build/generate-child-classes.php"/>
+  <exec executable="${basedir}/build/generate-child-classes.php" taskname="generate-code"/>
 
-  <exec executable="${basedir}/build/tools/phpab.phar">
+  <exec executable="${basedir}/build/tools/phpab.phar" taskname="generate-code">
    <arg value="--output" />
    <arg path="src/autoload.php" />
    <arg path="src" />
@@ -30,7 +30,7 @@
  </target>
 
  <target name="lint" depends="generate-code">
-  <apply executable="php" failonerror="true">
+  <apply executable="php" failonerror="true" taskname="lint">
    <arg value="-l" />
 
    <fileset dir="${basedir}/src">
@@ -46,7 +46,7 @@
  </target>
 
  <target name="phploc" description="Measure project size using PHPLOC">
-  <exec executable="${basedir}/build/tools/phploc.phar">
+  <exec executable="${basedir}/build/tools/phploc.phar" taskname="phploc">
    <arg value="--count-tests" />
    <arg path="${basedir}/src" />
    <arg path="${basedir}/tests" />
@@ -54,7 +54,7 @@
  </target>
 
  <target name="phploc-ci" depends="prepare" description="Measure project size using PHPLOC and log result in CSV and XML format">
-  <exec executable="${basedir}/build/tools/phploc.phar">
+  <exec executable="${basedir}/build/tools/phploc.phar" taskname="phploc">
    <arg value="--count-tests" />
    <arg value="--log-csv" />
    <arg path="${basedir}/build/logs/phploc.csv" />
@@ -66,7 +66,7 @@
  </target>
 
  <target name="pdepend" depends="prepare" description="Calculate software metrics using PHP_Depend">
-  <exec executable="${basedir}/build/tools/pdepend.phar">
+  <exec executable="${basedir}/build/tools/pdepend.phar" taskname="pdepend">
    <arg value="--jdepend-xml=${basedir}/build/logs/jdepend.xml" />
    <arg value="--jdepend-chart=${basedir}/build/pdepend/dependencies.svg" />
    <arg value="--overview-pyramid=${basedir}/build/pdepend/overview-pyramid.svg" />
@@ -75,7 +75,7 @@
  </target>
 
  <target name="phpmd" description="Perform project mess detection using PHPMD and print result in text format">
-  <exec executable="${basedir}/build/tools/phpmd.phar">
+  <exec executable="${basedir}/build/tools/phpmd.phar" taskname="phpmd">
    <arg path="${basedir}/src" />
    <arg value="text" />
    <arg path="${basedir}/build/phpmd.xml" />
@@ -83,7 +83,7 @@
  </target>
 
  <target name="phpmd-ci" depends="prepare" description="Perform project mess detection using PHPMD and log result in XML format">
-  <exec executable="${basedir}/build/tools/phpmd.phar">
+  <exec executable="${basedir}/build/tools/phpmd.phar" taskname="phpmd">
    <arg path="${basedir}/src" />
    <arg value="xml" />
    <arg path="${basedir}/build/phpmd.xml" />
@@ -93,7 +93,7 @@
  </target>
 
  <target name="phpcs" description="Find coding standard violations using PHP_CodeSniffer and print result in text format">
-  <exec executable="${basedir}/build/tools/phpcs.phar">
+  <exec executable="${basedir}/build/tools/phpcs.phar" taskname="phpcs">
    <arg value="--standard=PSR2" />
    <arg value="--extensions=php" />
    <arg value="--ignore=autoload.php" />
@@ -103,7 +103,7 @@
  </target>
 
  <target name="phpcs-ci" depends="prepare" description="Find coding standard violations using PHP_CodeSniffer and log result in XML format">
-  <exec executable="${basedir}/build/tools/phpcs.phar" output="/dev/null">
+  <exec executable="${basedir}/build/tools/phpcs.phar" output="/dev/null" taskname="phpcs">
    <arg value="--report=checkstyle" />
    <arg value="--report-file=${basedir}/build/logs/checkstyle.xml" />
    <arg value="--standard=PSR2" />
@@ -114,13 +114,13 @@
  </target>
 
  <target name="phpcpd" description="Find duplicate code using PHPCPD">
-  <exec executable="${basedir}/build/tools/phpcpd.phar">
+  <exec executable="${basedir}/build/tools/phpcpd.phar" taskname="phpcpd">
    <arg path="${basedir}/src" />
   </exec>
  </target>
 
  <target name="phpcpd-ci" depends="prepare" description="Find duplicate code using PHPCPD and log result in XML format">
-  <exec executable="${basedir}/build/tools/phpcpd.phar">
+  <exec executable="${basedir}/build/tools/phpcpd.phar" taskname="phpcpd">
    <arg value="--log-pmd" />
    <arg path="${basedir}/build/logs/pmd-cpd.xml" />
    <arg path="${basedir}/src" />
@@ -128,14 +128,14 @@
  </target>
 
  <target name="phpunit" depends="prepare" description="Run unit tests with PHPUnit">
-  <exec executable="${basedir}/build/tools/phpunit.phar" failonerror="true">
+  <exec executable="${basedir}/build/tools/phpunit.phar" failonerror="true" taskname="phpunit">
    <arg value="--configuration"/>
    <arg path="${basedir}/build/phpunit.xml"/>
   </exec>
  </target>
 
  <target name="phpdox" depends="phploc-ci,phpcs-ci,phpmd-ci" description="Generate API documentation using phpDox">
-  <exec executable="${basedir}/build/tools/phpdox.phar" dir="${basedir}/build"/>
+  <exec executable="${basedir}/build/tools/phpdox.phar" dir="${basedir}/build" taskname="phpdox"/>
  </target>
 </project>
 
