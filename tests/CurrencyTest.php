@@ -64,7 +64,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers \SebastianBergmann\Money\Currency::getCurrencies
      */
-    public function testRegisterdCurrenciesCanBeAccessed()
+    public function testRegisteredCurrenciesCanBeAccessed()
     {
         $currencies = Currency::getCurrencies();
 
