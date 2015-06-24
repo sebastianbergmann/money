@@ -2,6 +2,12 @@
 
 All notable changes to `sebastianbergmann/money` will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [1.6.1] - 2015-06-24
+
+### Changed
+* Fixed dependency information for PHP 7
+* Excluded `/build` and `/tests` directory from distribution
+
 ## [1.6.0] - 2015-04-02
 
 ### Added
@@ -61,6 +67,7 @@ All notable changes to `sebastianbergmann/money` will be documented in this file
 ### Added
 * Initial release
 
+[1.6.0]: https://github.com/sebastianbergmann/money/compare/v1.6.0...v1.6.1
 [1.6.0]: https://github.com/sebastianbergmann/money/compare/v1.5.1...v1.6.0
 [1.5.1]: https://github.com/sebastianbergmann/money/compare/v1.5.0...v1.5.1
 [1.5.0]: https://github.com/sebastianbergmann/money/compare/v1.4.0...v1.5.0
