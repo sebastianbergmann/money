@@ -20,6 +20,14 @@ Here is a minimal example of a `composer.json` file that just defines a dependen
         }
     }
 
+
+Or
+
+```sh
+$ composer require sebastian/money
+```
+
+
 ## Usage Examples
 
 #### Creating a Money object and accessing its monetary value
