@@ -11,8 +11,13 @@
         }
     ],
     "require": {
-        "php": ">=5.5",
+        "php": ">=5.5"
+    },
+    "require-dev": {
         "ext-intl": "*"
+    },
+    "suggest": {
+        "ext-intl": "Allow international formatting of currencies."
     },
     "autoload": {
         "classmap": [
