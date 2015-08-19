@@ -4,13 +4,8 @@ All notable changes to `sebastianbergmann/money` will be documented in this file
 
 ## [2.0.0] - not yet released
 
-### Added
-* Added the `IntlFormatter::fromLocale()` named constructor to create `IntlFormatter` objects for a specified locale
-
-### Changed
-* The constructor of the `IntlFormatter` class now expects a `NumberFormatter` object
-
 ### Removed
+* `SebastianBergmann\Money\IntlFormatter` has been moved to a separate package
 * Removed support for PHP < 5.5.0
 
 ## [1.6.0] - 2015-04-02

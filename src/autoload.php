@@ -78,7 +78,6 @@ spl_autoload_register(
                 'sebastianbergmann\\money\\idr' => '/currency/IDR.php',
                 'sebastianbergmann\\money\\ils' => '/currency/ILS.php',
                 'sebastianbergmann\\money\\inr' => '/currency/INR.php',
-                'sebastianbergmann\\money\\intlformatter' => '/IntlFormatter.php',
                 'sebastianbergmann\\money\\invalidargumentexception' => '/exceptions/InvalidArgumentException.php',
                 'sebastianbergmann\\money\\iqd' => '/currency/IQD.php',
                 'sebastianbergmann\\money\\irr' => '/currency/IRR.php',
@@ -202,6 +201,8 @@ spl_autoload_register(
         if (isset($classes[$cn])) {
             require __DIR__ . $classes[$cn];
         }
-    }
+    },
+    true,
+    false
 );
 // @codeCoverageIgnoreEnd

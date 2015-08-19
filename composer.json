@@ -11,8 +11,10 @@
         }
     ],
     "require": {
-        "php": ">=5.5",
-        "ext-intl": "*"
+        "php": ">=5.5"
+    },
+    "suggest": {
+        "sebastian/money-intl-formatter": "~1.0"
     },
     "autoload": {
         "classmap": [

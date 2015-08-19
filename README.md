@@ -79,26 +79,6 @@ The code above produces the output shown below:
 
 Please note that there is no subclass of `Money` that is specific to Turkish Lira as `TRY` is not a valid class name in PHP.
 
-#### Formatting a Money object using PHP's built-in NumberFormatter
-
-```php
-use SebastianBergmann\Money\Currency;
-use SebastianBergmann\Money\Money;
-use SebastianBergmann\Money\IntlFormatter;
-
-// Create Money object that represents 1 EUR
-$m = new Money(100, new Currency('EUR'));
-
-// Format a Money object using PHP's built-in NumberFormatter (German locale)
-$f = IntlFormatter::fromLocale('de_DE');
-
-print $f->format($m);
-```
-
-The code above produces the output shown below:
-
-    1,00 €
-
 #### Basic arithmetic using Money objects
 
 ```php
