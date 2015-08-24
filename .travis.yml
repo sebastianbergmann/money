@@ -10,6 +10,8 @@ matrix:
   allow_failures:
     - php: hhvm
 
+sudo: false
+
 script:
 
     - ./build/tools/phpunit.phar --configuration ./build/travis-ci.xml
