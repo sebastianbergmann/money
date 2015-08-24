@@ -6,6 +6,10 @@ php:
     - 7.0
     - hhvm
 
+matrix:
+  allow_failures:
+    - php: hhvm
+
 script:
 
     - ./build/tools/phpunit.phar --configuration ./build/travis-ci.xml
