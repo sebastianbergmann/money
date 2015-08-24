@@ -345,6 +345,36 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \SebastianBergmann\Money\Money::allocateToTargets
+     * @covers \SebastianBergmann\Money\Money::newMoney
+     * @uses   \SebastianBergmann\Money\Money::__construct
+     * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses   \SebastianBergmann\Money\Money::getAmount
+     * @uses   \SebastianBergmann\Money\Currency
+     */
+    public function testNegativeAmountCanBeAllocatedToNumberOfTargets()
+    {
+        $a = new Money(-99, new Currency('EUR'));
+        $r = $a->allocateToTargets(10);
+
+        $this->assertEquals(
+            [
+                new Money(-10, new Currency('EUR')),
+                new Money(-10, new Currency('EUR')),
+                new Money(-10, new Currency('EUR')),
+                new Money(-10, new Currency('EUR')),
+                new Money(-10, new Currency('EUR')),
+                new Money(-10, new Currency('EUR')),
+                new Money(-10, new Currency('EUR')),
+                new Money(-10, new Currency('EUR')),
+                new Money(-10, new Currency('EUR')),
+                new Money(-9, new Currency('EUR'))
+            ],
+            $r
+        );
+    }
+
+    /**
      * @covers \SebastianBergmann\Money\Money::extractPercentage
      * @uses   \SebastianBergmann\Money\Money::__construct
      * @uses   \SebastianBergmann\Money\Money::getAmount
@@ -399,6 +429,30 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
             [
                 new Money(2, new Currency('EUR')),
                 new Money(3, new Currency('EUR'))
+            ],
+            $r
+        );
+    }
+
+    /**
+     * @covers \SebastianBergmann\Money\Money::allocateByRatios
+     * @covers \SebastianBergmann\Money\Money::newMoney
+     * @covers \SebastianBergmann\Money\Money::castToInt
+     * @uses   \SebastianBergmann\Money\Money::__construct
+     * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses   \SebastianBergmann\Money\Money::getAmount
+     * @uses   \SebastianBergmann\Money\Money::assertInsideIntegerBounds
+     * @uses   \SebastianBergmann\Money\Currency
+     */
+    public function testNegativeAmountCanBeAllocatedByRatios()
+    {
+        $a = new Money(-5, new Currency('EUR'));
+        $r = $a->allocateByRatios([3, 7]);
+
+        $this->assertEquals(
+            [
+                new Money(-2, new Currency('EUR')),
+                new Money(-3, new Currency('EUR'))
             ],
             $r
         );

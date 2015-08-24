@@ -233,17 +233,19 @@ class Money implements \JsonSerializable
             throw new InvalidArgumentException('$n must be an integer');
         }
 
-        $low       = $this->newMoney(intval($this->amount / $n));
-        $high      = $this->newMoney($low->getAmount() + 1);
-        $remainder = $this->amount % $n;
-        $result    = [];
+        $sign       = ($this->amount < 0) ? -1 : 1;
+        $amount     = abs($this->amount);
+        $low        = $this->newMoney(intval($amount / $n));
+        $high       = $this->newMoney($low->getAmount() + 1);
+        $remainder  = $amount % $n;
+        $result     = [];
 
         for ($i = 0; $i < $remainder; $i++) {
-            $result[] = $high;
+            $result[] = $high->multiply($sign);
         }
 
         for ($i = $remainder; $i < $n; $i++) {
-            $result[] = $low;
+            $result[] = $low->multiply($sign);
         }
 
         return $result;
@@ -261,16 +263,18 @@ class Money implements \JsonSerializable
         /** @var \SebastianBergmann\Money\Money[] $result */
         $result    = [];
         $total     = array_sum($ratios);
-        $remainder = $this->amount;
+        $sign      = ($this->amount < 0) ? -1 : 1;
+        $absAmount = abs($this->amount);
+        $remainder = $absAmount;
 
         for ($i = 0; $i < count($ratios); $i++) {
-            $amount     = $this->castToInt($this->amount * $ratios[$i] / $total);
-            $result[]   = $this->newMoney($amount);
+            $amount     = $this->castToInt($absAmount * $ratios[$i] / $total);
+            $result[]   = $this->newMoney($amount)->multiply($sign);
             $remainder -= $amount;
         }
 
         for ($i = 0; $i < $remainder; $i++) {
-            $result[$i] = $this->newMoney($result[$i]->getAmount() + 1);
+            $result[$i] = $this->newMoney($result[$i]->getAmount() + $sign);
         }
 
         return $result;
