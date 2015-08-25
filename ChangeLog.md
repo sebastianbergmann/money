@@ -10,7 +10,7 @@ All notable changes to `sebastianbergmann/money` will be documented in this file
 
 ### Removed
 * `SebastianBergmann\Money\IntlFormatter` has been moved to a separate package
-* Removed support for PHP < 5.5.0
+* Removed support for PHP < 5.6.0
 
 ## [1.6.1] - 2015-06-24
 
