@@ -204,33 +204,6 @@ The code above produces the output shown below:
     10
     9
 
-Works for negative amounts, too.
-
-```php
-use SebastianBergmann\Money\Currency;
-use SebastianBergmann\Money\Money;
-
-// Create a Money object that represents -0,99 EUR
-$a = new Money(-99, new Currency('EUR'));
-
-foreach ($a->allocateToTargets(10) as $t) {
-    print $t->getAmount() . "\n";
-}
-```
-
-The code above produces the output shown below:
-
-    -10
-    -10
-    -10
-    -10
-    -10
-    -10
-    -10
-    -10
-    -10
-    -9
-
 #### Allocate the monetary value represented by a Money object using a list of ratios
 
 ```php
@@ -249,25 +222,6 @@ The code above produces the output shown below:
 
     2
     3
-
-Works for negative amounts, too.
-
-```php
-use SebastianBergmann\Money\Currency;
-use SebastianBergmann\Money\Money;
-
-// Create a Money object that represents -0,05 EUR
-$a = new Money(-5, new Currency('EUR'));
-
-foreach ($a->allocateByRatios(array(3, 7)) as $t) {
-    print $t->getAmount() . "\n";
-}
-```
-
-The code above produces the output shown below:
-
-    -2
-    -3
 
 #### Extract a percentage (and a subtotal) from the monetary value represented by a Money object
 
