@@ -4,6 +4,10 @@ All notable changes to `sebastianbergmann/money` will be documented in this file
 
 ## [2.0.0] - not yet released
 
+### Fixed
+
+* Fixed [#65](https://github.com/sebastianbergmann/money/issues/65): Unexpected behaviour of `allocateToTargets()` and `allocateByRatios()` with negative amounts
+
 ### Removed
 * `SebastianBergmann\Money\IntlFormatter` has been moved to a separate package
 * Removed support for PHP < 5.5.0
