@@ -320,6 +320,9 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @uses   \SebastianBergmann\Money\Money::__construct
      * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
      * @uses   \SebastianBergmann\Money\Money::getAmount
+     * @uses   \SebastianBergmann\Money\Money::multiply
+     * @uses   \SebastianBergmann\Money\Money::assertInsideIntegerBounds
+     * @uses   \SebastianBergmann\Money\Money::castToInt
      * @uses   \SebastianBergmann\Money\Currency
      */
     public function testCanBeAllocatedToNumberOfTargets()
@@ -350,6 +353,9 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @uses   \SebastianBergmann\Money\Money::__construct
      * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
      * @uses   \SebastianBergmann\Money\Money::getAmount
+     * @uses   \SebastianBergmann\Money\Money::multiply
+     * @uses   \SebastianBergmann\Money\Money::assertInsideIntegerBounds
+     * @uses   \SebastianBergmann\Money\Money::castToInt
      * @uses   \SebastianBergmann\Money\Currency
      */
     public function testNegativeAmountCanBeAllocatedToNumberOfTargets()
@@ -418,6 +424,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
      * @uses   \SebastianBergmann\Money\Money::getAmount
      * @uses   \SebastianBergmann\Money\Money::assertInsideIntegerBounds
+     * @uses   \SebastianBergmann\Money\Money::multiply
      * @uses   \SebastianBergmann\Money\Currency
      */
     public function testCanBeAllocatedByRatios()
@@ -442,6 +449,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
      * @uses   \SebastianBergmann\Money\Money::getAmount
      * @uses   \SebastianBergmann\Money\Money::assertInsideIntegerBounds
+     * @uses   \SebastianBergmann\Money\Money::multiply
      * @uses   \SebastianBergmann\Money\Currency
      */
     public function testNegativeAmountCanBeAllocatedByRatios()
