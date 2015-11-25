@@ -56,7 +56,7 @@ class Money implements \JsonSerializable
         }
 
         $this->amount   = $amount;
-        $this->currency = $this->handleCurrencyArgument($currency);
+        $this->currency = self::handleCurrencyArgument($currency);
     }
 
     /**
