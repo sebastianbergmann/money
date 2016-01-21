@@ -627,4 +627,16 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
             json_encode(new EUR(1))
         );
     }
+
+    /**
+     * @covers \SebastianBergmann\Money\Money::__toString
+     * @uses   \SebastianBergmann\Money\Money::__construct
+     * @uses   \SebastianBergmann\Money\Money::getConvertedAmount
+     * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses   \SebastianBergmann\Money\Currency
+     */
+    public function testCanBeCastToString()
+    {
+        $this->assertEquals('EUR 12.34',(string)(new EUR(1234)));
+    }
 }

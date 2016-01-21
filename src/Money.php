@@ -476,4 +476,12 @@ class Money implements \JsonSerializable
 
         return $currency;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->currency->getCurrencyCode() . ' ' . (string)$this->getConvertedAmount();
+    }
 }
