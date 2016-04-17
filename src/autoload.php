@@ -202,6 +202,8 @@ spl_autoload_register(
         if (isset($classes[$cn])) {
             require __DIR__ . $classes[$cn];
         }
-    }
+    },
+    true,
+    false
 );
 // @codeCoverageIgnoreEnd
