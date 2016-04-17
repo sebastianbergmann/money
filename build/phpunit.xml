@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit backupGlobals="false"
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/5.2/phpunit.xsd"
          bootstrap="../src/autoload.php"
+         backupGlobals="false"
+         backupStaticAttributes="false"
+         beStrictAboutCoversAnnotation="true"
          beStrictAboutOutputDuringTests="true"
          beStrictAboutTestsThatDoNotTestAnything="true"
          beStrictAboutTodoAnnotatedTests="true"
-         checkForUnintentionallyCoveredCode="true"
          forceCoversAnnotation="true"
          verbose="true">
-    <testsuites>
-        <testsuite name="Money">
-            <directory suffix="Test.php">../tests</directory>
-        </testsuite>
-    </testsuites>
+    <testsuite name="Money">
+        <directory suffix="Test.php">../tests</directory>
+    </testsuite>
 
     <logging>
         <log type="coverage-html" target="coverage"/>
@@ -19,6 +20,7 @@
         <log type="coverage-crap4j" target="logs/crap4j.xml"/>
         <log type="coverage-xml" target="logs/coverage"/>
         <log type="junit" target="logs/junit.xml"/>
+        <log type="testdox-html" target="testdox/index.html"/>
     </logging>
 
     <filter>

@@ -4,5 +4,6 @@ build/coverage
 build/logs
 build/pdepend
 build/phpdox
+build/testdox
 cache.properties
 .idea
