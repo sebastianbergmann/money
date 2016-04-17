@@ -10,6 +10,9 @@
 
 namespace SebastianBergmann\Money;
 
+/**
+ * @requires extension intl
+ */
 class IntlFormatterTest extends \PHPUnit_Framework_TestCase
 {
     /**
