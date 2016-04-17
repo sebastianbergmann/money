@@ -2,6 +2,10 @@
 
 All notable changes to `sebastianbergmann/money` will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [1.6.2] - 2016-04-17
+
+Final release after project was abandoned.
+
 ## [1.6.1] - 2015-06-24
 
 ### Changed
@@ -67,6 +71,7 @@ All notable changes to `sebastianbergmann/money` will be documented in this file
 ### Added
 * Initial release
 
+[1.6.2]: https://github.com/sebastianbergmann/money/compare/v1.6.1...v1.6.2
 [1.6.1]: https://github.com/sebastianbergmann/money/compare/v1.6.0...v1.6.1
 [1.6.0]: https://github.com/sebastianbergmann/money/compare/v1.5.1...v1.6.0
 [1.5.1]: https://github.com/sebastianbergmann/money/compare/v1.5.0...v1.5.1
