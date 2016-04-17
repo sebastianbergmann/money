@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "php": ">=5.4",
+        "php": "^5.4|^7.0",
         "ext-intl": "*"
     },
     "autoload": {
@@ -21,7 +21,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.0.x-dev"
+            "dev-master": "1.6.x-dev"
         }
     }
 }
