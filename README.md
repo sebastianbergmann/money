@@ -1,8 +1,4 @@
-[![Latest Stable Version](https://poser.pugx.org/sebastian/money/v/stable.png)](https://packagist.org/packages/sebastian/money)
-[![Build Status](https://scrutinizer-ci.com/g/sebastianbergmann/money/badges/build.png?b=master)](https://scrutinizer-ci.com/g/sebastianbergmann/money/build-status/master)
-[![Code Coverage](https://scrutinizer-ci.com/g/sebastianbergmann/money/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/sebastianbergmann/money/?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sebastianbergmann/money/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sebastianbergmann/money/?branch=master)
-[![Reference Status](https://www.versioneye.com/php/sebastian:money/reference_badge.svg?style=flat)](https://www.versioneye.com/php/sebastian:money/references)
+**This project has been abandoned.** It was only ever intended to be used as an example for PHPUnit features etc. and not for usage in production. I am sorry that I failed to make that clear. Please have a look at [moneyphp/money](https://github.com/moneyphp/money) instead.
 
 # Money
 
