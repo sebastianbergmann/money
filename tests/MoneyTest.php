@@ -10,7 +10,9 @@
 
 namespace SebastianBergmann\Money;
 
-class MoneyTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class MoneyTest extends TestCase
 {
     /**
      * @covers            \SebastianBergmann\Money\Money::__construct

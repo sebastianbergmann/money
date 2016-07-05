@@ -10,10 +10,12 @@
 
 namespace SebastianBergmann\Money;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @requires extension intl
  */
-class IntlFormatterTest extends \PHPUnit_Framework_TestCase
+class IntlFormatterTest extends TestCase
 {
     /**
      * @covers \SebastianBergmann\Money\IntlFormatter::__construct
