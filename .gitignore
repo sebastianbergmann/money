@@ -7,3 +7,4 @@ build/phpdox
 build/testdox
 cache.properties
 .idea
+vendor
