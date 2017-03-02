@@ -1,4 +1,5 @@
 <?php
+//change Done here
 /*
  * This file is part of the Money package.
  *
@@ -27,8 +28,8 @@ class Money implements \JsonSerializable
     /**
      * @var integer
      */
-    private $amount;
-
+    private $amount1;
+//private $amount;
     /**
      * @var \SebastianBergmann\Money\Currency
      */
