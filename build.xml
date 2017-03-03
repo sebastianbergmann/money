@@ -9,7 +9,7 @@
         <delete dir="${basedir}/build/pdepend"/>
         <property name="clean.done" value="true"/>
     </target>
-
+ABCD1234
     <target name="prepare" unless="prepare.done" depends="clean,generate-code" description="Prepare for build">
         <mkdir dir="${basedir}/build/api"/>
         <mkdir dir="${basedir}/build/coverage"/>
