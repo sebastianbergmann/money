@@ -9,7 +9,7 @@
  */
 
 namespace SebastianBergmann\Money;
-//dvjkdjvnkjdvnkjfnvkj
+//dvjkdjv
 /**
  * Value Object that represents a currency.
  *
@@ -23,7 +23,7 @@ namespace SebastianBergmann\Money;
  * @see        http://docs.oracle.com/javase/7/docs/api/java/util/Currency.html
  * @SuppressWarnings(PHPMD.ExcessiveClassLength)
  */
-class Currency1234
+class Currency
 {
     /**
      * @var array
