@@ -32,7 +32,7 @@ class Money implements \JsonSerializable
     /**
      * @var \SebastianBergmann\Money\Currency
      */
-    private $currency111;
+    private $currency;
 
     /**
      * @var integer[]
