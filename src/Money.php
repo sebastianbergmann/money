@@ -23,8 +23,8 @@ namespace SebastianBergmann\Money;
  * @see        http://martinfowler.com/bliki/ValueObject.html
  * @see        http://martinfowler.com/eaaCatalog/money.html
  */
-//Hello
-class Money1234 implements \JsonSerializable
+//Hello1234
+class Money implements \JsonSerializable
 {
     /**
      * @var integer
