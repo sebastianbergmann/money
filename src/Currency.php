@@ -24,7 +24,7 @@ namespace SebastianBergmann\Money;
  * @SuppressWarnings(PHPMD.ExcessiveClassLength)
  */
 // class Currency
-class Currency54321
+class Currency
 {
     /**
      * @var array
