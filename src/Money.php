@@ -24,7 +24,7 @@ namespace SebastianBergmann\Money;
  * @see        http://martinfowler.com/eaaCatalog/money.html
  */
 //Hellofhfdjbkjfbdkjfbjdbfjkdebfkjdbkjfbdkjfbdkjbjf1234
-class Money implements \JsonSerializable
+class Money1234 implements \JsonSerializable
 {
     /**
      * @var integer
