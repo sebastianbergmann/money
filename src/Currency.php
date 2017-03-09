@@ -23,8 +23,8 @@ namespace SebastianBergmann\Money;
  * @see        http://docs.oracle.com/javase/7/docs/api/java/util/Currency.html
  * @SuppressWarnings(PHPMD.ExcessiveClassLength)
  */
-// class Currency
-class Currency
+// class Currencysclk
+class Currency1sdhsjh
 {
     /**
      * @var array
