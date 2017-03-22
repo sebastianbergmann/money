@@ -11,7 +11,7 @@ namespace SebastianBergmann\Money;
 
 use PHPUnit\Framework\TestCase;
 //dhbdvbdvbfjhvbfhvb
-class MoneyTest1234 extends TestCase
+class MoneyTest extends TestCase
 {
     /**
      * @covers            \SebastianBergmann\Money\Money::__construct
