@@ -1,4 +1,5 @@
 <?php
+//change Done here
 /*
  * This file is part of the Money package.
  *
@@ -22,13 +23,13 @@ namespace SebastianBergmann\Money;
  * @see        http://martinfowler.com/bliki/ValueObject.html
  * @see        http://martinfowler.com/eaaCatalog/money.html
  */
+//Hellofhfdjbkjfbdkjfbjdbfjkdebfkjdbkjfbdkjfbdkjbjf1234
 class Money implements \JsonSerializable
 {
     /**
      * @var integer
      */
-    private $amount;
-
+  private $amount;
     /**
      * @var \SebastianBergmann\Money\Currency
      */

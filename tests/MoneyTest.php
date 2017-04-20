@@ -7,12 +7,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\Money;
 
 use PHPUnit\Framework\TestCase;
-
-class MoneyTest extends TestCase
+//dhbdvbdvbfjhvbfhvb
+class MoneyTest1234 extends TestCase
 {
     /**
      * @covers            \SebastianBergmann\Money\Money::__construct
