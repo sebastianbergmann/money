@@ -12,7 +12,7 @@ namespace SebastianBergmann\Money;
 
 use PHPUnit\Framework\TestCase;
 
-class CurrencyTest123 extends TestCase
+class CurrencyTest extends TestCase
 {
     /**
      * @covers            \SebastianBergmann\Money\Currency::__construct
