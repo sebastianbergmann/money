@@ -7,7 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
+//Added Comment to Number 10 here
 namespace SebastianBergmann\Money;
 
 /**
@@ -23,7 +23,8 @@ namespace SebastianBergmann\Money;
  * @see        http://docs.oracle.com/javase/7/docs/api/java/util/Currency.html
  * @SuppressWarnings(PHPMD.ExcessiveClassLength)
  */
-class Currency
+// class Currencysclk
+class Currency123
 {
     /**
      * @var array
