@@ -173,6 +173,12 @@ class Currency
         'default_fraction_digits' => 2,
         'sub_unit' => 100,
       ],
+      'BYN' => [
+        'display_name' => 'Belarussian Ruble',
+        'numeric_code' => 933,
+        'default_fraction_digits' => 0,
+        'sub_unit' => 100,
+      ],
       'BYR' => [
         'display_name' => 'Belarussian Ruble',
         'numeric_code' => 974,
